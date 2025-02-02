@@ -8,6 +8,7 @@ datasource db {
   relationMode = "prisma"
 }
 
+// CUSTOMER SCHEMA
 model User {
   id                    String                 @id @default(cuid())
   name                  String?
@@ -93,4 +94,194 @@ model TwoFactorConfirmation {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId])
+}
+
+// SELLER SCHEMA
+
+enum BusinessType {
+  Food
+  NonFood
+  Service
+}
+
+model Seller {
+  id                     String        @id @default(cuid())
+  name                   String?
+  email                  String
+  password               String?
+  type                   String?
+  dti                    String?
+  bir                    String?
+  barangayBusinessPermit String?
+  identity               String?
+  identityType           String?
+  sec                    String?
+  givenName              String?
+  middleName             String?
+  familyName             String?
+  otpCode                String?
+  isPremium              Boolean       @default(false)
+  businessType           BusinessType? @default(Food)
+  status                 String        @default("Pending")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  categorySlug  String?
+  category      Category?       @relation(fields: [categorySlug], references: [slug], onDelete: Cascade)
+  sellerAddress SellerAddress[]
+  sellerProduct SellerProduct[]
+  adminNotification  AdminNotification[]
+
+  @@index([categorySlug])
+}
+
+model SellerAddress {
+  id                 String   @id @default(cuid())
+  residentialAddress String?
+  contactPerson      String?
+  contactNumber      String?
+  nationality        String?
+  isReturnAddress    Boolean? @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  sellerId String
+  seller   Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+
+  @@index([sellerId])
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  seller            Seller[]
+  sellerSubCategory SubCategory[]
+}
+
+model SubCategory {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  categorySlug String
+  category     Category @relation(fields: [categorySlug], references: [slug], onDelete: Cascade)
+
+  @@index([categorySlug])
+}
+
+model SellerProduct {
+  id                  String   @id @default(cuid())
+  slug                String   @unique
+  name                String
+  description         String
+  category            String
+  images              String[]
+  video               String?
+  brand               String?
+  materials           String[]
+  weight              Float?
+  height              Float?
+  price               Float?
+  sku                 String
+  tags                String[]
+  discount            Float?
+  warrantyPeriod      String?
+  warrantyPolicy      String?
+  status              String   @default("In stock")
+  adminApprovalStatus String   @default("Pending")
+  isVariant           Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  sellerId String
+  seller   Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+
+  sellerProductVariants SellerProductVariants[]
+
+  @@index([sellerId])
+}
+
+model SellerProductVariants {
+  id        String   @id @default(cuid())
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sellerProductSlug String
+  sellerProduct     SellerProduct @relation(fields: [sellerProductSlug], references: [slug], onDelete: Cascade)
+
+  sellerProductVariantsOptions SellerProductVariantsOptions[]
+
+  @@index([sellerProductSlug])
+}
+
+model SellerProductVariantsOptions {
+  id        String   @id @default(cuid())
+  name      String
+  image     String?
+  price     Float?
+  stock     Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sellerProductVariantsId String
+  sellerProductVariants   SellerProductVariants @relation(fields: [sellerProductVariantsId], references: [id], onDelete: Cascade)
+
+  @@index([sellerProductVariantsId])
+}
+
+// ADMIN SCHEMA
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AdminSettings {
+  id              String   @id @default(cuid())
+  logo            String?
+  brandName       String?
+  commision       Float?
+  description     String?
+  dateEstablished String?
+  contactNumber   String?
+  address         String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model AdminPolicies {
+  id                   String   @id @default(cuid())
+  terms                String?
+  privacy              String?
+  refund               String?
+  intellectualProperty String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model AdminNotification {
+  id        String   @id @default(cuid())
+  type      String
+  title     String
+  message   String
+  status    String   @default("Unread")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sellerId String
+  seller   Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+
+  @@index([sellerId])
 }

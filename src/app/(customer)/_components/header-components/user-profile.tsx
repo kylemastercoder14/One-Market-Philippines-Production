@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { signOut } from "next-auth/react";
+import { Button } from '@/components/ui/button';
 
 const data = [
   {
@@ -130,8 +131,9 @@ const UserProfile = ({ auth }: { auth: any }) => {
       onMouseLeave={() => setShowDropdown(false)}
     >
       {/* User Avatar and Button */}
-      <button
-        className="px-4 flex items-center gap-2 py-2 rounded-2xl hover:bg-zinc-300/70 text-black text-sm transition-colors duration-300"
+      <Button
+      variant="ghost"
+        className="flex items-center gap-2 py-2 rounded-2xl hover:bg-zinc-300/70 text-black text-sm transition-colors duration-300"
         onClick={toggleDropdown}
       >
         <img
@@ -139,22 +141,22 @@ const UserProfile = ({ auth }: { auth: any }) => {
           alt="User Avatar"
           className="w-8 h-8 rounded-full"
         />
-        <div className="flex flex-col items-start">
+        <div className="md:flex hidden flex-col items-start">
           <span className="text-sm m-0">Hello, {auth.name || "Customer"}</span>
           <span className="font-semibold text-sm m-0">Orders & Account</span>
         </div>
-      </button>
+      </Button>
 
       {/* Dropdown */}
       {showDropdown && (
         <div
-          className="absolute top-full right-0 mt-2 flex w-[600px] shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-out opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0"
+          className="absolute top-full right-0 mt-2 flex md:w-[600px] w-max shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-out opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0"
           onMouseEnter={() => setShowDropdown(true)}
           onMouseLeave={() => setShowDropdown(false)}
         >
           {/* Browsing History Section */}
           <div
-            className={`w-1/2 bg-gray-50 p-4 transition-transform duration-500 ${showBrowsingHistory ? "translate-x-0" : "translate-x-full"}`}
+            className={`md:w-1/2 md:block hidden bg-gray-50 p-4 transition-transform duration-500 ${showBrowsingHistory ? "translate-x-0" : "translate-x-full"}`}
           >
             <h3 className="px-4 py-2 font-semibold border-b">
               Browsing history
@@ -183,7 +185,7 @@ const UserProfile = ({ auth }: { auth: any }) => {
           </div>
 
           {/* Profile Section */}
-          <div className="w-1/2 bg-white p-4 z-50">
+          <div className="md:w-1/2 w-full bg-white p-4 z-50">
             <div className="px-4 py-2 flex items-center space-x-2 border-b">
               <img
                 src={auth.image || avatarUrl}

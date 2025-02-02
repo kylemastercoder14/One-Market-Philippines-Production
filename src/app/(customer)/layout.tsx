@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "./_components/header";
 import { auth } from "@/lib/auth";
+import Footer from './_components/footer';
 
 const CustomerLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await auth();
@@ -9,7 +10,7 @@ const CustomerLayout = async ({ children }: { children: React.ReactNode }) => {
     <div>
       <Header user={data} />
       {children}
-      <div>FOOTER</div>
+      <Footer />
     </div>
   );
 };

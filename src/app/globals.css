@@ -6,6 +6,42 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.facebook {
+  color: #1877f2;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.yes-scrollbar::-webkit-scrollbar {
+  display: block;
+}
+
+/* Targeting the scrollbar for modern browsers */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the vertical scrollbar */
+  height: 12px; /* Height of the horizontal scrollbar */
+}
+
+/* Track (background) */
+::-webkit-scrollbar-track {
+  background: #f4f4f4; /* Light gray background for the track */
+  border-radius: 6px; /* Rounded corners for the track */
+}
+
+/* Handle (scrollbar thumb) */
+::-webkit-scrollbar-thumb {
+  background: #888; /* Medium gray color for the thumb */
+  border-radius: 6px; /* Rounded corners for the thumb */
+  border: 2px solid #f4f4f4; /* Adds padding around the thumb */
+}
+
+/* Hover state for the thumb */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker gray for hover state */
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

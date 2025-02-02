@@ -182,7 +182,7 @@ const UserLogin = () => {
           className="px-4 flex items-center gap-2 py-2 rounded-2xl hover:bg-zinc-300/70 text-black text-sm transition-colors duration-300"
         >
           <User className="w-6 h-6 rounded-full" />
-          <div className="flex flex-col items-start">
+          <div className="md:flex hidden flex-col items-start">
             <span className="text-sm m-0">Sign in / Register</span>
             <span className="font-semibold text-sm m-0">Orders & Account</span>
           </div>

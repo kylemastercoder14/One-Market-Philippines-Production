@@ -14,7 +14,6 @@ export const NonFoodProductValidators = z.object({
   }),
   tags: z.array(z.string()).nonempty("Please at least one tag"),
   category: z.string().min(1, { message: "Category is required" }),
-  discount: z.coerce.number().optional(),
   warrantyPeriod: z.string().optional(),
   warrantyPolicy: z.string().optional(),
   media: z

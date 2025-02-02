@@ -27,7 +27,6 @@ interface ProductItem {
   price?: number;
   sku: string;
   tags: string[];
-  discount?: number;
   warrantyPeriod?: string;
   warrantyPolicy?: string;
   status: "In stock" | "Out of stock";

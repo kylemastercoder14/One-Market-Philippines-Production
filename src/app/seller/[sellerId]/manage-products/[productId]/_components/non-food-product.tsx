@@ -69,7 +69,6 @@ const NonFoodProductForm = ({
       tags: initialData?.tags || [],
       warrantyPeriod: initialData?.warrantyPeriod || "",
       warrantyPolicy: initialData?.warrantyPolicy || "",
-      discount: initialData?.discount || 0,
       slug: initialData?.slug || "",
     },
   });
@@ -114,7 +113,6 @@ const NonFoodProductForm = ({
       height: values.height,
       price: values.price,
       sku: values.sku,
-      discount: values.discount,
       warrantyPeriod: values.warrantyPeriod,
       warrantyPolicy: values.warrantyPolicy,
       sellerId,

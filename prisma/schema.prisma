@@ -127,11 +127,12 @@ model Seller {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  categorySlug  String?
-  category      Category?       @relation(fields: [categorySlug], references: [slug], onDelete: Cascade)
-  sellerAddress SellerAddress[]
-  sellerProduct SellerProduct[]
-  adminNotification  AdminNotification[]
+  categorySlug      String?
+  category          Category?           @relation(fields: [categorySlug], references: [slug], onDelete: Cascade)
+  sellerAddress     SellerAddress[]
+  sellerProduct     SellerProduct[]
+  adminNotification AdminNotification[]
+  sellerDiscount    SellerDiscount[]
 
   @@index([categorySlug])
 }
@@ -192,7 +193,6 @@ model SellerProduct {
   price               Float?
   sku                 String
   tags                String[]
-  discount            Float?
   warrantyPeriod      String?
   warrantyPolicy      String?
   status              String   @default("In stock")
@@ -206,7 +206,11 @@ model SellerProduct {
 
   sellerProductVariants SellerProductVariants[]
 
+  discountId String?
+  discount   SellerDiscount? @relation(fields: [discountId], references: [id], onDelete: Cascade)
+
   @@index([sellerId])
+  @@index([discountId])
 }
 
 model SellerProductVariants {
@@ -236,6 +240,23 @@ model SellerProductVariantsOptions {
   sellerProductVariants   SellerProductVariants @relation(fields: [sellerProductVariantsId], references: [id], onDelete: Cascade)
 
   @@index([sellerProductVariantsId])
+}
+
+model SellerDiscount {
+  id        String   @id @default(cuid())
+  discount  String
+  startDate String
+  endDate   String
+  type      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sellerId String
+  seller   Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+
+  products SellerProduct[]
+
+  @@index([sellerId])
 }
 
 // ADMIN SCHEMA

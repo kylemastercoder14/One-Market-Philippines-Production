@@ -53,7 +53,7 @@ const DiscountId = async (props: {
         title={
           discounts ? `Edit product discount` : "Create new product discount"
         }
-        link={`/seller/${params.sellerId}/promotions/discount`}
+        link={`/seller/${params.sellerId}/promotions/discounts`}
       />
       <p className="text-sm text-muted-foreground mt-2">
         {discounts

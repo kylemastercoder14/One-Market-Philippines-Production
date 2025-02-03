@@ -55,8 +55,18 @@ export function AppSidebar({
       },
       {
         title: "Promotions",
-        url: `/seller/${params.sellerId}/promotions`,
+        url: "#",
         icon: Megaphone,
+        items: [
+          {
+            title: "Product Discount",
+            url: `/seller/${params.sellerId}/promotions/discounts`,
+          },
+          {
+            title: "Coupons",
+            url: `/seller/${params.sellerId}/promotions/coupons`,
+          }
+        ]
       },
       {
         title: "Customers",

@@ -133,6 +133,7 @@ model Seller {
   sellerProduct     SellerProduct[]
   adminNotification AdminNotification[]
   sellerDiscount    SellerDiscount[]
+  sellerCoupon      SellerCoupon[]
 
   @@index([categorySlug])
 }
@@ -257,6 +258,26 @@ model SellerDiscount {
   seller   Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)
 
   products SellerProduct[]
+
+  @@index([sellerId])
+}
+
+model SellerCoupon {
+  id        String   @id @default(cuid())
+  channel   String
+  name      String
+  startDate DateTime
+  endDate   DateTime
+  type      String
+  discountAmount Float?
+  minimumSpend Float?
+  claimableQuantity Int
+  status    String   @default("Active")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sellerId String
+  seller   Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)
 
   @@index([sellerId])
 }

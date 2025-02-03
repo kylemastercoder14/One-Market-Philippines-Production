@@ -63,7 +63,7 @@ const SellerProductDiscounts = async (props: {
         <div className="flex flex-col">
           <Link
             className="flex items-center gap-2"
-            href={`/seller/${params.sellerId}/promotions/discounts`}
+            href={`/seller/${params.sellerId}/promotions`}
           >
             <ChevronLeft className="w-4 h-4" />
             <span>Sales Promotions</span>

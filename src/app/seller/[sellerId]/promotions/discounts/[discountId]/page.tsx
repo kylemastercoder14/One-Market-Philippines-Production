@@ -15,6 +15,37 @@ const DiscountId = async (props: {
       id: params.discountId,
     },
   });
+  const products = await db.sellerProduct.findMany({
+    where: {
+      sellerId: params.sellerId,
+    },
+    orderBy: {
+      name: "asc",
+    },
+    include: {
+      sellerProductVariants: {
+        include: {
+          sellerProductVariantsOptions: true,
+        },
+      },
+    },
+  });
+
+  const seller = await db.seller.findUnique({
+    where: {
+      id: params.sellerId,
+    },
+    include: {
+      category: {
+        include: {
+          sellerSubCategory: true,
+        }
+      }
+    }
+  })
+
+  const categories = seller?.category?.sellerSubCategory ?? [];
+
   return (
     <div>
       <HeadingAction
@@ -29,7 +60,12 @@ const DiscountId = async (props: {
           ? "Modify the existing product discount details, type, promotion period, and other relevant information."
           : "Fill in the product discount details, including type, and promotion period, to create a new product discount."}
       </p>
-      <ProductDiscountForm initialData={discounts} sellerId={params.sellerId} />
+      <ProductDiscountForm
+        products={products}
+        initialData={discounts}
+        sellerId={params.sellerId}
+        categories={categories}
+      />
     </div>
   );
 };

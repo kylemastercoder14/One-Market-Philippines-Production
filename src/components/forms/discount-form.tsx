@@ -48,7 +48,7 @@ import {
 } from "@/components/ui/table";
 import Image from "next/image";
 import { Checkbox } from "@/components/ui/checkbox";
-import { createProductDiscount } from "../../actions/promotions";
+import { createProductDiscount } from "@/actions/promotions";
 
 interface ProductWithVariantsOptions extends SellerProductVariants {
   sellerProductVariantsOptions: SellerProductVariantsOptions[];
@@ -196,10 +196,10 @@ const ProductDiscountForm = ({
                           <span className="text-red-600 ml-1 mr-2">*</span>{" "}
                           <TooltipProvider>
                             <Tooltip>
-                              <TooltipTrigger>
+                              <TooltipTrigger type="button">
                                 <CircleHelp className="w-4 h-4 cursor-pointer" />
                               </TooltipTrigger>
-                              <TooltipContent>
+                              <TooltipContent className='w-60'>
                                 <p>
                                   This is a smart input field, if you type
                                   &rsquo;tomorrow at 3pm&rsquo; it will
@@ -231,10 +231,10 @@ const ProductDiscountForm = ({
                           <span className="text-red-600 ml-1 mr-2">*</span>{" "}
                           <TooltipProvider>
                             <Tooltip>
-                              <TooltipTrigger>
+                              <TooltipTrigger type="button">
                                 <CircleHelp className="w-4 h-4 cursor-pointer" />
                               </TooltipTrigger>
-                              <TooltipContent>
+                              <TooltipContent className='w-60'>
                                 <p>
                                   This is a smart input field, if you type
                                   &rsquo;one week from now&rsquo; it will

@@ -264,7 +264,7 @@ model SellerDiscount {
 
 model SellerCoupon {
   id        String   @id @default(cuid())
-  channel   String
+  channel   String[]
   name      String
   startDate DateTime
   endDate   DateTime

@@ -2,6 +2,11 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import db from "@/lib/db";
+import { format, isAfter, isBefore } from "date-fns";
+import CouponClient from './_components/client';
+import { CouponColumn } from './_components/column';
 
 const SellerCoupon = async (props: {
   params: Promise<{
@@ -9,7 +14,49 @@ const SellerCoupon = async (props: {
   }>;
 }) => {
   const params = await props.params;
+  const data = await db.sellerCoupon.findMany({
+    where: {
+      sellerId: params.sellerId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
 
+  const formattedData: CouponColumn[] = data.map((item) => ({
+    id: item.id,
+    name: item.name,
+    channel: item.channel.join(", "),
+    claimableQuantity: item.claimableQuantity,
+    couponStatus: item.status,
+    period: `${format(item.startDate, "MMMM dd, yyyy")} - ${format(item.endDate, "MMMM dd, yyyy")}`,
+    type: item.type,
+  }));
+
+  const now = new Date();
+
+  const ongoingDiscounts = formattedData.filter(
+    (item) =>
+      isBefore(new Date(item.period.split(" - ")[0]), now) &&
+      isAfter(new Date(item.period.split(" - ")[1]), now) &&
+      item.couponStatus === "Active"
+  );
+
+  const upcomingDiscounts = formattedData.filter(
+    (item) =>
+      isAfter(new Date(item.period.split(" - ")[0]), now) &&
+      item.couponStatus === "Active"
+  );
+
+  const deactivatedDiscounts = formattedData.filter(
+    (item) => item.couponStatus === "Inactive"
+  );
+
+  const expiredDiscounts = formattedData.filter(
+    (item) =>
+      isAfter(now, new Date(item.period.split(" - ")[1])) &&
+      item.couponStatus === "Active"
+  );
   return (
     <div>
       <div className="flex justify-between mb-3">
@@ -29,7 +76,30 @@ const SellerCoupon = async (props: {
           </Link>
         </Button>
       </div>
-	  <p>Coupons</p>
+      <Tabs defaultValue="all">
+        <TabsList>
+          <TabsTrigger value="all">All</TabsTrigger>
+          <TabsTrigger value="ongoing">Ongoing</TabsTrigger>
+          <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
+          <TabsTrigger value="deactivated">Deactivated</TabsTrigger>
+          <TabsTrigger value="expired">Expired</TabsTrigger>
+        </TabsList>
+        <TabsContent className="mt-2" value="all">
+          <CouponClient data={formattedData} />
+        </TabsContent>
+        <TabsContent className="mt-2" value="ongoing">
+          <CouponClient data={ongoingDiscounts} />
+        </TabsContent>
+        <TabsContent className="mt-2" value="upcoming">
+          <CouponClient data={upcomingDiscounts} />
+        </TabsContent>
+        <TabsContent className="mt-2" value="deactivated">
+          <CouponClient data={deactivatedDiscounts} />
+        </TabsContent>
+        <TabsContent className="mt-2" value="expired">
+          <CouponClient data={expiredDiscounts} />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };

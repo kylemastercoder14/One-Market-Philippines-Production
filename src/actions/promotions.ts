@@ -113,6 +113,7 @@ export const createCoupon = async (
         endDate: data.endPeriod.toISOString(),
         type: data.type,
         sellerId: sellerId,
+        channel: data.channel,
         minimumSpend: data.minimumSpend,
         discountAmount: data.discountAmount,
         claimableQuantity: data.claimableQuantity,

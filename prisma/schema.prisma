@@ -134,6 +134,7 @@ model Seller {
   adminNotification AdminNotification[]
   sellerDiscount    SellerDiscount[]
   sellerCoupon      SellerCoupon[]
+  sellerBank        SellerBank[]
 
   @@index([categorySlug])
 }
@@ -263,18 +264,43 @@ model SellerDiscount {
 }
 
 model SellerCoupon {
-  id        String   @id @default(cuid())
-  channel   String[]
-  name      String
-  startDate DateTime
-  endDate   DateTime
-  type      String
-  discountAmount Float?
-  minimumSpend Float?
+  id                String   @id @default(cuid())
+  channel           String[]
+  name              String
+  startDate         DateTime
+  endDate           DateTime
+  type              String
+  discountAmount    Float?
+  minimumSpend      Float?
   claimableQuantity Int
-  status    String   @default("Active")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  status            String   @default("Active")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  sellerId String
+  seller   Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+
+  @@index([sellerId])
+}
+
+enum PaymentType {
+  Bank
+  EWallet
+}
+
+model SellerBank {
+  id           String      @id @default(cuid())
+  name         String?
+  type         PaymentType
+  cardNumber   String?
+  validThru    String?
+  cvc          String?
+  firstName    String?
+  lastName     String?
+  emailAddress String?
+  mobileNumber String?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 
   sellerId String
   seller   Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)

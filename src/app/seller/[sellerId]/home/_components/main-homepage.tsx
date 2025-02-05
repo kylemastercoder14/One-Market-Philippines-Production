@@ -56,13 +56,13 @@ const MainHomePage = ({
                 className={`flex py-4 px-3 items-center justify-between space-x-2 cursor-pointer
               ${
                 selectedTab === "step2"
-                  ? "text-orange-800 bg-orange-200 border-orange-600"
-                  : "text-orange-800 bg-orange-100/60 border-orange-600 hover:bg-orange-100"
+                  ? "text-[#8D021F] bg-[#8D021F]/10 hover:bg-[#8D021F]/15 border border-[#8D021F]/40"
+                  : "text-[#8D021F] bg-[#8D021F] border-[#8D021F] hover:bg-[#8D021F]/80"
               }`}
                 onClick={() => setSelectedTab("step2")}
               >
                 <div className="flex items-center space-x-2">
-                  <CiShoppingBasket color="#9a3412" />
+                  <CiShoppingBasket color="#8D021F" />
                   <p className="text-sm">Add your first product</p>
                 </div>
                 <ChevronRight className="ml-auto w-4 h-4" />
@@ -80,13 +80,13 @@ const MainHomePage = ({
                 className={`flex py-4 px-3 items-center justify-between space-x-2 cursor-pointer
               ${
                 selectedTab === "step3"
-                  ? "text-orange-800 bg-orange-100/60 hover:bg-orange-100 border border-orange-300"
-                  : "text-orange-800 bg-orange-100/60 border-orange-600 hover:bg-orange-100"
+                  ? "text-[#8D021F] bg-[#8D021F]/10 hover:bg-[#8D021F]/15 border border-[#8D021F]/40"
+                  : "text-[#8D021F] bg-[#8D021F] border-[#8D021F] hover:bg-[#8D021F]/80"
               }`}
                 onClick={() => setSelectedTab("step3")}
               >
                 <div className="flex items-center space-x-2">
-                  <CiWallet color="#9a3412" />
+                  <CiWallet color="#8D021F" />
                   <p className="text-sm">Link payment method</p>
                 </div>
                 <ChevronRight className="ml-auto w-4 h-4" />

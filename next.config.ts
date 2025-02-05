@@ -7,6 +7,12 @@ const nextConfig: NextConfig = {
       "aimg.kwcdn.com",
       "img.kwcdn.com",
       "img.freepik.com",
+      "slicedinvoices.com",
+      "getcash.ph",
+      "dashboard.xendit.co",
+      "upload.wikimedia.org",
+      "static.wikia.nocookie.net",
+      "logodix.com",
     ],
   },
   eslint: {

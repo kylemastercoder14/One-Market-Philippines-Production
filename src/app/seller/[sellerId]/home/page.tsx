@@ -50,9 +50,9 @@ const Home = async (props: {
   return (
     <>
       {seller?.status === "Pending" && (
-        <div className="border flex py-2 px-3 items-center gap-2 bg-orange-200/10 border-orange-600/80 rounded-md">
-          <IoMdAlert color="#ea580c" className="w-4 h-4" />
-          <p className="text-sm text-orange-800">
+        <div className="border flex py-2 px-3 items-center gap-2 bg-orange-[#8D021F]/10 border-[#8D021F]/80 rounded-md">
+          <IoMdAlert color="#8D021F" className="w-4 h-4" />
+          <p className="text-sm text-[#8D021F]">
             Your documents are currently under review. Your products will become
             visible to buyers once you are verified. Thank you for waiting!
           </p>

@@ -25,6 +25,7 @@ import { Input } from "@/components/ui/input";
 import OptionRadio, { RadioGroup } from "@/components/globals/radio-group";
 import Image from "next/image";
 import ComboBox from "@/components/ui/combo-box";
+import { createPaymentMethod } from "@/actions/payment-method";
 
 const AddBankAccount = () => {
   const router = useRouter();
@@ -51,13 +52,13 @@ const AddBankAccount = () => {
 
   async function onSubmit(values: z.infer<typeof BankAccountValidators>) {
     try {
-      //   const res = await createCoupon(values, params.sellerId);
-      //   if (res.success) {
-      //     toast.success(res.success);
-      //     router.push(`/seller/${params.sellerId}/promotions/coupons`);
-      //   } else {
-      //     toast.error(res.error);
-      //   }
+        const res = await createPaymentMethod(values, params.sellerId as string);
+        if (res.success) {
+          toast.success(res.success);
+          router.push(`/seller/${params.sellerId}/payment-method`);
+        } else {
+          toast.error(res.error);
+        }
     } catch (error) {
       console.error(error);
       toast.error("Failed to create coupon");
@@ -434,6 +435,17 @@ const AddBankAccount = () => {
                   )}
                 />
               </div>
+            </div>
+            <div className="flex items-center justify-end mt-5">
+              <Button
+                type="button"
+                onClick={() => setAlertOpen(true)}
+                variant="ghost"
+                disabled={isSubmitting}
+              >
+                Cancel
+              </Button>
+              <Button type="submit" disabled={isSubmitting}>Submit</Button>
             </div>
           </form>
         </Form>

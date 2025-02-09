@@ -1,6 +1,6 @@
 "use client";
 
-import { SellerProduct } from "@prisma/client";
+import { SellerBank, SellerProduct } from "@prisma/client";
 import React, { useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { CiShoppingBasket, CiWallet } from "react-icons/ci";
@@ -14,11 +14,12 @@ const MainHomePage = ({
   paymentMethod,
 }: {
   product: SellerProduct | null;
-  paymentMethod: string | null;
+  paymentMethod: SellerBank | null;
 }) => {
   const router = useRouter();
   const params = useParams();
   const profile = true;
+
   const requiredFields = [product, paymentMethod, profile];
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
@@ -28,6 +29,11 @@ const MainHomePage = ({
   const [selectedTab, setSelectedTab] = useState<"step2" | "step3" | undefined>(
     initialStep
   );
+
+  const isStep2Completed = Boolean(product);
+  const isStep3Completed = Boolean(paymentMethod);
+  const isStep2Disabled = !isStep2Completed; // Disable step2 if product is not added
+  const isStep3Disabled = !isStep3Completed; // Disable step3 if payment method is not linked
 
   return (
     <div className="w-full border bg-white rounded-md shadow-md p-5">
@@ -54,12 +60,14 @@ const MainHomePage = ({
             ) : (
               <div
                 className={`flex py-4 px-3 items-center justify-between space-x-2 cursor-pointer
-              ${
-                selectedTab === "step2"
-                  ? "text-[#8D021F] bg-[#8D021F]/10 hover:bg-[#8D021F]/15 border border-[#8D021F]/40"
-                  : "text-[#8D021F] bg-[#8D021F] border-[#8D021F] hover:bg-[#8D021F]/80"
-              }`}
-                onClick={() => setSelectedTab("step2")}
+                  ${
+                    selectedTab === "step2"
+                      ? "text-[#8D021F] bg-[#8D021F]/10 hover:bg-[#8D021F]/15 border border-[#8D021F]/40"
+                      : "text-[#8D021F] bg-[#8D021F] border-[#8D021F] hover:bg-[#8D021F]/80"
+                  }
+                  ${isStep2Disabled ? "cursor-not-allowed opacity-50" : ""}
+                `}
+                onClick={() => !isStep2Disabled && setSelectedTab("step2")}
               >
                 <div className="flex items-center space-x-2">
                   <CiShoppingBasket color="#8D021F" />
@@ -78,12 +86,14 @@ const MainHomePage = ({
             ) : (
               <div
                 className={`flex py-4 px-3 items-center justify-between space-x-2 cursor-pointer
-              ${
-                selectedTab === "step3"
-                  ? "text-[#8D021F] bg-[#8D021F]/10 hover:bg-[#8D021F]/15 border border-[#8D021F]/40"
-                  : "text-[#8D021F] bg-[#8D021F] border-[#8D021F] hover:bg-[#8D021F]/80"
-              }`}
-                onClick={() => setSelectedTab("step3")}
+                  ${
+                    selectedTab === "step3"
+                      ? "text-[#8D021F] bg-[#8D021F]/10 hover:bg-[#8D021F]/15 border border-[#8D021F]/40"
+                      : "text-[#8D021F] bg-[#8D021F] border-[#8D021F] hover:bg-[#8D021F]/80"
+                  }
+                  ${isStep3Disabled ? "cursor-not-allowed opacity-50" : ""}
+                `}
+                onClick={() => !isStep3Disabled && setSelectedTab("step3")}
               >
                 <div className="flex items-center space-x-2">
                   <CiWallet color="#8D021F" />
@@ -97,9 +107,9 @@ const MainHomePage = ({
 
         {/* Content Section (Changes based on selectedTab) */}
         <div className="md:col-span-3">
-          {selectedTab === "step2" && (
+          {!product && (
             <div className="flex items-start gap-10">
-              <div className="relative w-[500px] h-[200px]">
+              <div className="relative w-[200px] h-[200px]">
                 <Image
                   src="/images/verifying-vector.svg"
                   fill
@@ -118,7 +128,9 @@ const MainHomePage = ({
                 <Button
                   className="mt-5"
                   onClick={() =>
-                    router.push(`/seller/${params.sellerId}/manage-products/create`)
+                    router.push(
+                      `/seller/${params.sellerId}/manage-products/create`
+                    )
                   }
                 >
                   Add Product
@@ -127,7 +139,7 @@ const MainHomePage = ({
             </div>
           )}
 
-          {selectedTab === "step3" && (
+          {!paymentMethod && (
             <div className="flex items-start gap-10">
               <div className="relative w-[200px] h-[200px]">
                 <Image
@@ -148,10 +160,41 @@ const MainHomePage = ({
                 <Button
                   className="mt-5"
                   onClick={() =>
-                    router.push(`/seller/${params.sellerId}/manage-products`)
+                    router.push(`/seller/${params.sellerId}/payment-method`)
                   }
                 >
                   Link Payment Method
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {product && paymentMethod && (
+            <div className="flex items-start gap-10">
+              <div className="relative w-[250px] h-[250px]">
+                <Image
+                  src="/images/manage-account.svg"
+                  fill
+                  className="w-full h-full"
+                  alt="Manage account"
+                />
+              </div>
+              <div className="mt-5">
+                <h1 className="font-semibold text-lg">
+                  Congratulations! You&apos;re all set. 🎉
+                </h1>
+                <p className="text-sm text-muted-foreground mt-3">
+                  You can start selling your products now and manage your
+                  account. If you need any help, please contact us. We are happy
+                  to help you. Thank you!
+                </p>
+                <Button
+                  className="mt-5"
+                  onClick={() =>
+                    router.push(`/seller/${params.sellerId}/my-account`)
+                  }
+                >
+                  Manage Account
                 </Button>
               </div>
             </div>

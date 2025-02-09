@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { IoMdAlert } from "react-icons/io";
 import MainHomePage from "./_components/main-homepage";
 import Image from "next/image";
-import ActionNeeded from './_components/action-needed';
+import ActionNeeded from "./_components/action-needed";
 
 const Home = async (props: {
   params: Promise<{
@@ -29,13 +29,13 @@ const Home = async (props: {
     where: {
       sellerId: params.sellerId,
     },
-  })
+  });
 
   const productCount = await db.sellerProduct.count({
     where: {
       sellerId: params.sellerId,
     },
-  })
+  });
 
   const orderCount = 2;
   const outOfStockCount = await db.sellerProduct.count({
@@ -43,10 +43,14 @@ const Home = async (props: {
       sellerId: params.sellerId,
       status: "Out of stock",
     },
-  })
+  });
   const returnCount = 1;
 
-  const existingPaymentMethod = null;
+  const existingPaymentMethod = await db.sellerBank.findFirst({
+    where: {
+      sellerId: params.sellerId,
+    },
+  });
   return (
     <>
       {seller?.status === "Pending" && (
@@ -87,8 +91,16 @@ const Home = async (props: {
               </span>
             </div>
           </div>
-          <MainHomePage product={existingProduct} paymentMethod={existingPaymentMethod} />
-          <ActionNeeded productCount={productCount} orderCount={orderCount} outOfStockCount={outOfStockCount} returnCount={returnCount} />
+          <MainHomePage
+            product={existingProduct}
+            paymentMethod={existingPaymentMethod}
+          />
+          <ActionNeeded
+            productCount={productCount}
+            orderCount={orderCount}
+            outOfStockCount={outOfStockCount}
+            returnCount={returnCount}
+          />
         </div>
         <div className="md:col-span-3">
           <h1 className="text-xl font-semibold">Announcements</h1>

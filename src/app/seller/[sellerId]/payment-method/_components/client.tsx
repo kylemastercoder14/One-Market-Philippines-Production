@@ -4,9 +4,14 @@ import React from "react";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter } from "next/navigation";
+import { SellerBank } from "@prisma/client";
 
-const PaymentMethodClient = () => {
+const PaymentMethodClient = ({
+  existingBank,
+}: {
+  existingBank: SellerBank | null;
+}) => {
   const params = useParams();
   const router = useRouter();
   return (
@@ -31,8 +36,8 @@ const PaymentMethodClient = () => {
               </Badge>
             </div>
             <p>
-              Connect to accept credit/debit cards, e-wallets, retail outlet, online banking and
-              other payment gateway.
+              Connect to accept credit/debit cards, e-wallets, retail outlet,
+              online banking and other payment gateway.
             </p>
             <div className="flex items-center gap-2">
               <Image
@@ -76,19 +81,33 @@ const PaymentMethodClient = () => {
                 alt="Gcash"
                 width={40}
                 height={40}
-                className='object-cover'
+                className="object-cover"
               />
-               <Image
+              <Image
                 src="https://logodix.com/logo/2206804.jpg"
                 alt="Maya"
                 width={40}
                 height={40}
-                className='object-cover'
+                className="object-cover"
               />
             </div>
           </div>
         </div>
-        <Button onClick={() => router.push(`/seller/${params.sellerId}/payment-method/xendit`)}>Connect</Button>
+        <Button
+          // disabled={existingBank ? true : false}
+          className={`${existingBank ? "bg-green-600 hover:bg-green-600/80 text-white" : ""}`}
+          onClick={() => {
+            if (existingBank) {
+              router.push(
+                `/seller/${params.sellerId}/my-account`
+              );
+            } else {
+              router.push(`/seller/${params.sellerId}/payment-method/xendit`);
+            }
+          }}
+        >
+          {existingBank ? "View Account" : "Connect"}
+        </Button>
       </div>
       <div className="bg-white flex justify-between items-center border shadow-md p-5 rounded-md">
         <div className="flex items-center gap-3">
@@ -110,7 +129,7 @@ const PaymentMethodClient = () => {
             </p>
           </div>
         </div>
-        <Button>Connect</Button>
+        <Button>Link Account</Button>
       </div>
     </div>
   );

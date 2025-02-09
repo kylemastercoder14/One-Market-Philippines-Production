@@ -124,7 +124,7 @@ const CategoriesDropdown = () => {
                       </div>
                     ))}
                   </div>
-                  <div className="col-span-7 ml-3 overflow-y-auto max-h-[70vh]">
+                  <div className="col-span-7 ml-3 p-2 overflow-y-auto no-scrollbar max-h-[70vh]">
                     {/* show sub-categories here based on selected category */}
                     {subLoading ? (
                       <div className="flex flex-col h-full items-center justify-center">
@@ -148,24 +148,12 @@ const CategoriesDropdown = () => {
                           <li
                             key={subCategory.id}
                             onClick={() =>
-                              router.push(`/products/${subCategory.categorySlug}/sub-category/${subCategory.slug}`)
+                              router.push(
+                                `/products/${subCategory.categorySlug}/sub-category/${subCategory.slug}`
+                              )
                             }
-                            className="p-2 flex flex-col items-center justify-center cursor-pointer"
+                            className="p-2 flex text-white bg-gradient-to-b h-[120px] from-red-400 via-red-700 to-red-800 rounded-xl flex-col items-center justify-center cursor-pointer"
                           >
-                            <div className="relative w-20 h-20">
-                              {subCategory.image ? (
-                                <Image
-                                  src={subCategory.image}
-                                  alt={subCategory.name}
-                                  fill
-                                  className="w-full h-full rounded-full object-cover"
-                                />
-                              ) : (
-                                <div className="w-full h-full rounded-full text-xs flex flex-col items-center justify-center text-center bg-zinc-200/70">
-                                  No image found
-                                </div>
-                              )}
-                            </div>
                             <span className="text-sm text-center mt-2">
                               {subCategory.name}
                             </span>

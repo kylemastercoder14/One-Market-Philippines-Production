@@ -272,7 +272,7 @@ export const TagsInput = React.forwardRef<HTMLDivElement, TagsInputProps>(
               aria-disabled={disableButton}
               data-active={activeIndex === index}
               className={cn(
-                "relative px-2 rounded-full bg-orange-600 text-white hover:bg-orange-600/80 flex items-center gap-1 data-[active='true']:ring-2 data-[active='true']:ring-muted-foreground truncate aria-disabled:opacity-50 aria-disabled:cursor-not-allowed"
+                "relative px-2 rounded-full bg-[#8D021F] text-white hover:bg-[#8D021F]/80 flex items-center gap-1 data-[active='true']:ring-2 data-[active='true']:ring-muted-foreground truncate aria-disabled:opacity-50 aria-disabled:cursor-not-allowed"
               )}
               variant={"secondary"}
             >

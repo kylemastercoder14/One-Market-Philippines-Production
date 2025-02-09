@@ -35,7 +35,6 @@ export function NavSellers({ sellers }: { sellers: Seller[] }) {
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Sellers</SidebarGroupLabel>
-
       <SidebarMenu>
         {sellers.map((item) => (
           <SidebarMenuItem key={item.name}>
@@ -84,7 +83,7 @@ export function NavSellers({ sellers }: { sellers: Seller[] }) {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                  onClick={() => router.push(`/admin/analytics`)}
+                  onClick={() => router.push(`/admin/sellers/${item.id}/analytics`)}
                 >
                   <ChartSpline className="text-muted-foreground" />
                   <span>Analytics</span>

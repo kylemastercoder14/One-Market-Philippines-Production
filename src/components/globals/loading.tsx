@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import React from "react";
 
-const Loading = ({ loading }: { loading: boolean }) => {
+const LoadingComponent = () => {
   const icons = [
     <ShirtIcon className="w-6 h-6 text-gray-600" />,
     <BriefcaseBusiness className="w-6 h-6 text-gray-600" />,
@@ -34,12 +34,10 @@ const Loading = ({ loading }: { loading: boolean }) => {
     const intervalId = setInterval(() => {
       const randomIndex = Math.floor(Math.random() * icons.length);
       setCurrentIcon(icons[randomIndex]);
-    }, 500);
+    }, 300);
 
-    // Cleanup on component unmount
     return () => clearInterval(intervalId);
   }, []);
-  
 
   return (
     <div className="w-full h-full fixed inset-0 z-[99] flex items-center flex-col justify-center backdrop-blur bg-black bg-opacity-50">
@@ -53,4 +51,4 @@ const Loading = ({ loading }: { loading: boolean }) => {
   );
 };
 
-export default Loading;
+export default LoadingComponent;

@@ -3,7 +3,6 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { Metadata } from "next";
-import Loading from "@/components/providers/loading-provider";
 
 // Define local fonts
 const helveticaLight = localFont({
@@ -53,7 +52,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <Loading />
       <body className={`${fontVariables} antialiased`}>
         <ThemeProvider
           attribute="class"

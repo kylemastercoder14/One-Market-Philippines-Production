@@ -1,5 +1,6 @@
 import db from "@/lib/db";
 import React from "react";
+import StoreClient from "../_components/client";
 
 const SpecificSeller = async (props: {
   params: Promise<{
@@ -12,7 +13,24 @@ const SpecificSeller = async (props: {
       id: params.sellerId,
     },
   });
-  return <div>{seller?.name}</div>;
+
+  const products = await db.sellerProduct.findMany({
+    where: {
+      sellerId: params.sellerId,
+    },
+    include: {
+      sellerProductVariants: {
+        include: {
+          sellerProductVariantsOptions: true,
+        },
+      },
+    },
+  });
+  return (
+    <div className="px-5 w-full">
+      <StoreClient seller={seller} products={products} />
+    </div>
+  );
 };
 
 export default SpecificSeller;

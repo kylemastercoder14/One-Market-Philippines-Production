@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
+import { ProductStatusHTML } from "@/components/email-template/product-status-email";
 import db from "@/lib/db";
+import nodemailer from "nodemailer";
 
 export const createNonFoodProductWithVariants = async (values: any) => {
   try {
@@ -315,5 +317,102 @@ export const deleteProduct = async (productId: string) => {
     return {
       error: error instanceof Error ? error.message : "Unknown error occurred",
     };
+  }
+};
+
+export const updateProductStatus = async (productId: string, sellerId: string, status: string, reason: string) => {
+  if(!status) {
+    return { error: "Status is required" };
+  }
+
+  try {
+
+    const existingSeller = await db.seller.findUnique({
+      where: {
+        id: sellerId,
+      },
+    });
+
+    if(!existingSeller) {
+      return { error: "Seller not found" };
+    }
+
+    // Check for an existing product with the same name and sellerId
+    const existingProduct = await db.sellerProduct.findUnique({
+      where: { id: productId },
+      include: {
+        sellerProductVariants: {
+          include: {
+            sellerProductVariantsOptions: true,
+          }
+        }
+      }
+    });
+
+    if (!existingProduct) {
+      return { error: "Product does not exist" };
+    }
+
+    // Update the main product
+    await db.sellerProduct.update({
+      data: {
+        adminApprovalStatus: status,
+      },
+      where: {
+        id: productId,
+      },
+      
+    });
+
+    await sendStatusProductEmail(existingSeller.name as string, existingSeller.email, status, existingProduct.images[0], existingProduct.name);
+
+    return {
+      success: "Product status updated successfully",
+    };
+  } catch (error: any) {
+    console.error("Error updating product status:", error.message, error.stack);
+    return {
+      error: error instanceof Error ? error.message : "Unknown error occurred",
+    };
+  }
+}
+
+export const sendStatusProductEmail = async (
+  storeName: string,
+  email: string,
+  status: string,
+  productImage: string,
+  productName: string,
+) => {
+  const htmlContent = await ProductStatusHTML({
+    status,
+    storeName,
+    productImage,
+    productName,
+  });
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "onemarketphilippines2025@gmail.com",
+      pass: "vrbscailgpflucvn",
+    },
+  });
+
+  const message = {
+    from: "onemarketphilippines2025@gmail.com",
+    to: email,
+    subject: `Your product has been ${status}`,
+    text: `Your product has been ${status}`,
+    html: htmlContent,
+  };
+
+  try {
+    await transporter.sendMail(message);
+
+    return { success: "Email has been sent." };
+  } catch (error) {
+    console.error("Error sending notification", error);
+    return { message: "An error occurred. Please try again." };
   }
 };

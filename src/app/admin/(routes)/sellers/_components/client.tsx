@@ -14,6 +14,9 @@ import React from "react";
 import { Clock, DownloadIcon, EyeIcon, Search } from "lucide-react";
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
+import { Modal } from "@/components/ui/modal";
+import { useRouter } from "next/navigation";
+import Heading from "@/components/ui/heading";
 
 interface ProductVariantProps extends SellerProductVariants {
   sellerProductVariantsOptions: SellerProductVariantsOptions[];
@@ -30,12 +33,34 @@ const StoreClient = ({
   seller: Seller | null;
   products: ProductProps[];
 }) => {
+  const router = useRouter();
+  const [openModal, setOpenModal] = React.useState(false);
+  const [selectedImage, setSelectedImage] = React.useState({
+    url: "",
+    name: "",
+  });
+  const fileName = (url: string) => url.split("/").pop();
   const image =
     "https://img.kwcdn.com/supplier-public-tag/1f13e183980/58186005-2bcb-4c92-97c0-814cf3cbf508_300x300.jpeg?imageView2/2/w/800/q/70/format/webp";
-  const identityUrl = seller?.identity || "";
-  const fileName = identityUrl.split("/").pop();
   return (
     <>
+      <Modal isOpen={openModal} onClose={() => setOpenModal(false)}>
+        <Heading title={selectedImage.name} description="" />
+        <div className="relative w-full h-[30vh]">
+          <Image
+            src={selectedImage.url}
+            alt={selectedImage.name}
+            fill
+            className="w-full h-full"
+          />
+        </div>
+        <Button
+          className="mt-2 flex justify-end ml-auto items-center"
+          onClick={() => setOpenModal(false)}
+        >
+          Okay
+        </Button>
+      </Modal>
       <div className="flex items-center py-2 justify-between">
         <div className="flex items-center gap-3">
           <Image
@@ -89,7 +114,7 @@ const StoreClient = ({
           <TabsContent value="info">
             <div className="flex w-full mt-3 flex-col">
               <h1 className="font-semibold">Seller Information</h1>
-              <div className="flex min-w-[400px] items-center justify-between rounded-md mt-3 py-2 px-3 bg-zinc-200">
+              <div className="flex w-full items-center justify-between rounded-md mt-3 py-2 px-3 bg-zinc-200">
                 <div className="flex items-center gap-2 w-full">
                   <div className="bg-black rounded-md p-2">
                     <Clock className="w-3 h-3 text-white" />
@@ -106,32 +131,224 @@ const StoreClient = ({
                 </span>
               </div>
               <h1 className="font-semibold mt-4">Attachments</h1>
-              <div className="flex flex-col mt-3">
-                <div className="flex items-center gap-2">
-                  <div className="relative">
-                    <Image
-                      src={seller?.identity || ""}
-                      alt="ID"
-                      width={80}
-                      height={80}
-                      className="rounded-lg"
-                    />
-                    <div className="absolute text-xs bg-black/80 p-1 rounded-md text-white top-0 right-0">
-                      {seller?.identityType}
+              <div className="flex flex-col space-y-4 mt-3">
+                {seller?.identity && (
+                  <div className="flex items-center gap-2">
+                    <div className="relative">
+                      <Image
+                        src={seller?.identity || ""}
+                        alt="ID"
+                        width={80}
+                        height={80}
+                        className="rounded-lg"
+                      />
+                      <div className="absolute text-xs bg-black/80 p-1 rounded-md text-white top-0 right-0">
+                        {seller?.identityType}
+                      </div>
+                    </div>
+                    <div>
+                      <span className="text-sm">
+                        {fileName(seller?.identity || "")}
+                      </span>
+                      <div className="flex items-center">
+                        <Button
+                          onClick={() => {
+                            setOpenModal(true);
+                            setSelectedImage({
+                              name: seller.identityType || "",
+                              url: seller.identity || "",
+                            });
+                          }}
+                          variant="ghost"
+                          size="sm"
+                        >
+                          <EyeIcon className="w-4 h-4" /> View
+                        </Button>
+                        <Button
+                          onClick={() => router.push(seller.identity || "")}
+                          variant="ghost"
+                          size="sm"
+                        >
+                          <DownloadIcon className="w-4 h-4" /> Download
+                        </Button>
+                      </div>
                     </div>
                   </div>
-                  <div>
-                    <span className="text-sm">{fileName}</span>
-                    <div className="flex items-center">
-                      <Button variant="ghost" size="sm">
-                        <EyeIcon className="w-4 h-4" /> View
-                      </Button>
-                      <Button variant="ghost" size="sm">
-                        <DownloadIcon className="w-4 h-4" /> Download
-                      </Button>
+                )}
+                {seller?.bir && (
+                  <div className="flex items-center gap-2">
+                    <div className="relative">
+                      <Image
+                        src={seller?.bir || ""}
+                        alt="BIR"
+                        width={80}
+                        height={80}
+                        className="rounded-lg"
+                      />
+                      <div className="absolute text-xs bg-black/80 p-1 rounded-md text-white top-0 right-0">
+                        BIR
+                      </div>
+                    </div>
+                    <div>
+                      <span className="text-sm">
+                        {fileName(seller?.bir || "")}
+                      </span>
+                      <div className="flex items-center">
+                        <Button
+                          onClick={() => {
+                            setOpenModal(true);
+                            setSelectedImage({
+                              name: "Bureau of Internal Revenue (BIR) Form 2303",
+                              url: seller.bir || "",
+                            });
+                          }}
+                          variant="ghost"
+                          size="sm"
+                        >
+                          <EyeIcon className="w-4 h-4" /> View
+                        </Button>
+                        <Button
+                          onClick={() => router.push(seller.bir || "")}
+                          variant="ghost"
+                          size="sm"
+                        >
+                          <DownloadIcon className="w-4 h-4" /> Download
+                        </Button>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
+                {seller?.barangayBusinessPermit && (
+                  <div className="flex items-center gap-2">
+                    <div className="relative">
+                      <Image
+                        src={seller?.barangayBusinessPermit || ""}
+                        alt="BBP"
+                        width={80}
+                        height={80}
+                        className="rounded-lg"
+                      />
+                      <div className="absolute text-xs bg-black/80 p-1 rounded-md text-white top-0 right-0">
+                        BBP
+                      </div>
+                    </div>
+                    <div>
+                      <span className="text-sm">
+                        {fileName(seller?.barangayBusinessPermit || "")}
+                      </span>
+                      <div className="flex items-center">
+                        <Button
+                          onClick={() => {
+                            setOpenModal(true);
+                            setSelectedImage({
+                              name: "Barangay Business Permit",
+                              url: seller.barangayBusinessPermit || "",
+                            });
+                          }}
+                          variant="ghost"
+                          size="sm"
+                        >
+                          <EyeIcon className="w-4 h-4" /> View
+                        </Button>
+                        <Button
+                          onClick={() =>
+                            router.push(seller.barangayBusinessPermit || "")
+                          }
+                          variant="ghost"
+                          size="sm"
+                        >
+                          <DownloadIcon className="w-4 h-4" /> Download
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {seller?.dti && (
+                  <div className="flex items-center gap-2">
+                    <div className="relative">
+                      <Image
+                        src={seller?.dti || ""}
+                        alt="DTI"
+                        width={80}
+                        height={80}
+                        className="rounded-lg"
+                      />
+                      <div className="absolute text-xs bg-black/80 p-1 rounded-md text-white top-0 right-0">
+                        DTI
+                      </div>
+                    </div>
+                    <div>
+                      <span className="text-sm">
+                        {fileName(seller?.dti || "")}
+                      </span>
+                      <div className="flex items-center">
+                        <Button
+                          onClick={() => {
+                            setOpenModal(true);
+                            setSelectedImage({
+                              name: "Department of Trade and Industry",
+                              url: seller.dti || "",
+                            });
+                          }}
+                          variant="ghost"
+                          size="sm"
+                        >
+                          <EyeIcon className="w-4 h-4" /> View
+                        </Button>
+                        <Button
+                          onClick={() => router.push(seller.dti || "")}
+                          variant="ghost"
+                          size="sm"
+                        >
+                          <DownloadIcon className="w-4 h-4" /> Download
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {seller?.sec && (
+                  <div className="flex items-center gap-2">
+                    <div className="relative">
+                      <Image
+                        src={seller?.sec || ""}
+                        alt="SEC"
+                        width={80}
+                        height={80}
+                        className="rounded-lg"
+                      />
+                      <div className="absolute text-xs bg-black/80 p-1 rounded-md text-white top-0 right-0">
+                        SEC
+                      </div>
+                    </div>
+                    <div>
+                      <span className="text-sm">
+                        {fileName(seller?.sec || "")}
+                      </span>
+                      <div className="flex items-center">
+                        <Button
+                          onClick={() => {
+                            setOpenModal(true);
+                            setSelectedImage({
+                              name: "Securities and Exchange Commission",
+                              url: seller.sec || "",
+                            });
+                          }}
+                          variant="ghost"
+                          size="sm"
+                        >
+                          <EyeIcon className="w-4 h-4" /> View
+                        </Button>
+                        <Button
+                          onClick={() => router.push(seller.sec || "")}
+                          variant="ghost"
+                          size="sm"
+                        >
+                          <DownloadIcon className="w-4 h-4" /> Download
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </TabsContent>

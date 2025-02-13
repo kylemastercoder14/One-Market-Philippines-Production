@@ -5,6 +5,7 @@ import * as jose from "jose";
 import db from "@/lib/db";
 import { OtpVerificationHTML } from "@/components/email-template/otp-verification";
 import { WelcomeOnboardingHTML } from "../components/email-template/welcome-onboarding";
+import { SellerStatusHTML } from "@/components/email-template/seller-status-email";
 
 export const loginSeller = async (email: string, password: string) => {
   try {
@@ -389,5 +390,89 @@ export const updateSellerBilling = async (
     });
   } catch (error) {
     console.error("Error updating seller billing:", error);
+  }
+};
+
+export const verifySeller = async (
+  sellerId: string,
+  reason: string,
+  verify: boolean
+) => {
+  if (!sellerId) {
+    return { error: "Invalid seller ID" };
+  }
+
+  try {
+    const existingSeller = await db.seller.findUnique({
+      where: {
+        id: sellerId,
+      },
+    });
+
+    if (!existingSeller) {
+      return { error: "Seller not found" };
+    }
+
+    await db.seller.update({
+      where: {
+        id: sellerId,
+      },
+      data: {
+        status: verify ? "Approved" : "Rejected",
+      },
+    });
+
+    await sendVerificationReasonEmail(
+      sellerId,
+      existingSeller.name || "",
+      existingSeller.email,
+      reason,
+      verify ? "Approved" : "Rejected"
+    );
+
+    return {success: "Seller verified successfully"};
+  } catch (error) {
+    console.error("Error verifying seller:", error);
+    return { error: "An error occurred. Please try again later." };
+  }
+};
+
+export const sendVerificationReasonEmail = async (
+  sellerId: string,
+  storeName: string,
+  email: string,
+  reason: string,
+  verify: string
+) => {
+  const htmlContent = await SellerStatusHTML({
+    sellerId,
+    storeName,
+    reason,
+    verify
+  });
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "onemarketphilippines2025@gmail.com",
+      pass: "vrbscailgpflucvn",
+    },
+  });
+
+  const message = {
+    from: "onemarketphilippines2025@gmail.com",
+    to: email,
+    subject: `Your application has been ${verify} | 1 Market Philippines`,
+    text: `Your application has been ${verify} | 1 Market Philippines`,
+    html: htmlContent,
+  };
+
+  try {
+    await transporter.sendMail(message);
+
+    return { success: "Email has been sent." };
+  } catch (error) {
+    console.error("Error sending notification", error);
+    return { message: "An error occurred. Please try again." };
   }
 };

@@ -11,22 +11,18 @@ import { useRouter } from "next/navigation";
 const ProductCard = ({
   title,
   image,
-  price,
   originalPrice,
   slug,
   sold,
-  discount,
   ratingCount,
   time,
   className,
 }: {
   title: string;
   image: string;
-  price: number;
   slug: string;
-  originalPrice: number;
+  originalPrice: string;
   sold?: number;
-  discount: number;
   ratingCount?: number;
   time?: number;
   initialCountdown?: number;
@@ -50,14 +46,8 @@ const ProductCard = ({
           <div className="py-4">
             <p className="line-clamp-2 text-sm mb-2">{title}</p>
             <div className="flex items-center gap-2 text-sm">
-              <p className="text-red-700 font-semibold">₱{price}</p>
-              <p className="text-muted-foreground line-through">
-                ₱{originalPrice}
-              </p>
+              <p className="text-red-700 font-semibold">{originalPrice}</p>
               {sold && <p>{sold}+ sold</p>}
-              <div className="border border-red-700 px-1.5 py-0.5 rounded-md text-red-700 text-xs">
-                -{discount}%
-              </div>
             </div>
             {time && (
               <div className="flex items-center space-x-2 mt-2">

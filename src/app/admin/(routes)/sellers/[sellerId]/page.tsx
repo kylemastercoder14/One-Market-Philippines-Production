@@ -17,6 +17,7 @@ const SpecificSeller = async (props: {
   const products = await db.sellerProduct.findMany({
     where: {
       sellerId: params.sellerId,
+      adminApprovalStatus: "Approved"
     },
     include: {
       sellerProductVariants: {

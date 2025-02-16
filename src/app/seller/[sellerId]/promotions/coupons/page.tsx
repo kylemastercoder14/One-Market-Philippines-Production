@@ -30,7 +30,7 @@ const SellerCoupon = async (props: {
     claimableQuantity: item.claimableQuantity,
     couponStatus: item.status,
     period: `${format(item.startDate, "MMMM dd, yyyy")} - ${format(item.endDate, "MMMM dd, yyyy")}`,
-    type: item.type,
+    type: item.type === "Money off" ? `₱${item.discountAmount} off` : `₱${item.discountAmount} off orders over ₱${item.minimumSpend}`,
   }));
 
   const now = new Date();
@@ -48,14 +48,10 @@ const SellerCoupon = async (props: {
       item.couponStatus === "Active"
   );
 
-  const deactivatedDiscounts = formattedData.filter(
-    (item) => item.couponStatus === "Inactive"
-  );
-
   const expiredDiscounts = formattedData.filter(
     (item) =>
       isAfter(now, new Date(item.period.split(" - ")[1])) &&
-      item.couponStatus === "Active"
+      item.couponStatus === "Expired"
   );
   return (
     <div>
@@ -81,7 +77,6 @@ const SellerCoupon = async (props: {
           <TabsTrigger value="all">All</TabsTrigger>
           <TabsTrigger value="ongoing">Ongoing</TabsTrigger>
           <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
-          <TabsTrigger value="deactivated">Deactivated</TabsTrigger>
           <TabsTrigger value="expired">Expired</TabsTrigger>
         </TabsList>
         <TabsContent className="mt-2" value="all">
@@ -92,9 +87,6 @@ const SellerCoupon = async (props: {
         </TabsContent>
         <TabsContent className="mt-2" value="upcoming">
           <CouponClient data={upcomingDiscounts} />
-        </TabsContent>
-        <TabsContent className="mt-2" value="deactivated">
-          <CouponClient data={deactivatedDiscounts} />
         </TabsContent>
         <TabsContent className="mt-2" value="expired">
           <CouponClient data={expiredDiscounts} />

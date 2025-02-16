@@ -10,7 +10,13 @@ const CouponId = async (props: {
   }>;
 }) => {
   const params = await props.params;
-  const coupons = null;
+
+  const coupons = await db.sellerCoupon.findUnique({
+    where: {
+      id: params.couponId,
+    },
+  });
+
   const seller = await db.seller.findUnique({
     where: {
       id: params.sellerId,

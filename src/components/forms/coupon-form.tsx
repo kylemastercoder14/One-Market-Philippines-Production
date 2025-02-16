@@ -30,7 +30,7 @@ import {
 import OptionCheck, { CheckGroup } from "@/components/globals/check-group";
 import OptionRadio, { RadioGroup } from "@/components/globals/radio-group";
 import AlertModal from "@/components/ui/alert-modal";
-import { createCoupon } from '@/actions/promotions';
+import { createCoupon, updateCoupon } from "@/actions/promotions";
 
 const CouponForm = ({
   initialData,
@@ -62,12 +62,22 @@ const CouponForm = ({
 
   async function onSubmit(values: z.infer<typeof CouponValidators>) {
     try {
-      const res = await createCoupon(values, sellerId);
-      if (res.success) {
-        toast.success(res.success);
-        router.push(`/seller/${sellerId}/promotions/coupons`);
+      if (initialData) {
+        const res = await updateCoupon(values, sellerId, initialData.id);
+        if (res.success) {
+          toast.success(res.success);
+          router.push(`/seller/${sellerId}/promotions/coupons`);
+        } else {
+          toast.error(res.error);
+        }
       } else {
-        toast.error(res.error);
+        const res = await createCoupon(values, sellerId);
+        if (res.success) {
+          toast.success(res.success);
+          router.push(`/seller/${sellerId}/promotions/coupons`);
+        } else {
+          toast.error(res.error);
+        }
       }
     } catch (error) {
       console.error(error);

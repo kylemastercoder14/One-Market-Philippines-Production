@@ -47,14 +47,10 @@ const SellerProductDiscounts = async (props: {
       item.discountStatus === "Active"
   );
 
-  const deactivatedDiscounts = formattedData.filter(
-    (item) => item.discountStatus === "Inactive"
-  );
-
   const expiredDiscounts = formattedData.filter(
     (item) =>
       isAfter(now, new Date(item.period.split(" - ")[1])) &&
-      item.discountStatus === "Active"
+      item.discountStatus === "Expired"
   );
 
   return (
@@ -81,7 +77,6 @@ const SellerProductDiscounts = async (props: {
           <TabsTrigger value="all">All</TabsTrigger>
           <TabsTrigger value="ongoing">Ongoing</TabsTrigger>
           <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
-          <TabsTrigger value="deactivated">Deactivated</TabsTrigger>
           <TabsTrigger value="expired">Expired</TabsTrigger>
         </TabsList>
         <TabsContent className="mt-2" value="all">
@@ -92,9 +87,6 @@ const SellerProductDiscounts = async (props: {
         </TabsContent>
         <TabsContent className="mt-2" value="upcoming">
           <ProductDiscountClient data={upcomingDiscounts} />
-        </TabsContent>
-        <TabsContent className="mt-2" value="deactivated">
-          <ProductDiscountClient data={deactivatedDiscounts} />
         </TabsContent>
         <TabsContent className="mt-2" value="expired">
           <ProductDiscountClient data={expiredDiscounts} />

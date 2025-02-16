@@ -258,3 +258,84 @@ export const createCoupon = async (
     return { error: "An error occurred while creating the coupon" };
   }
 };
+
+export const updateCoupon = async (
+  data: {
+    name: string;
+    channel: string[];
+    startPeriod: Date;
+    endPeriod: Date;
+    type: string;
+    minimumSpend?: number;
+    discountAmount: number;
+    claimableQuantity: number;
+  },
+  sellerId: string,
+  couponId: string
+) => {
+  if (data.startPeriod > data.endPeriod) {
+    return { error: "Start period cannot be greater than end period" };
+  }
+
+  if (data.startPeriod < new Date()) {
+    return { error: "Start period cannot be in the past" };
+  }
+
+  if (!data.name || !data.endPeriod || !data.type || !data.startPeriod) {
+    return { error: "Please fill all the required fields" };
+  }
+
+  try {
+    const existingCoupon = await db.sellerCoupon.findUnique({
+      where: {
+        id: couponId,
+      },
+    });
+
+    if (!existingCoupon) {
+      return { error: "Coupon not exist" };
+    }
+
+    const coupon = await db.sellerCoupon.update({
+      data: {
+        name: data.name,
+        startDate: data.startPeriod.toISOString(),
+        endDate: data.endPeriod.toISOString(),
+        type: data.type,
+        sellerId: sellerId,
+        channel: data.channel,
+        minimumSpend: data.minimumSpend,
+        discountAmount: data.discountAmount,
+        claimableQuantity: data.claimableQuantity,
+      },
+      where: {
+        id: couponId,
+      },
+    });
+
+    return {
+      coupon,
+      success: "Coupon updated successfully",
+    };
+  } catch (error) {
+    console.error(error);
+    return { error: "An error occurred while updating the coupon" };
+  }
+};
+
+export const deleteCoupon = async (couponId: string) => {
+  try {
+    await db.sellerCoupon.delete({
+      where: {
+        id: couponId,
+      },
+    });
+
+    return {
+      success: "Coupon deleted successfully",
+    };
+  } catch (error) {
+    console.error(error);
+    return { error: "An error occurred while deleting the coupon" };
+  }
+};

@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ChevronsUpDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { CellAction } from "./cell-action";
 
 export type CouponColumn = {
   id: string;
@@ -74,7 +75,9 @@ export const columns: ColumnDef<CouponColumn>[] = [
       return (
         <Badge
           variant={
-            row.original.type === "Money off (min.spend)" ? "default" : "secondary"
+            row.original.type.includes("orders over")
+              ? "default"
+              : "secondary"
           }
         >
           {row.original.type}
@@ -118,6 +121,13 @@ export const columns: ColumnDef<CouponColumn>[] = [
           <span>{row.original.couponStatus}</span>
         </div>
       );
+    },
+  },
+  {
+    accessorKey: "actions",
+    header: "",
+    cell: ({ row }) => {
+      return <CellAction id={row.original.id} />;
     },
   },
 ];

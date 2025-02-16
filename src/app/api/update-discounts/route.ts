@@ -9,17 +9,17 @@ export async function POST(req: Request) {
     const expiredDiscounts = await db.sellerDiscount.findMany({
       where: {
         endDate: { lt: now.toISOString() }, // endDate is less than the current date
-        status: "active", // Only update active discounts
+        status: "Active", // Only update active discounts
       },
     });
 
-    // Update the status of expired discounts to "Inactive"
+    // Update the status of expired discounts to "Expired"
     for (const discount of expiredDiscounts) {
       await db.sellerDiscount.update({
         where: { id: discount.id },
-        data: { status: "Inactive" },
+        data: { status: "Expired" },
       });
-      console.log(`Updated discount ${discount.id} to Inactive.`);
+      console.log(`Updated discount ${discount.id} to Expired.`);
     }
 
     return new NextResponse("Updated expired discounts successfully.", {

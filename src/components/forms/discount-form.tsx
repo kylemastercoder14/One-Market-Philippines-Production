@@ -48,7 +48,7 @@ import {
 } from "@/components/ui/table";
 import Image from "next/image";
 import { Checkbox } from "@/components/ui/checkbox";
-import { createProductDiscount } from "@/actions/promotions";
+import { createProductDiscount, updateProductDiscount } from "@/actions/promotions";
 
 interface ProductWithVariantsOptions extends SellerProductVariants {
   sellerProductVariantsOptions: SellerProductVariantsOptions[];
@@ -58,6 +58,10 @@ interface ProductWithVariants extends SellerProduct {
   sellerProductVariants: ProductWithVariantsOptions[];
 }
 
+interface DiscountsWithProducts extends SellerDiscount {
+  products: SellerProduct[];
+}
+
 const ProductDiscountForm = ({
   sellerId,
   initialData,
@@ -65,7 +69,7 @@ const ProductDiscountForm = ({
   categories,
 }: {
   sellerId: string;
-  initialData: SellerDiscount | null;
+  initialData: DiscountsWithProducts | null;
   products: ProductWithVariants[];
   categories: SubCategory[];
 }) => {
@@ -79,6 +83,18 @@ const ProductDiscountForm = ({
   const [selectedForBatchDelete, setSelectedForBatchDelete] = React.useState<
     string[]
   >([]);
+
+  console.log("PRODUCTS", initialData?.products);
+
+  // Initialize selectedProducts with initialData products
+  React.useEffect(() => {
+    if (initialData?.products) {
+      const initialProducts = products.filter((product) =>
+        initialData.products.some((p) => p.id === product.id)
+      );
+      setSelectedProducts(initialProducts);
+    }
+  }, [initialData, products]);
 
   const handleDelete = (id: string) => {
     setSelectedProducts((prev) => prev.filter((p) => p.id !== id));
@@ -102,12 +118,16 @@ const ProductDiscountForm = ({
   const form = useForm<z.infer<typeof ProductDiscountValidators>>({
     resolver: zodResolver(ProductDiscountValidators),
     defaultValues: {
-      name: "",
-      startPeriod: undefined,
-      endPeriod: undefined,
-      type: "",
-      products: [],
-      value: 0,
+      name: initialData?.discount || "",
+      startPeriod: initialData?.startDate
+        ? new Date(initialData.startDate)
+        : undefined,
+      endPeriod: initialData?.endDate
+        ? new Date(initialData.endDate)
+        : undefined,
+      type: initialData?.type || "",
+      products: initialData?.products.map((product) => product.id) || [],
+      value: initialData?.value || 0,
     },
   });
 
@@ -127,12 +147,22 @@ const ProductDiscountForm = ({
       products: selectedProducts,
     };
     try {
-      const res = await createProductDiscount(data, sellerId);
-      if (res.success) {
-        toast.success(res.success);
-        router.push(`/seller/${sellerId}/promotions/discounts`);
+      if (initialData) {
+        const res = await updateProductDiscount(data, sellerId, initialData.id);
+        if (res.success) {
+          toast.success(res.success);
+          router.push(`/seller/${sellerId}/promotions/discounts`);
+        } else {
+          toast.error(res.error);
+        }
       } else {
-        toast.error(res.error);
+        const res = await createProductDiscount(data, sellerId);
+        if (res.success) {
+          toast.success(res.success);
+          router.push(`/seller/${sellerId}/promotions/discounts`);
+        } else {
+          toast.error(res.error);
+        }
       }
     } catch (error) {
       console.error(error);
@@ -162,7 +192,7 @@ const ProductDiscountForm = ({
       />
       <div className="mt-7">
         <Form {...form}>
-          <form autoComplete='off' onSubmit={form.handleSubmit(onSubmit)}>
+          <form autoComplete="off" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="bg-white shadow-md rounded-lg p-4 border">
               <h1 className="font-semibold text-lg mb-4">Basic information</h1>
               <div className="space-y-5">
@@ -199,7 +229,7 @@ const ProductDiscountForm = ({
                               <TooltipTrigger type="button">
                                 <CircleHelp className="w-4 h-4 cursor-pointer" />
                               </TooltipTrigger>
-                              <TooltipContent className='w-60'>
+                              <TooltipContent className="w-60">
                                 <p>
                                   This is a smart input field, if you type
                                   &rsquo;tomorrow at 3pm&rsquo; it will
@@ -234,7 +264,7 @@ const ProductDiscountForm = ({
                               <TooltipTrigger type="button">
                                 <CircleHelp className="w-4 h-4 cursor-pointer" />
                               </TooltipTrigger>
-                              <TooltipContent className='w-60'>
+                              <TooltipContent className="w-60">
                                 <p>
                                   This is a smart input field, if you type
                                   &rsquo;one week from now&rsquo; it will
@@ -390,7 +420,7 @@ const ProductDiscountForm = ({
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {products.map((product) => {
+                        {selectedProducts.map((product) => {
                           // Flatten all options to find the minimum price but exclude the zero prices
                           const lowestPrice =
                             product.sellerProductVariants.reduce(

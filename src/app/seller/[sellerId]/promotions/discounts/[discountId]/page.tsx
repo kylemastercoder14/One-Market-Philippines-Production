@@ -14,6 +14,9 @@ const DiscountId = async (props: {
     where: {
       id: params.discountId,
     },
+    include: {
+      products: true
+    }
   });
   const products = await db.sellerProduct.findMany({
     where: {

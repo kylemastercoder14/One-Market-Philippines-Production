@@ -1,12 +1,15 @@
 import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import db from "@/lib/db";
 
 export async function GET(
-  req: Request,
-  { params }: { params: { categoryId: string } }
+  req: NextRequest,
+  context: { params: { categoryId: string } }
 ) {
   try {
-    if (!params.categoryId) {
+    const { categoryId } = context.params;
+
+    if (!categoryId) {
       return new NextResponse("Category ID is required", { status: 400 });
     }
 
@@ -15,7 +18,7 @@ export async function GET(
         name: "asc",
       },
       where: {
-        categorySlug: params.categoryId,
+        categorySlug: categoryId,
       },
     });
 

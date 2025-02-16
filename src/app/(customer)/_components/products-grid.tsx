@@ -189,14 +189,13 @@ const ProductsGrid = () => {
     <div className="mt-10 grid md:grid-cols-5 grid-cols-1 gap-5">
       {data.map((product, index) => (
         <ProductCard
+        href='/product/slug'
           slug={product.slug}
           key={index}
           title={product.title}
           image={product.image}
-          price={product.price}
           originalPrice={product.originalPrice}
           sold={product.sold}
-          discount={product.discount}
           ratingCount={product.ratingCount}
         />
       ))}

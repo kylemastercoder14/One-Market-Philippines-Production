@@ -35,7 +35,7 @@ const OptionCheck = ({
   return (
     <label
       className={`px-6 py-4 flex items-start gap-3 shadow border rounded-lg cursor-pointer transition-all ${
-        isChecked ? "border-orange-600" : "border-gray-300"
+        isChecked ? "border-[#8D021F] dark:border-[#fa5075]" : "border-gray-300"
       }`}
     >
       <input
@@ -49,11 +49,11 @@ const OptionCheck = ({
       />
       <div
         className={`w-3 h-3 mt-1 rounded-full border-2 flex items-center justify-center ${
-          isChecked ? "border-orange-600" : "border-gray-300"
+          isChecked ? "border-[#8D021F] dark:border-[#fa5075]" : "border-gray-300"
         }`}
       >
         {isChecked && (
-          <div className="w-1 h-1 rounded-full bg-orange-600"></div>
+          <div className="w-1 h-1 rounded-full dark:bg-[#fa5075] bg-[#8D021F]"></div>
         )}
       </div>
       {children}

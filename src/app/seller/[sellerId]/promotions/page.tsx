@@ -14,7 +14,7 @@ const SellerPromotions = async (props: {
         <p className="font-semibold text-2xl">Sales Promotions</p>
       </div>
       <div className="grid md:grid-cols-2 grid-cols-1 gap-10 mt-5">
-        <div className="bg-white border flex items-start gap-3 shadow-md p-5">
+        <div className="bg-white dark:bg-zinc-900 border flex items-start gap-3 shadow-md p-5">
           <div className="relative w-[250px] h-[200px]">
             <Image
               src="/images/discount.svg"
@@ -25,7 +25,7 @@ const SellerPromotions = async (props: {
           </div>
           <div>
             <p className="text-lg font-semibold">Product Discount</p>
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-sm text-muted-foreground mt-2">
               Offer product discounts to boost sales. The cost of the discount
               is covered by the seller.
             </p>
@@ -45,7 +45,7 @@ const SellerPromotions = async (props: {
             </div>
           </div>
         </div>
-        <div className="bg-white flex items-start gap-3 border shadow-md p-5">
+        <div className="bg-white dark:bg-zinc-900 flex items-start gap-3 border shadow-md p-5">
           <div className="relative w-[600px] h-[200px]">
             <Image
               src="/images/coupons.svg"
@@ -56,7 +56,7 @@ const SellerPromotions = async (props: {
           </div>
           <div>
             <p className="text-lg font-semibold">Coupon</p>
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-sm text-muted-foreground mt-2">
               Create coupon that customers can claim through product detail
               pages, search results, and the shopping cart. The cost of the
               coupon is covered by the seller.

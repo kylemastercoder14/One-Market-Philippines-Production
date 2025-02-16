@@ -136,6 +136,7 @@ model Seller {
   sellerDiscount    SellerDiscount[]
   sellerCoupon      SellerCoupon[]
   sellerBank        SellerBank[]
+  sellerPolicies    SellerPolicies[]
 
   @@index([categorySlug])
 }
@@ -302,6 +303,20 @@ model SellerBank {
   mobileNumber String?
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
+
+  sellerId String
+  seller   Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+
+  @@index([sellerId])
+}
+
+model SellerPolicies {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  status    String   @default("Pending")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   sellerId String
   seller   Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)

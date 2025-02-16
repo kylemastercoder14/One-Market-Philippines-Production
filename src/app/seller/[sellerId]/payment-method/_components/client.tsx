@@ -16,7 +16,7 @@ const PaymentMethodClient = ({
   const router = useRouter();
   return (
     <div className="mt-5 space-y-5">
-      <div className="bg-white flex justify-between items-center border shadow-md p-5 rounded-md">
+      <div className="bg-white dark:bg-zinc-900 flex justify-between items-center border shadow-md p-5 rounded-md">
         <div className="flex items-center gap-3">
           <div className="relative w-[80px] h-[80px] border rounded-lg">
             <Image
@@ -31,7 +31,7 @@ const PaymentMethodClient = ({
               <h1 className="font-semibold">
                 Accept Credit/Debit Cards with Xendit
               </h1>
-              <Badge className="bg-green-200 text-green-600 hover:bg-green-200/80">
+              <Badge className="bg-green-200 dark:bg-green-800 text-green-600 dark:text-green-300 hover:bg-green-200/80">
                 Recommended
               </Badge>
             </div>
@@ -99,7 +99,7 @@ const PaymentMethodClient = ({
           onClick={() => {
             if (existingBank) {
               router.push(
-                `/seller/${params.sellerId}/my-account`
+                `/seller/${params.sellerId}/settings/payment-accounts`
               );
             } else {
               router.push(`/seller/${params.sellerId}/payment-method/xendit`);
@@ -109,7 +109,7 @@ const PaymentMethodClient = ({
           {existingBank ? "View Account" : "Connect"}
         </Button>
       </div>
-      <div className="bg-white flex justify-between items-center border shadow-md p-5 rounded-md">
+      <div className="bg-white dark:bg-zinc-900 flex justify-between items-center border shadow-md p-5 rounded-md">
         <div className="flex items-center gap-3">
           <div className="relative w-[80px] h-[80px] border rounded-lg">
             <Image

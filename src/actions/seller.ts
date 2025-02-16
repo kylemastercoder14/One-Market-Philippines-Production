@@ -430,7 +430,7 @@ export const verifySeller = async (
       verify ? "Approved" : "Rejected"
     );
 
-    return {success: "Seller verified successfully"};
+    return { success: "Seller verified successfully" };
   } catch (error) {
     console.error("Error verifying seller:", error);
     return { error: "An error occurred. Please try again later." };
@@ -448,7 +448,7 @@ export const sendVerificationReasonEmail = async (
     sellerId,
     storeName,
     reason,
-    verify
+    verify,
   });
 
   const transporter = nodemailer.createTransport({
@@ -474,5 +474,137 @@ export const sendVerificationReasonEmail = async (
   } catch (error) {
     console.error("Error sending notification", error);
     return { message: "An error occurred. Please try again." };
+  }
+};
+
+export const deleteProfileImage = async (sellerId: string) => {
+  try {
+    await db.seller.update({
+      where: {
+        id: sellerId,
+      },
+      data: {
+        image: null,
+      },
+    });
+
+    return { success: "Profile image deleted successfully" };
+  } catch (error) {
+    console.error("Error deleting profile image:", error);
+    return { error: "An error occurred. Please try again later." };
+  }
+};
+
+export const updateProfileInformation = async (
+  data: {
+    givenName: string;
+    familyName: string;
+    nationality: string;
+    profileImage?: string;
+  },
+  sellerId: string,
+  addressId: string
+) => {
+  try {
+    await db.seller.update({
+      where: {
+        id: sellerId,
+      },
+      data: {
+        givenName: data.givenName,
+        familyName: data.familyName,
+        sellerAddress: {
+          update: {
+            data: {
+              nationality: data.nationality,
+            },
+            where: {
+              id: addressId,
+            },
+          },
+        },
+        image: data.profileImage,
+      },
+    });
+
+    return { success: "Profile information updated successfully" };
+  } catch (error) {
+    console.error("Error updating profile information:", error);
+    return { error: "An error occurred. Please try again later." };
+  }
+};
+
+export const createPolicies = async (
+  policies: { title: string; content: string }[],
+  sellerId?: string
+) => {
+  if (!policies || policies.length === 0) {
+    return { error: "At least one policy is required" };
+  }
+
+  try {
+    for (const policy of policies) {
+      await db.sellerPolicies.create({
+        data: {
+          title: policy.title,
+          content: policy.content,
+          sellerId: sellerId || "",
+        },
+      });
+    }
+
+    return { success: "Policies added successfully" };
+  } catch (error) {
+    console.error(error);
+    return { error: "Something went wrong. Please try again" };
+  }
+};
+
+export const updatePolicies = async (
+  policies: { title: string; content: string }[],
+  sellerId: string
+) => {
+  if (!policies || policies.length === 0) {
+    return { error: "At least one policy is required" };
+  }
+
+  try {
+    // Delete existing policies for the seller
+    await db.sellerPolicies.deleteMany({
+      where: {
+        sellerId: sellerId,
+      },
+    });
+
+    // Create new policies
+    for (const policy of policies) {
+      await db.sellerPolicies.create({
+        data: {
+          title: policy.title,
+          content: policy.content,
+          sellerId: sellerId,
+        },
+      });
+    }
+
+    return { success: "Policies updated successfully" };
+  } catch (error) {
+    console.error(error);
+    return { error: "Something went wrong. Please try again" };
+  }
+};
+
+export const deletePolicy = async (policyId: string) => {
+  try {
+    await db.sellerPolicies.delete({
+      where: {
+        id: policyId,
+      },
+    });
+
+    return { success: "Policy deleted successfully" };
+  } catch (error) {
+    console.error(error);
+    return { error: "Something went wrong. Please try again" };
   }
 };

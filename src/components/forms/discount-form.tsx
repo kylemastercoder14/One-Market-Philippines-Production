@@ -193,7 +193,7 @@ const ProductDiscountForm = ({
       <div className="mt-7">
         <Form {...form}>
           <form autoComplete="off" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="bg-white shadow-md rounded-lg p-4 border">
+            <div className="bg-white dark:bg-zinc-900 shadow-md rounded-lg p-4 border">
               <h1 className="font-semibold text-lg mb-4">Basic information</h1>
               <div className="space-y-5">
                 <FormField
@@ -362,7 +362,7 @@ const ProductDiscountForm = ({
                 </div>
               </div>
             </div>
-            <div className="bg-white shadow-md rounded-lg p-4 border mt-7">
+            <div className="bg-white dark:bg-zinc-900 shadow-md rounded-lg p-4 border mt-7">
               <h1 className="font-semibold text-lg">Products</h1>
               <p className="text-muted-foreground">
                 Select products and set promotional prices
@@ -372,7 +372,7 @@ const ProductDiscountForm = ({
                 onClick={() => setProductModal(true)}
                 type="button"
                 variant="outline"
-                className="mt-3 border-orange-600 text-orange-600 hover:text-orange-600/80 hover:bg-orange-100/60"
+                className="mt-3 border-orange-600 bg-transparent hover:bg-transparent text-orange-600 hover:text-orange-600/80"
               >
                 Select Products
               </Button>

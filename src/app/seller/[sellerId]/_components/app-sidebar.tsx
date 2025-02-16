@@ -7,7 +7,6 @@ import {
   LayoutDashboard,
   Megaphone,
   MessageCircleQuestion,
-  Settings,
   ShoppingBag,
   Users,
   Wallet2,
@@ -77,11 +76,6 @@ export function AppSidebar({
         title: "Payment Method",
         url: `/seller/${params.sellerId}/payment-method`,
         icon: Wallet2,
-      },
-      {
-        title: "Settings",
-        url: `/seller/${params.sellerId}/settings`,
-        icon: Settings,
       },
       {
         title: "Help Center",

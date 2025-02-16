@@ -27,3 +27,17 @@ export const formatTime = (time: number) => {
   const seconds = (time % 60).toString().padStart(2, "0");
   return `${hours}:${minutes}:${seconds}`;
 };
+
+export const maskNumber = (number: string, type: string) => {
+  if (!number) return "";
+
+  if (type === "Bank") {
+    // Mask all digits except the last 4 for card numbers
+    return number.replace(/\d(?=\d{4})/g, "*");
+  } else if (type === "EWallet") {
+    // Mask all digits except the last 2 for mobile numbers
+    return number.replace(/\d(?=\d{2})/g, "*");
+  }
+
+  return number; // Return the original number if no type matches
+};

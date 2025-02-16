@@ -52,13 +52,13 @@ const AddBankAccount = () => {
 
   async function onSubmit(values: z.infer<typeof BankAccountValidators>) {
     try {
-        const res = await createPaymentMethod(values, params.sellerId as string);
-        if (res.success) {
-          toast.success(res.success);
-          router.push(`/seller/${params.sellerId}/payment-method`);
-        } else {
-          toast.error(res.error);
-        }
+      const res = await createPaymentMethod(values, params.sellerId as string);
+      if (res.success) {
+        toast.success(res.success);
+        router.push(`/seller/${params.sellerId}/payment-method`);
+      } else {
+        toast.error(res.error);
+      }
     } catch (error) {
       console.error(error);
       toast.error("Failed to create coupon");
@@ -92,7 +92,7 @@ const AddBankAccount = () => {
         isOpen={alertOpen}
         onClose={() => setAlertOpen(false)}
         onConfirm={() =>
-          router.push(`/seller/${params.sellerId}/payment-method`)
+          router.push(`/seller/${params.sellerId}/settings/payment-accounts`)
         }
         title="Discard your changes?"
         description="
@@ -262,11 +262,14 @@ const AddBankAccount = () => {
                               {...field}
                               placeholder="4000 0000 0000 1091"
                               onChange={(e) => {
-                                let value = e.target.value
+                                const value = e.target.value
                                   .replace(/\D/g, "")
-                                  .slice(0, 16); // Allow only digits, limit to 16
-                                value = value.replace(/(\d{4})/g, "$1 ").trim(); // Format as "XXXX XXXX XXXX XXXX"
-                                field.onChange(value);
+                                  .slice(0, 16); // Remove non-digits and limit to 16
+                                const formattedValue = value
+                                  .replace(/(\d{4})/g, "$1 ")
+                                  .trim(); // Format as "XXXX XXXX XXXX XXXX"
+                                field.onChange(value); // Store raw value (without spaces) in form state
+                                e.target.value = formattedValue; // Display formatted value in the input field
                               }}
                             />
                           </FormControl>
@@ -445,7 +448,9 @@ const AddBankAccount = () => {
               >
                 Cancel
               </Button>
-              <Button type="submit" disabled={isSubmitting}>Submit</Button>
+              <Button type="submit" disabled={isSubmitting}>
+                Submit
+              </Button>
             </div>
           </form>
         </Form>

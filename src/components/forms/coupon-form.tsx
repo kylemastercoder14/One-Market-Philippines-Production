@@ -98,7 +98,7 @@ const CouponForm = ({
       <div className="mt-7">
         <Form {...form}>
           <form autoComplete="off" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="bg-white shadow-md rounded-lg p-4 border">
+            <div className="bg-white dark:bg-zinc-900 shadow-md rounded-lg p-4 border">
               <h1 className="font-semibold text-lg mb-4">Basic information</h1>
               <div className="space-y-5">
                 <FormField
@@ -269,7 +269,7 @@ const CouponForm = ({
                 </div>
               </div>
             </div>
-            <div className="bg-white shadow-md rounded-lg p-4 border mt-5">
+            <div className="bg-white dark:bg-zinc-900 shadow-md rounded-lg p-4 border mt-5">
               <h1 className="font-semibold text-lg mb-4">Coupon settings</h1>
               <div className="space-y-5">
                 <FormField
@@ -295,7 +295,7 @@ const CouponForm = ({
                                       From: {sellerName}
                                     </p>
                                     <p
-                                      className={`text-xl ${form.watch("type") === "Money off" ? "text-orange-600" : "text-zinc-500"} font-semibold mt-1`}
+                                      className={`text-xl ${form.watch("type") === "Money off" ? "text-[#8D021F] dark:text-[#fa5075]" : "text-zinc-500"} font-semibold mt-1`}
                                     >
                                       ₱{form.watch("discountAmount")} off
                                     </p>
@@ -313,7 +313,7 @@ const CouponForm = ({
                                   <Button
                                     size="sm"
                                     type="button"
-                                    className={`${form.watch("type") === "Money off" ? "bg-orange-600" : "bg-zinc-400 hover:bg-zinc-400"}`}
+                                    className={`${form.watch("type") === "Money off" ? "bg-[#8D021F] dark:bg-[#fa5075]" : "bg-zinc-400 hover:bg-zinc-400"}`}
                                   >
                                     Claim
                                   </Button>
@@ -334,7 +334,7 @@ const CouponForm = ({
                                       From: {sellerName}
                                     </p>
                                     <p
-                                      className={`text-xl ${form.watch("type") === "Money off (min.spend)" ? "text-orange-600" : "text-zinc-500"} font-semibold mt-1`}
+                                      className={`text-xl ${form.watch("type") === "Money off (min.spend)" ? "text-[#8D021F] dark:text-[#fa5075]" : "text-zinc-500"} font-semibold mt-1`}
                                     >
                                       ₱{form.watch("discountAmount")} off orders
                                       over ₱{form.watch("minimumSpend")}
@@ -353,7 +353,7 @@ const CouponForm = ({
                                   <Button
                                     size="sm"
                                     type="button"
-                                    className={`${form.watch("type") === "Money off (min.spend)" ? "bg-orange-600" : "bg-zinc-400 hover:bg-zinc-400"}`}
+                                    className={`${form.watch("type") === "Money off (min.spend)" ? "bg-[#8D021F] dark:bg-[#fa5075]" : "bg-zinc-400 hover:bg-zinc-400"}`}
                                   >
                                     Claim
                                   </Button>

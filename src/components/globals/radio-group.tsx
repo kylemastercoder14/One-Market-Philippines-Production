@@ -33,7 +33,7 @@ const OptionRadio = ({
   return (
     <label
       className={`px-6 py-4 flex items-start gap-3 shadow border rounded-lg cursor-pointer transition-all ${
-        selectedValue === value ? "border-[#8D021F]" : "border-gray-300"
+        selectedValue === value ? "border-[#8D021F] dark:border-[#fa5075]" : "border-gray-300"
       }`}
     >
       <input
@@ -47,11 +47,11 @@ const OptionRadio = ({
       />
       <div
         className={`w-3 h-3 mt-1 rounded-full border-2 flex items-center justify-center ${
-          selectedValue === value ? "border-[#8D021F]" : "border-gray-300"
+          selectedValue === value ? "border-[#8D021F] dark:border-[#fa5075]" : "border-gray-300"
         }`}
       >
         {selectedValue === value && (
-          <div className="w-1 h-1 rounded-full bg-[#8D021F]"></div>
+          <div className="w-1 h-1 rounded-full dark:bg-[#fa5075] bg-[#8D021F]"></div>
         )}
       </div>
       {children}

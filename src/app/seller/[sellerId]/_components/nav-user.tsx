@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronsUpDown, LogOut, Sparkles } from "lucide-react";
+import { ChevronsUpDown, LogOut, Settings, Sparkles } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -89,7 +89,15 @@ export function NavUser({ user }: { user: Seller }) {
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
-                <DropdownMenuItem onClick={() => router.push(`/seller/${user.id}/subscription`)}>
+                <DropdownMenuItem
+                  onClick={() => router.push(`/seller/${user.id}/settings`)}
+                >
+                  <Settings />
+                  Settings
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => router.push(`/seller/${user.id}/subscription`)}
+                >
                   <Sparkles />
                   Subscription
                 </DropdownMenuItem>

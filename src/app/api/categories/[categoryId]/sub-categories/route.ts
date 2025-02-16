@@ -2,12 +2,9 @@ import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import db from "@/lib/db";
 
-export async function GET(
-  req: NextRequest,
-  context: { params: { categoryId: string } }
-) {
+export async function GET(req: NextRequest) {
   try {
-    const { categoryId } = context.params;
+    const categoryId = req.nextUrl.pathname.split("/").pop();
 
     if (!categoryId) {
       return new NextResponse("Category ID is required", { status: 400 });

@@ -194,7 +194,7 @@ const ProductsGrid = () => {
           key={index}
           title={product.title}
           image={product.image}
-          originalPrice={product.originalPrice}
+          originalPrice={product.originalPrice.toString()}
           sold={product.sold}
           ratingCount={product.ratingCount}
         />

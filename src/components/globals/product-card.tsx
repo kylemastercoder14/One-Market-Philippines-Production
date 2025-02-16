@@ -21,7 +21,7 @@ const ProductCard = ({
   title: string;
   image: string;
   slug: string;
-  originalPrice: number;
+  originalPrice: string;
   sold?: number;
   ratingCount?: number;
   time?: number;

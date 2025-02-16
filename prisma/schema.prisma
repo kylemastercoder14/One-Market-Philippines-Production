@@ -108,6 +108,7 @@ model Seller {
   id                     String        @id @default(cuid())
   name                   String?
   email                  String
+  image                  String?
   password               String?
   type                   String?
   dti                    String?

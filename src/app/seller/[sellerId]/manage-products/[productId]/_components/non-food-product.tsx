@@ -34,8 +34,7 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
-import useProduct from "@/hooks/use-product";
-import { createNonFoodProduct, updateNonFoodProduct } from "@/actions/product";
+import { createNonFoodProductWithoutPrice, createNonFoodProductWithPrice, updateNonFoodProduct } from "@/actions/product";
 import SuggestCategoryForm from '@/components/forms/suggest-category-form';
 
 const NonFoodProductForm = ({
@@ -47,7 +46,6 @@ const NonFoodProductForm = ({
   sellerId: string;
   initialData: SellerProduct | null;
 }) => {
-  const addProductToLocalStorage = useProduct((state) => state.addItem);
   const [isAlertOpen, setIsAlertOpen] = React.useState(false);
   const router = useRouter();
 
@@ -93,32 +91,6 @@ const NonFoodProductForm = ({
     form.setValue("slug", slug, { shouldValidate: true });
   }, [nameValue, form]);
 
-  const handleAddProductToStorage = (
-    values: z.infer<typeof NonFoodProductValidators>
-  ) => {
-    addProductToLocalStorage({
-      name: values.title,
-      slug: values.slug || "",
-      description: values.description,
-      status: values.status,
-      tags: values.tags,
-      category: values.category,
-      images:
-        values.media?.filter(
-          (file): file is string => typeof file === "string"
-        ) || [],
-      brand: values.brand,
-      materials: values.materials,
-      weight: values.weight,
-      height: values.height,
-      price: values.price,
-      sku: values.sku,
-      warrantyPeriod: values.warrantyPeriod,
-      warrantyPolicy: values.warrantyPolicy,
-      sellerId,
-    });
-  };
-
   async function onSubmit(values: z.infer<typeof NonFoodProductValidators>) {
     setIsAlertOpen(false);
     try {
@@ -136,12 +108,18 @@ const NonFoodProductForm = ({
         }
       } else {
         if (values.isVariant) {
-          handleAddProductToStorage(values);
-        } else {
-          const res = await createNonFoodProduct(values, sellerId);
+          const res = await createNonFoodProductWithoutPrice(values, sellerId);
           if (res.success) {
             toast.success(res.success);
             router.push(`/seller/${sellerId}/manage-products`);
+          } else {
+            toast.error(res.error);
+          }
+        } else {
+          const res = await createNonFoodProductWithPrice(values, sellerId);
+          if (res.success) {
+            toast.success(res.success);
+            router.push(`/seller/${sellerId}/manage-products/create/${values.slug}`);
           } else {
             toast.error(res.error);
           }

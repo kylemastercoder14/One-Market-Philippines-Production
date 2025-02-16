@@ -4,6 +4,13 @@ import React, { useState } from "react";
 import useProduct from "@/hooks/use-product";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import VariantImageUpload from "@/components/globals/variant-image-upload";
 import { Separator } from "@/components/ui/separator";
@@ -67,7 +74,7 @@ const VariantForm = ({
   const handleAddOption = (variantIndex: number) => {
     const updatedVariants = [...variants];
     updatedVariants[variantIndex].options.push({
-      id: "", // New options have an empty ID
+      id: "",
       name: "",
       price: 0,
       stock: 0,
@@ -133,8 +140,8 @@ const VariantForm = ({
         isOpen={open}
         onClose={() => setOpen(false)}
         onConfirm={handleCancel}
-        title='Are you sure you want to cancel?'
-        description='This action cannot be undone. If you proceed, all changes will be lost.'
+        title="Are you sure you want to cancel?"
+        description="This action cannot be undone. If you proceed, all changes will be lost."
       />
       <div>
         <form
@@ -150,16 +157,26 @@ const VariantForm = ({
             >
               <div className="space-y-2 mb-4">
                 <Label>Variant Name</Label>
-                <Input
+                <Select
                   disabled={loading}
-                  value={variant.name}
-                  onChange={(e) => {
+                  defaultValue={variant.name}
+                  onValueChange={(value) => {
                     const updatedVariants = [...variants];
-                    updatedVariants[variantIndex].name = e.target.value;
+                    updatedVariants[variantIndex].name = value;
                     setVariants(updatedVariants);
                   }}
-                  placeholder="e.g. 'Color, Size, Theme'"
-                />
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a variant name" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Color">Color</SelectItem>
+                    <SelectItem value="Size">Size</SelectItem>
+                    <SelectItem value="Theme">Theme</SelectItem>
+                    <SelectItem value="Occasion">Occasion</SelectItem>
+                    <SelectItem value="Season">Season</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               {variant.options.map((option, optionIndex) => (
                 <div key={optionIndex} className="space-y-3 mb-3">
@@ -275,10 +292,10 @@ const VariantForm = ({
             </Button>
             <Button
               onClick={() => {
-                if(initialVariants) {
-                  router.back()
+                if (initialVariants) {
+                  router.back();
                 } else {
-                  setOpen(true)
+                  setOpen(true);
                 }
               }}
               disabled={loading}

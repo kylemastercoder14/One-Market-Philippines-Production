@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import {
   Seller,
   SellerProduct,
@@ -51,9 +50,6 @@ const StoreClient = ({
     name: "",
   });
   const fileName = (url: string) => url.split("/").pop();
-  const image =
-    "https://img.kwcdn.com/supplier-public-tag/1f13e183980/58186005-2bcb-4c92-97c0-814cf3cbf508_300x300.jpeg?imageView2/2/w/800/q/70/format/webp";
-
   const onVerify = async () => {
     setLoading(true);
     try {
@@ -145,7 +141,7 @@ const StoreClient = ({
       <div className="flex items-center py-2 justify-between">
         <div className="flex items-center gap-3">
           <Image
-            src={image}
+            src={seller?.image || ""}
             alt={seller?.name || ""}
             width={60}
             height={60}
@@ -491,6 +487,8 @@ const StoreClient = ({
                   : "Price unavailable";
               return (
                 <ProductCard
+                  href={`/admin/sellers/${seller?.id}/products/${product.id}`}
+                  key={product.id}
                   title={product.name}
                   image={product.images[0]}
                   originalPrice={

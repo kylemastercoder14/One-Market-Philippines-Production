@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
@@ -160,7 +161,10 @@ export const updateNonFoodProductWithVariants = async (
   }
 };
 
-export const createNonFoodProduct = async (values: any, sellerId: string) => {
+export const createNonFoodProductWithPrice = async (
+  values: any,
+  sellerId: string
+) => {
   try {
     // Destructure product data
     const {
@@ -207,6 +211,72 @@ export const createNonFoodProduct = async (values: any, sellerId: string) => {
         warrantyPeriod,
         warrantyPolicy,
         sellerId,
+      },
+    });
+
+    return {
+      success: "Product created successfully",
+      product: createdProduct,
+    };
+  } catch (error: any) {
+    console.error("Error creating product:", error.message, error.stack);
+    return {
+      error: error instanceof Error ? error.message : "Unknown error occurred",
+    };
+  }
+};
+
+export const createNonFoodProductWithoutPrice = async (
+  values: any,
+  sellerId: string
+) => {
+  try {
+    // Destructure product data
+    const {
+      title,
+      slug,
+      description,
+      tags,
+      category,
+      media,
+      brand,
+      materials,
+      weight,
+      height,
+      sku,
+      warrantyPeriod,
+      warrantyPolicy,
+      isVariant,
+    } = values;
+
+    // Check for an existing product with the same name and sellerId
+    const existingProduct = await db.sellerProduct.findFirst({
+      where: { name: title, sellerId },
+    });
+
+    if (existingProduct) {
+      return { error: "Product with this name already exists" };
+    }
+
+    // Create the main product
+    const createdProduct = await db.sellerProduct.create({
+      data: {
+        name: title,
+        slug,
+        description,
+        tags,
+        category,
+        images: media,
+        price: 0,
+        brand,
+        materials,
+        weight,
+        height,
+        sku,
+        warrantyPeriod,
+        warrantyPolicy,
+        sellerId,
+        isVariant,
       },
     });
 
@@ -320,20 +390,24 @@ export const deleteProduct = async (productId: string) => {
   }
 };
 
-export const updateProductStatus = async (productId: string, sellerId: string, status: string, reason: string) => {
-  if(!status) {
+export const updateProductStatus = async (
+  productId: string,
+  sellerId: string,
+  status: string,
+  reason: string
+) => {
+  if (!status) {
     return { error: "Status is required" };
   }
 
   try {
-
     const existingSeller = await db.seller.findUnique({
       where: {
         id: sellerId,
       },
     });
 
-    if(!existingSeller) {
+    if (!existingSeller) {
       return { error: "Seller not found" };
     }
 
@@ -344,9 +418,9 @@ export const updateProductStatus = async (productId: string, sellerId: string, s
         sellerProductVariants: {
           include: {
             sellerProductVariantsOptions: true,
-          }
-        }
-      }
+          },
+        },
+      },
     });
 
     if (!existingProduct) {
@@ -361,10 +435,15 @@ export const updateProductStatus = async (productId: string, sellerId: string, s
       where: {
         id: productId,
       },
-      
     });
 
-    await sendStatusProductEmail(existingSeller.name as string, existingSeller.email, status, existingProduct.images[0], existingProduct.name);
+    await sendStatusProductEmail(
+      existingSeller.name as string,
+      existingSeller.email,
+      status,
+      existingProduct.images[0],
+      existingProduct.name
+    );
 
     return {
       success: "Product status updated successfully",
@@ -375,14 +454,14 @@ export const updateProductStatus = async (productId: string, sellerId: string, s
       error: error instanceof Error ? error.message : "Unknown error occurred",
     };
   }
-}
+};
 
 export const sendStatusProductEmail = async (
   storeName: string,
   email: string,
   status: string,
   productImage: string,
-  productName: string,
+  productName: string
 ) => {
   const htmlContent = await ProductStatusHTML({
     status,

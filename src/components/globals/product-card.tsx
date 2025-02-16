@@ -12,11 +12,11 @@ const ProductCard = ({
   title,
   image,
   originalPrice,
-  slug,
   sold,
   ratingCount,
   time,
   className,
+  href
 }: {
   title: string;
   image: string;
@@ -27,10 +27,11 @@ const ProductCard = ({
   time?: number;
   initialCountdown?: number;
   className?: string;
+  href: string;
 }) => {
   const router = useRouter();
   return (
-    <div className="p-1 cursor-pointer" onClick={() => router.push(`/${slug}`)}>
+    <div className="p-1 cursor-pointer" onClick={() => router.push(href)}>
       <Card className="border-0 shadow-none">
         <CardContent className="p-0">
           <div

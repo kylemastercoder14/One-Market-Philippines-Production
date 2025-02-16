@@ -98,13 +98,12 @@ const FlashDealsSection = () => {
               className="pl-1 md:basis-1/2 lg:basis-1/5"
             >
               <ProductCard
+                href="/product/slug"
                 slug={product.slug}
                 title={product.title}
                 image={product.image}
-                price={product.price}
                 originalPrice={product.originalPrice}
                 sold={product.sold}
-                discount={product.discount}
                 ratingCount={product.ratingCount}
                 time={timers[index]}
                 initialCountdown={initialCountdown}

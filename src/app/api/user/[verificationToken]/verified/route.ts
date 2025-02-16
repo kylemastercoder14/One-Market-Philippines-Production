@@ -1,22 +1,20 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getVerificationTokenByToken } from "@/data/verification-token";
 import db from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
 
-export async function POST(
-  req: Request,
-  { params }: { params: { verificationToken: string } }
-) {
+export async function POST(req: NextRequest) {
+  const verificationToken = req.nextUrl.pathname.split("/").pop();
   try {
     const checkVerificationToken = await getVerificationTokenByToken(
-      params.verificationToken
+      verificationToken as string
     );
 
     if (checkVerificationToken === null) {
       return new NextResponse("Token does not exist", { status: 401 });
     }
 
-    if (params.verificationToken !== checkVerificationToken?.token) {
+    if (verificationToken !== checkVerificationToken?.token) {
       return new NextResponse("Invalid verification token", { status: 401 });
     }
 

@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ChevronsUpDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { CellAction } from './cell-action';
 
 export type ProductDiscountColumn = {
   id: string;
@@ -87,6 +88,15 @@ export const columns: ColumnDef<ProductDiscountColumn>[] = [
           ></div>
           <span>{row.original.discountStatus}</span>
         </div>
+      );
+    },
+  },
+  {
+    accessorKey: "actions",
+    header: "",
+    cell: ({ row }) => {
+      return (
+        <CellAction id={row.original.id} />
       );
     },
   },

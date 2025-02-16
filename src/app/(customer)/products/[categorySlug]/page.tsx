@@ -8,11 +8,12 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-const CategoryPage = async ({
-  params,
-}: {
-  params: { categorySlug: string };
+const CategoryPage = async (props: {
+  params: Promise<{
+    categorySlug: string;
+  }>;
 }) => {
+  const params = await props.params;
   // Replace hyphens with spaces
   const formattedCategory = params.categorySlug
     ? params.categorySlug.replace(/-/g, " ")

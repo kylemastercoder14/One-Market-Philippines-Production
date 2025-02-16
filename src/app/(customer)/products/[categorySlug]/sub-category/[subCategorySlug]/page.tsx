@@ -8,11 +8,13 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-const SubCategoryPage = async ({
-  params,
-}: {
-  params: { categorySlug: string; subCategorySlug: string };
+const SubCategoryPage = async (props: {
+  params: Promise<{
+    categorySlug: string;
+    subCategorySlug: string;
+  }>;
 }) => {
+  const params = await props.params;
   // Replace hyphens with spaces and decode URL-encoded characters
   const formattedCategory = params.categorySlug
     ? decodeURIComponent(params.categorySlug.replace(/-/g, " "))

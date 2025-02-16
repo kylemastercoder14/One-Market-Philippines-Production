@@ -1,49 +1,40 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+// src/app/api/callbacks/route.ts
 
-import type { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 import { getPaymentStatus } from "@/lib/xendit";
-
-interface CallbackResponse {
-  success: boolean;
-  error?: string;
-  message?: string;
-}
 
 /**
  * Handles payment status callbacks from Xendit.
- * @param req - The Next.js API request object.
- * @param res - The Next.js API response object.
+ * @param request - The Next.js request object.
+ * @returns A NextResponse object with the result.
  */
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<CallbackResponse>
-) {
-  if (req.method !== "POST") {
-    return res
-      .status(405)
-      .json({ success: false, message: "Method not allowed" });
-  }
-
-  const { id } = req.body as { id: string };
-
-  if (!id) {
-    return res
-      .status(400)
-      .json({ success: false, error: "Missing payment ID" });
-  }
-
+export async function POST(request: Request) {
   try {
+    const body = await request.json();
+    const { id } = body as { id: string };
+
+    if (!id) {
+      return NextResponse.json(
+        { success: false, error: "Missing payment ID" },
+        { status: 400 }
+      );
+    }
+
     const paymentStatus = await getPaymentStatus(id);
 
     // TODO: Update your database or process the payment status
     console.log("Payment status:", paymentStatus);
 
-    return res.status(200).json({ success: true });
+    return NextResponse.json({ success: true }, { status: 200 });
   } catch (error: any) {
     console.error("Error handling callback:", error);
-    return res.status(500).json({
-      success: false,
-      error: error.response?.data?.message || "Internal Server Error",
-    });
+    return NextResponse.json(
+      {
+        success: false,
+        error: error.response?.data?.message || "Internal Server Error",
+      },
+      { status: 500 }
+    );
   }
 }

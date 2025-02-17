@@ -153,7 +153,7 @@ const VariantForm = ({
           {variants.map((variant, variantIndex) => (
             <div
               key={variantIndex}
-              className="bg-white border shadow rounded-md p-3 mt-4"
+              className="bg-white dark:bg-zinc-900 border shadow rounded-md p-3 mt-4"
             >
               <div className="space-y-2 mb-4">
                 <Label>Variant Name</Label>
@@ -175,6 +175,7 @@ const VariantForm = ({
                     <SelectItem value="Theme">Theme</SelectItem>
                     <SelectItem value="Occasion">Occasion</SelectItem>
                     <SelectItem value="Season">Season</SelectItem>
+                    <SelectItem value="Flavor">Flavor</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

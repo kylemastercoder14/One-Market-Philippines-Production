@@ -199,7 +199,7 @@ const SettingUpForm = ({ sellerId }: { sellerId: string }) => {
                 <FormLabel>Contact Person</FormLabel>
                 <FormControl>
                   <PhoneInput
-                    className={`flex h-9 ${focusOrange ? "border-orange-600" : "border-input"} w-full rounded-md border bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-orange-600 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm`}
+                    className={`flex h-9 ${focusOrange ? "dark:border-[#ff3661] border-[#8D021F]" : "border-input"} w-full rounded-md border bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:ring-1 dark:focus-visible:ring-[#ff3661] focus-visible:ring-[#8D021F] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm`}
                     placeholder="Enter the phone number"
                     onFocus={handleFocus}
                     onBlur={handleBlur}
@@ -246,7 +246,7 @@ const SettingUpForm = ({ sellerId }: { sellerId: string }) => {
         />
         <Button
           disabled={loading}
-          className="bg-orange-600 hover:bg-orange-600/80 flex ml-auto"
+          className="flex ml-auto"
         >
           Start to add products
         </Button>

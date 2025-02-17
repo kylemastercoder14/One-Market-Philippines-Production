@@ -496,7 +496,7 @@ const OnboardingComponent = ({
       </Modal>
       <Form {...form}>
         <form autoComplete='off' onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="bg-white shadow-sm rounded-md border mt-4 mb-4 py-6 px-5">
+          <div className="bg-white dark:bg-zinc-900 shadow-sm rounded-md border mt-4 mb-4 py-6 px-5">
             <p className={`text-md text-muted-foreground font-semibold`}>
               Business Type
             </p>
@@ -520,10 +520,10 @@ const OnboardingComponent = ({
                             </p>
                             <div
                               onClick={() => setDynamicModal(true)}
-                              className="text-sm mt-2 font-semibold hover:text-black text-muted-foreground flex items-center gap-2"
+                              className="text-sm mt-2 font-semibold text-muted-foreground flex items-center gap-2"
                             >
                               <span>View requirements</span>
-                              <ExternalLink className="w-4 h-4 mr-2 text-orange-600" />
+                              <ExternalLink className="w-4 h-4 mr-2 dark:text-[#ff3661] text-[#8D021F]" />
                             </div>
                           </div>
                         </BusinessType>
@@ -540,10 +540,10 @@ const OnboardingComponent = ({
                             </p>
                             <div
                               onClick={() => setDynamicModal(true)}
-                              className="text-sm mt-2 font-semibold hover:text-black text-muted-foreground flex items-center gap-2"
+                              className="text-sm mt-2 font-semibold text-muted-foreground flex items-center gap-2"
                             >
                               <span>View requirements</span>
-                              <ExternalLink className="w-4 h-4 mr-2 text-orange-600" />
+                              <ExternalLink className="w-4 h-4 mr-2 dark:text-[#ff3661] text-[#8D021F]" />
                             </div>
                           </div>
                         </BusinessType>
@@ -556,10 +556,10 @@ const OnboardingComponent = ({
                             </p>
                             <div
                               onClick={() => setDynamicModal(true)}
-                              className="text-sm mt-2 font-semibold hover:text-black text-muted-foreground flex items-center gap-2"
+                              className="text-sm mt-2 font-semibold text-muted-foreground flex items-center gap-2"
                             >
                               <span>View requirements</span>
-                              <ExternalLink className="w-4 h-4 mr-2 text-orange-600" />
+                              <ExternalLink className="w-4 h-4 mr-2 dark:text-[#ff3661] text-[#8D021F]" />
                             </div>
                           </div>
                         </BusinessType>
@@ -572,10 +572,10 @@ const OnboardingComponent = ({
                             </p>
                             <div
                               onClick={() => setDynamicModal(true)}
-                              className="text-sm mt-2 font-semibold hover:text-black text-muted-foreground flex items-center gap-2"
+                              className="text-sm mt-2 font-semibold text-muted-foreground flex items-center gap-2"
                             >
                               <span>View requirements</span>
-                              <ExternalLink className="w-4 h-4 mr-2 text-orange-600" />
+                              <ExternalLink className="w-4 h-4 mr-2 dark:text-[#ff3661] text-[#8D021F]" />
                             </div>
                           </div>
                         </BusinessType>
@@ -643,7 +643,7 @@ const OnboardingComponent = ({
               )}
             />
           </div>
-          <div className="bg-white shadow-sm rounded-md border mt-4 mb-4 p-3 flex items-center gap-6">
+          <div className="bg-white dark:bg-zinc-900 shadow-sm rounded-md border mt-4 mb-4 p-3 flex items-center gap-6">
             <Image
               alt="Store"
               src="/images/owner.png"
@@ -662,7 +662,7 @@ const OnboardingComponent = ({
             </div>
           </div>
           {form.watch("businessType") === "Individual" && (
-            <div className="bg-white shadow-sm rounded-md border mt-4 mb-4 py-6 px-5">
+            <div className="bg-white dark:bg-zinc-900 shadow-sm rounded-md border mt-4 mb-4 py-6 px-5">
               <p className="text-md text-muted-foreground font-semibold mb-2">
                 Type of Identification
               </p>
@@ -712,7 +712,7 @@ const OnboardingComponent = ({
                     onClick={() =>
                       handleViewSampleIdentity(form.watch("identityType") || "")
                     }
-                    className="font-semibold text-orange-600 cursor-pointer"
+                    className="font-semibold dark:text-[#ff3661] text-[#8D021F] cursor-pointer"
                   >
                     View Sample
                   </span>
@@ -738,7 +738,7 @@ const OnboardingComponent = ({
             </div>
           )}
           {form.watch("businessType") === "Sole-Proprietorship" && (
-            <div className="bg-white shadow-sm rounded-md border mt-4 mb-4 py-6 px-5">
+            <div className="bg-white dark:bg-zinc-900 shadow-sm rounded-md border mt-4 mb-4 py-6 px-5">
               <p className="text-md text-muted-foreground font-semibold mb-2">
                 Upload company registration document
               </p>
@@ -753,7 +753,7 @@ const OnboardingComponent = ({
                   JPEG or PDF format.
                   <span
                     onClick={() => setDtiSampleModal(true)}
-                    className="font-semibold text-orange-600 cursor-pointer"
+                    className="font-semibold dark:text-[#ff3661] text-[#8D021F] cursor-pointer"
                   >
                     View Sample
                   </span>
@@ -779,7 +779,7 @@ const OnboardingComponent = ({
             </div>
           )}
           {form.watch("businessType") === "Corporation" && (
-            <div className="bg-white shadow-sm rounded-md border mt-4 mb-4 py-6 px-5">
+            <div className="bg-white dark:bg-zinc-900 shadow-sm rounded-md border mt-4 mb-4 py-6 px-5">
               <p className="text-md text-muted-foreground font-semibold mb-2">
                 Upload company registration document
               </p>
@@ -794,7 +794,7 @@ const OnboardingComponent = ({
                   JPEG or PDF format.
                   <span
                     onClick={() => setSecSampleModal(true)}
-                    className="font-semibold text-orange-600 cursor-pointer"
+                    className="font-semibold dark:text-[#ff3661] text-[#8D021F] cursor-pointer"
                   >
                     View Sample
                   </span>
@@ -820,7 +820,7 @@ const OnboardingComponent = ({
             </div>
           )}
           {form.watch("businessType") === "Partnership" && (
-            <div className="bg-white shadow-sm rounded-md border mt-4 mb-4 py-6 px-5">
+            <div className="bg-white dark:bg-zinc-900 shadow-sm rounded-md border mt-4 mb-4 py-6 px-5">
               <p className="text-md text-muted-foreground font-semibold mb-2">
                 Upload company registration document
               </p>
@@ -835,7 +835,7 @@ const OnboardingComponent = ({
                   JPEG or PDF format.
                   <span
                     onClick={() => setSecSampleModal(true)}
-                    className="font-semibold text-orange-600 cursor-pointer"
+                    className="font-semibold dark:text-[#ff3661] text-[#8D021F] cursor-pointer"
                   >
                     View Sample
                   </span>
@@ -860,7 +860,7 @@ const OnboardingComponent = ({
               />
             </div>
           )}
-          <div className="bg-white shadow-sm rounded-md border mt-4 mb-4 py-6 px-5">
+          <div className="bg-white dark:bg-zinc-900 shadow-sm rounded-md border mt-4 mb-4 py-6 px-5">
             <p className="text-md text-muted-foreground font-semibold">
               Certificate of Registration (COR): Bureau of Internal Revenue
               (BIR) Form 2303
@@ -874,7 +874,7 @@ const OnboardingComponent = ({
                 onClick={() =>
                   window.open("https://www.bir.gov.ph/newbizreg", "_blank")
                 }
-                className="font-semibold text-orange-600 cursor-pointer"
+                className="font-semibold dark:text-[#ff3661] text-[#8D021F] cursor-pointer"
               >
                 BIR NewBizReg website
               </span>
@@ -888,7 +888,7 @@ const OnboardingComponent = ({
               profile in accordance with local regulations.{" "}
               <span
                 onClick={() => setBirSampleModal(true)}
-                className="font-semibold text-orange-600 cursor-pointer"
+                className="font-semibold dark:text-[#ff3661] text-[#8D021F] cursor-pointer"
               >
                 View Sample
               </span>
@@ -914,7 +914,7 @@ const OnboardingComponent = ({
               This is optional.
             </span>
           </div>
-          <div className="bg-white shadow-sm rounded-md border mt-4 mb-4 py-6 px-5">
+          <div className="bg-white dark:bg-zinc-900 shadow-sm rounded-md border mt-4 mb-4 py-6 px-5">
             <p className="text-md text-muted-foreground font-semibold">
               Barangay Business Permit
             </p>
@@ -932,7 +932,7 @@ const OnboardingComponent = ({
               profile in accordance with local regulations.{" "}
               <span
                 onClick={() => setBarangayPermitSampleModal(true)}
-                className="font-semibold text-orange-600 cursor-pointer"
+                className="font-semibold dark:text-[#ff3661] text-[#8D021F] cursor-pointer"
               >
                 View Sample
               </span>
@@ -955,7 +955,7 @@ const OnboardingComponent = ({
               )}
             />
           </div>
-          <div className="bg-white shadow-sm rounded-md border mt-4 mb-4 py-6 px-5">
+          <div className="bg-white dark:bg-zinc-900 shadow-sm rounded-md border mt-4 mb-4 py-6 px-5">
             <p className="text-md text-muted-foreground font-semibold">
               Additional contact information
             </p>
@@ -1051,7 +1051,6 @@ const OnboardingComponent = ({
             <Button
               disabled={loading}
               type="submit"
-              className="bg-orange-600 hover:bg-orange-600/80"
             >
               Submit
             </Button>

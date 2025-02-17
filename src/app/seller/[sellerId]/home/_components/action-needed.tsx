@@ -15,7 +15,7 @@ const ActionNeeded = ({
   returnCount: number;
 }) => {
   return (
-    <div className="w-full border bg-white rounded-md shadow-md p-5 mt-5">
+    <div className="w-full border bg-white dark:bg-zinc-900 rounded-md shadow-md p-5 mt-5">
       <h1 className="text-2xl font-semibold mb-4">Action Needed</h1>
       <div className="grid md:grid-cols-4 grid-cols-1">
         <div>

@@ -29,7 +29,7 @@ const SellerDashboard = async (props: {
     <div>
       <Modal className="p-0 max-w-4xl overflow-hidden" isOpen>
         <div className="grid md:grid-cols-5 grid-cols-1 gap-4">
-          <div className="col-span-1 p-3 relative bg-orange-600 rounded-s-md flex flex-col items-center justify-center">
+          <div className="col-span-1 p-3 overflow-hidden relative dark:bg-[#ff3661] bg-[#8D021F] rounded-s-md flex flex-col items-center justify-center">
             <div className="flex flex-col items-center justify-center gap-2">
               <Image
                 src="/images/setting-up.png"
@@ -38,7 +38,7 @@ const SellerDashboard = async (props: {
                 width={100}
                 height={100}
               />
-              <Badge className="bg-orange-400 pointer-events-none select-none px-10 hover:bg-white text-black">
+              <Badge className="dark:bg-[#ff7291] bg-[#831c33] pointer-events-none select-none px-10 hover:bg-white text-black">
                 Start
               </Badge>
             </div>

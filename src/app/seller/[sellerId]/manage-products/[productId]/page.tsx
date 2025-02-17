@@ -1,4 +1,3 @@
-
 import React from "react";
 import HeadingAction from "@/components/ui/heading-action";
 import db from "@/lib/db";
@@ -53,7 +52,13 @@ const ProductId = async (props: {
           initialData={products}
         />
       )}
-      {businessType === "Food" && <FoodProductForm />}
+      {businessType === "Food" && (
+        <FoodProductForm
+          subCategories={seller?.category?.sellerSubCategory || []}
+          sellerId={params.sellerId}
+          initialData={products}
+        />
+      )}
       {businessType === "Service" && <ServiceProductForm />}
     </div>
   );

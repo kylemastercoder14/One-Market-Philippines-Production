@@ -178,9 +178,12 @@ const RegisterForm = ({ data }: { data: AdminPolicies[] }) => {
               disabled={loading}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email Address</FormLabel>
+                  <FormLabel className="text-black dark:text-white">
+                    Email Address
+                  </FormLabel>
                   <FormControl>
                     <Input
+                      className="text-black dark:text-white"
                       placeholder="Enter your email address"
                       {...field}
                       onChange={(e) => {
@@ -204,9 +207,12 @@ const RegisterForm = ({ data }: { data: AdminPolicies[] }) => {
                 disabled={loading}
                 render={({ field }) => (
                   <FormItem className="relative">
-                    <FormLabel>Email Verification Code</FormLabel>
+                    <FormLabel className="text-black dark:text-white">
+                      Email Verification Code
+                    </FormLabel>
                     <FormControl>
                       <Input
+                        className="text-black dark:text-white"
                         placeholder="Enter the email verification code"
                         {...field}
                       />
@@ -215,7 +221,7 @@ const RegisterForm = ({ data }: { data: AdminPolicies[] }) => {
                       disabled={disableSendCode || resendTimer > 0 || loading}
                       onClick={handleSendOtp}
                       type="button"
-                      className="absolute text-orange-600 top-[26px] right-1 hover:bg-transparent font-semibold hover:text-orange-600/70"
+                      className="absolute dark:text-[#ff3661] text-[#8D021F] top-[26px] right-1 hover:bg-transparent font-semibold hover:dark:text-[#ff3661]/70 hover:text-[#8D021F]/70"
                       size="sm"
                       variant="ghost"
                     >
@@ -235,9 +241,12 @@ const RegisterForm = ({ data }: { data: AdminPolicies[] }) => {
                 disabled={loading}
                 render={({ field }) => (
                   <FormItem className="relative">
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel className="text-black dark:text-white">
+                      Password
+                    </FormLabel>
                     <FormControl>
                       <Input
+                        className="text-black dark:text-white"
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter a password"
                         {...field}
@@ -320,9 +329,12 @@ const RegisterForm = ({ data }: { data: AdminPolicies[] }) => {
               disabled={loading}
               render={({ field }) => (
                 <FormItem className="relative">
-                  <FormLabel>Confirm Password</FormLabel>
+                  <FormLabel className="text-black dark:text-white">
+                    Confirm Password
+                  </FormLabel>
                   <FormControl>
                     <Input
+                      className="text-black dark:text-white"
                       type={showPassword1 ? "text" : "password"}
                       placeholder="Confirm the password"
                       {...field}
@@ -345,30 +357,30 @@ const RegisterForm = ({ data }: { data: AdminPolicies[] }) => {
           </div>
           <Button
             disabled={loading}
-            className="mt-5 w-full mb-4 bg-orange-600 hover:bg-orange-600/80"
+            className="mt-5 w-full mb-4"
             type="submit"
           >
             Sign Up
           </Button>
-          <span className="text-sm text-muted-foreground">
+          <span className="text-sm text-black dark:text-white">
             By continuing, you agree to the{" "}
             <span
               onClick={() => setTermsOpen(true)}
-              className="cursor-pointer font-semibold hover:text-orange-600 text-zinc-700"
+              className="cursor-pointer font-semibold hover:dark:text-[#ff3661] hover:text-[#8D021F] text-zinc-700 dark:text-zinc-500"
             >
               Terms and Agreement for 1 Market Philippines
             </span>
             ,{" "}
             <span
               onClick={() => setIntellectualOpen(true)}
-              className="cursor-pointer font-semibold hover:text-orange-600 text-zinc-700"
+              className="cursor-pointer font-semibold hover:dark:text-[#ff3661] hover:text-[#8D021F] text-zinc-700 dark:text-zinc-500"
             >
               Our Intellectual Property Policy
             </span>{" "}
             and acknowledge that you have read the{" "}
             <span
               onClick={() => setPrivacyOpen(true)}
-              className="cursor-pointer font-semibold hover:text-orange-600 text-zinc-700"
+              className="cursor-pointer font-semibold hover:dark:text-[#ff3661] hover:text-[#8D021F] text-zinc-700 dark:text-zinc-500"
             >
               1 Market Philippines Shop Privacy Policy
             </span>{" "}

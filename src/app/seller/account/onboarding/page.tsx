@@ -13,7 +13,7 @@ const Onboarding = async () => {
     <>
       <div className="max-w-4xl mx-auto py-10">
         <p className="font-semibold text-2xl">Upload Documents</p>
-        <div className="bg-white shadow-sm rounded-md border mt-4 mb-4 p-3 flex items-center gap-6">
+        <div className="bg-white dark:bg-zinc-900 shadow-sm rounded-md border mt-4 mb-4 p-3 flex items-center gap-6">
           <Image alt="Store" src="/images/store.png" width={100} height={100} />
           <div>
             <p className="text-lg font-semibold">Your shop preference</p>

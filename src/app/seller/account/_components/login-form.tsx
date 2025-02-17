@@ -107,9 +107,15 @@ const LoginForm = ({ data }: { data: AdminPolicies[] }) => {
               disabled={loading}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email Address</FormLabel>
+                  <FormLabel className="text-black dark:text-white">
+                    Email Address
+                  </FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter your email address" {...field} />
+                    <Input
+                      className="text-black dark:text-white"
+                      placeholder="Enter your email address"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -122,9 +128,12 @@ const LoginForm = ({ data }: { data: AdminPolicies[] }) => {
                 disabled={loading}
                 render={({ field }) => (
                   <FormItem className="relative">
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel className="text-black dark:text-white">
+                      Password
+                    </FormLabel>
                     <FormControl>
                       <Input
+                        className="text-black dark:text-white"
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter a password"
                         {...field}
@@ -146,32 +155,28 @@ const LoginForm = ({ data }: { data: AdminPolicies[] }) => {
               />
             </div>
           </div>
-          <Button
-            disabled={loading}
-            className="mt-5 w-full mb-4 bg-orange-600 hover:bg-orange-600/80"
-            type="submit"
-          >
+          <Button disabled={loading} className="mt-5 w-full mb-4" type="submit">
             Login
           </Button>
-          <span className="text-sm text-muted-foreground">
+          <span className="text-sm text-black dark:text-white">
             By continuing, you agree to the{" "}
             <span
               onClick={() => setTermsOpen(true)}
-              className="cursor-pointer font-semibold hover:text-orange-600 text-zinc-700"
+              className="cursor-pointer font-semibold hover:dark:text-[#ff3661] hover:text-[#8D021F] text-zinc-700 dark:text-zinc-500"
             >
               Terms and Agreement for 1 Market Philippines
             </span>
             ,{" "}
             <span
               onClick={() => setIntellectualOpen(true)}
-              className="cursor-pointer font-semibold hover:text-orange-600 text-zinc-700"
+              className="cursor-pointer font-semibold hover:dark:text-[#ff3661] hover:text-[#8D021F] text-zinc-700 dark:text-zinc-500"
             >
               Our Intellectual Property Policy
             </span>{" "}
             and acknowledge that you have read the{" "}
             <span
               onClick={() => setPrivacyOpen(true)}
-              className="cursor-pointer font-semibold hover:text-orange-600 text-zinc-700"
+              className="cursor-pointer font-semibold hover:dark:text-[#ff3661] hover:text-[#8D021F] text-zinc-700 dark:text-zinc-500"
             >
               1 Market Philippines Shop Privacy Policy
             </span>{" "}

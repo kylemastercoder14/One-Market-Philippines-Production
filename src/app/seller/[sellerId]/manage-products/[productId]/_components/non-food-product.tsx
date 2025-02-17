@@ -147,7 +147,7 @@ const NonFoodProductForm = ({
         <form>
           <div className="mt-5 grid md:grid-cols-10 grid-cols-1 gap-5">
             <div className="md:col-span-7">
-              <div className="bg-white border shadow rounded md p-3 mt-4 space-y-4">
+              <div className="bg-white dark:bg-zinc-900 border shadow rounded md p-3 mt-4 space-y-4">
                 <FormField
                   control={form.control}
                   name="title"
@@ -221,7 +221,7 @@ const NonFoodProductForm = ({
                   )}
                 />
               </div>
-              <div className="bg-white border shadow rounded md p-3 mt-4 space-y-4">
+              <div className="bg-white dark:bg-zinc-900 border shadow rounded md p-3 mt-4 space-y-4">
                 <div className="grid md:grid-cols-2 grid:cols-1 gap-3">
                   <FormField
                     control={form.control}
@@ -385,7 +385,7 @@ const NonFoodProductForm = ({
                   />
                 </div>
               </div>
-              <div className="bg-white border shadow rounded md p-3 mt-4 space-y-4">
+              <div className="bg-white dark:bg-zinc-900 border shadow rounded md p-3 mt-4 space-y-4">
                 <FormField
                   control={form.control}
                   name="media"
@@ -420,7 +420,7 @@ const NonFoodProductForm = ({
               </div>
             </div>
             <div className="md:col-span-3">
-              <div className="bg-white border shadow rounded md p-3 mt-4 space-y-4">
+              <div className="bg-white dark:bg-zinc-900 border shadow rounded md p-3 mt-4 space-y-4">
                 <FormField
                   control={form.control}
                   name="tags"
@@ -475,7 +475,7 @@ const NonFoodProductForm = ({
                   )}
                 />
               </div>
-              <div className="bg-white border shadow rounded md p-3 mt-4 space-y-4">
+              <div className="bg-white dark:bg-zinc-900 border shadow rounded md p-3 mt-4 space-y-4">
                 <FormField
                   control={form.control}
                   name="warrantyPeriod"
@@ -538,7 +538,7 @@ const NonFoodProductForm = ({
                   )}
                 />
               </div>
-              <div className="bg-white border shadow rounded md p-3 mt-4 space-y-4">
+              <div className="bg-white dark:bg-zinc-900 border shadow rounded md p-3 mt-4 space-y-4">
                 <FormField
                   control={form.control}
                   name="isVariant"

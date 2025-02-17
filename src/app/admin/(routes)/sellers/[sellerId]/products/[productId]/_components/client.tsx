@@ -152,48 +152,78 @@ const ProductIdClient = ({
           </p>
           <p>{12}+ sold</p>
         </div>
-        <p className="font-semibold mt-5">Color: </p>
-        <div className="flex items-center gap-3 mt-2">
+        <div className="mt-2">
           {product?.sellerProductVariants.find(
             (variant) => variant.name === "Color"
-          ) ? (
-            <Color
-              data={
-                product?.sellerProductVariants
-                  .find((variant) => variant.name === "Color")
-                  ?.sellerProductVariantsOptions.map((option) => ({
-                    ...option,
-                    name: option.name,
-                    image: option.image,
-                    price: option.price,
-                  })) || []
-              }
-              onSelect={(option) => setSelectedColor(option)}
-            />
-          ) : (
-            <p>No colors available.</p>
+          ) && (
+            <>
+              <p className="font-semibold mt-5">Color: </p>
+              <div className="flex items-center gap-2">
+                <Color
+                  data={
+                    product?.sellerProductVariants
+                      .find((variant) => variant.name === "Color")
+                      ?.sellerProductVariantsOptions.map((option) => ({
+                        ...option,
+                        name: option.name,
+                        image: option.image,
+                        price: option.price,
+                      })) || []
+                  }
+                  onSelect={(option) => setSelectedColor(option)}
+                />
+              </div>
+            </>
           )}
         </div>
-        <p className="font-semibold mt-5">Size: </p>
-        {product?.sellerProductVariants.find(
-          (variant) => variant.name === "Size"
-        ) ? (
-          <Size
-            data={
-              product?.sellerProductVariants
-                .find((variant) => variant.name === "Size")
-                ?.sellerProductVariantsOptions.map((option) => ({
-                  ...option,
-                  name: option.name,
-                  image: option.image,
-                  price: option.price,
-                })) || []
-            }
-            onSelect={(option) => setSelectedSize(option)}
-          />
-        ) : (
-          <p>No sizes available.</p>
-        )}
+        <div className="mt-5">
+          {product?.sellerProductVariants.find(
+            (variant) => variant.name === "Size"
+          ) && (
+            <>
+              <p className="font-semibold mt-5">Size: </p>
+              <div className="flex items-center gap-2">
+                <Size
+                  data={
+                    product?.sellerProductVariants
+                      .find((variant) => variant.name === "Size")
+                      ?.sellerProductVariantsOptions.map((option) => ({
+                        ...option,
+                        name: option.name,
+                        image: option.image,
+                        price: option.price,
+                      })) || []
+                  }
+                  onSelect={(option) => setSelectedSize(option)}
+                />
+              </div>
+            </>
+          )}
+        </div>
+        <div className="mt-5">
+          {product?.sellerProductVariants.find(
+            (variant) => variant.name === "Flavor"
+          ) && (
+            <>
+              <p className="font-semibold mt-5">Flavor: </p>
+              <div className="flex items-center gap-2">
+                <Color
+                  data={
+                    product?.sellerProductVariants
+                      .find((variant) => variant.name === "Flavor")
+                      ?.sellerProductVariantsOptions.map((option) => ({
+                        ...option,
+                        name: option.name,
+                        image: option.image,
+                        price: option.price,
+                      })) || []
+                  }
+                  onSelect={(option) => setSelectedSize(option)}
+                />
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

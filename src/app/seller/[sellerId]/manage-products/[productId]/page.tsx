@@ -36,13 +36,17 @@ const ProductId = async (props: {
     <div>
       <HeadingAction
         className="w-40"
-        title={products ? `Edit Product` : "Add Product"}
+        title={
+          products
+            ? `Edit ${businessType === "Service" ? "Service" : "Product"}`
+            : `Add ${businessType === "Service" ? "Service" : "Product"}`
+        }
         link={`/seller/${params.sellerId}/manage-products`}
       />
       <p className="text-sm text-muted-foreground mt-2">
         {products
-          ? "Modify the existing product details, update pricing, descriptions, and other relevant information."
-          : "Fill in the product details, including name, category, price, and description, to add a new product to your store."}
+          ? `Modify the existing ${businessType === "Service" ? "service" : "product"} details, update pricing, descriptions, and other relevant information.`
+          : `Fill in the ${businessType === "Service" ? "service" : "product"} details, including name, category, price, and description, to add a new ${businessType === "Service" ? "service" : "product"} to your store.`}
       </p>
 
       {businessType === "NonFood" && (
@@ -59,7 +63,13 @@ const ProductId = async (props: {
           initialData={products}
         />
       )}
-      {businessType === "Service" && <ServiceProductForm />}
+      {businessType === "Service" && (
+        <ServiceProductForm
+          subCategories={seller?.category?.sellerSubCategory || []}
+          sellerId={params.sellerId}
+          initialData={products}
+        />
+      )}
     </div>
   );
 };

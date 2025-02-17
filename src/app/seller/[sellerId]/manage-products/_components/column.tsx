@@ -16,6 +16,7 @@ export type ProductColumn = {
   slug: string;
   tags: string;
   availability: string;
+  isVariant: boolean;
   price: string;
 };
 
@@ -184,7 +185,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
     accessorKey: "actions",
     header: "",
     cell: ({row}) => (
-      <CellAction id={row.original.id} slug={row.original.slug} />
+      <CellAction id={row.original.id} slug={row.original.slug} isVariant={row.original.isVariant} />
     )
   }
 ];

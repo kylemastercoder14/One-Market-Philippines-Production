@@ -23,6 +23,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { verifySeller } from "@/actions/seller";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface ProductVariantProps extends SellerProductVariants {
   sellerProductVariantsOptions: SellerProductVariantsOptions[];
@@ -140,13 +141,10 @@ const StoreClient = ({
       </Modal>
       <div className="flex items-center py-2 justify-between">
         <div className="flex items-center gap-3">
-          <Image
-            src={seller?.image || ""}
-            alt={seller?.name || ""}
-            width={60}
-            height={60}
-            className="rounded-full object-cover"
-          />
+          <Avatar className="w-20 h-20">
+            <AvatarImage src={seller?.image || ""} />
+            <AvatarFallback>{seller?.name?.charAt(0)}</AvatarFallback>
+          </Avatar>
           <div>
             <div className="font-semibold text-lg flex items-center gap-3">
               {seller?.name}{" "}

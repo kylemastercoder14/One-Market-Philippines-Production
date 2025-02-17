@@ -292,6 +292,107 @@ export const createNonFoodProductWithoutPrice = async (
   }
 };
 
+export const createService = async (values: any, sellerId: string) => {
+  try {
+    // Destructure product data
+    const {
+      title,
+      slug,
+      description,
+      price,
+      tags,
+      category,
+      media,
+      sku,
+      isVariant,
+    } = values;
+
+    // Check for an existing product with the same name and sellerId
+    const existingProduct = await db.sellerProduct.findFirst({
+      where: { name: title, sellerId },
+    });
+
+    if (existingProduct) {
+      return { error: "Service with this name already exists" };
+    }
+
+    // Create the main product
+    const createdProduct = await db.sellerProduct.create({
+      data: {
+        name: title,
+        slug,
+        description,
+        tags,
+        category,
+        images: media,
+        price,
+        sku,
+        sellerId,
+        isVariant,
+      },
+    });
+
+    return {
+      success: "Service created successfully",
+      product: createdProduct,
+    };
+  } catch (error: any) {
+    console.error("Error creating service:", error.message, error.stack);
+    return {
+      error: error instanceof Error ? error.message : "Unknown error occurred",
+    };
+  }
+};
+
+export const updateService = async (
+  values: any,
+  productId: string,
+  sellerId: string
+) => {
+  try {
+    // Destructure product data
+    const { title, slug, description, tags, category, media, price, sku } =
+      values;
+
+    // Check for an existing product with the same name and sellerId
+    const existingProduct = await db.sellerProduct.findUnique({
+      where: { id: productId },
+    });
+
+    if (!existingProduct) {
+      return { error: "Service does not exist" };
+    }
+
+    // Create the main product
+    const updatedProduct = await db.sellerProduct.update({
+      data: {
+        name: title,
+        slug,
+        description,
+        tags,
+        category,
+        images: media,
+        price,
+        sku,
+        sellerId,
+      },
+      where: {
+        id: productId,
+      },
+    });
+
+    return {
+      success: "Service updated successfully",
+      product: updatedProduct,
+    };
+  } catch (error: any) {
+    console.error("Error updating service:", error.message, error.stack);
+    return {
+      error: error instanceof Error ? error.message : "Unknown error occurred",
+    };
+  }
+};
+
 export const updateNonFoodProduct = async (
   values: any,
   productId: string,

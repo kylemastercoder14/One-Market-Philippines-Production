@@ -11,15 +11,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {
   Edit,
-  LayoutList,
   MoreHorizontal,
   ShoppingBag,
-  Trash,
 } from "lucide-react";
 import { toast } from "sonner";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
-import { deleteProduct, updateProductStatus } from "@/actions/product";
+import { updateProductStatus } from "@/actions/product";
 import { Modal } from "@/components/ui/modal";
 import { Label } from "@/components/ui/label";
 import Heading from "@/components/ui/heading";
@@ -52,6 +50,7 @@ export const CellAction: React.FC<CellActionProps> = ({ id }) => {
       if (res.success) {
         toast.success(res.success);
         router.refresh();
+        setOpen(false);
       } else {
         toast.error(res.error);
       }

@@ -12,8 +12,8 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import Color from "@/components/globals/color";
 import Size from "@/components/globals/size";
-import Image from "next/image";
 import Preview from "@/components/globals/preview";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface ProductVariantProps extends SellerProductVariants {
   sellerProductVariantsOptions: SellerProductVariantsOptions[];
@@ -132,13 +132,10 @@ const ProductIdClient = ({
           >
             Sold by:{" "}
             <div className="text-orange-600 flex items-center gap-2 hover:underline">
-              <Image
-                src={seller?.image || ""}
-                alt={seller?.name || "Seller"}
-                width={20}
-                height={20}
-                className="rounded-full object-cover"
-              />
+              <Avatar>
+                <AvatarImage src={seller?.image || ""} />
+                <AvatarFallback>{seller?.name?.charAt(0)}</AvatarFallback>
+              </Avatar>
               {seller?.name}
             </div>
           </Link>

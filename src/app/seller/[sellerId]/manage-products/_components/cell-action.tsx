@@ -19,9 +19,14 @@ import { deleteProduct } from "@/actions/product";
 interface CellActionProps {
   id: string;
   slug: string;
+  isVariant: boolean;
 }
 
-export const CellAction: React.FC<CellActionProps> = ({ id, slug }) => {
+export const CellAction: React.FC<CellActionProps> = ({
+  id,
+  slug,
+  isVariant,
+}) => {
   const router = useRouter();
   const params = useParams();
   const [open, setOpen] = React.useState(false);
@@ -71,16 +76,18 @@ export const CellAction: React.FC<CellActionProps> = ({ id, slug }) => {
             <Edit className="w-4 h-4 mr-2" />
             Edit Product
           </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() =>
-              router.push(
-                `/seller/${params.sellerId}/manage-products/${id}/${slug}`
-              )
-            }
-          >
-            <LayoutList className="w-4 h-4 mr-2" />
-            Variations
-          </DropdownMenuItem>
+          {isVariant && (
+            <DropdownMenuItem
+              onClick={() =>
+                router.push(
+                  `/seller/${params.sellerId}/manage-products/${id}/${slug}`
+                )
+              }
+            >
+              <LayoutList className="w-4 h-4 mr-2" />
+              Variations
+            </DropdownMenuItem>
+          )}
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setOpen(true)}>
             <Trash className="w-4 h-4 mr-2" />

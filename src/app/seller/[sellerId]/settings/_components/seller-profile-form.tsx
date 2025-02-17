@@ -128,7 +128,7 @@ const SellerProfileForm = ({
             <div className="flex items-center gap-3">
               <div className="relative">
                 <Avatar className="w-20 h-20">
-                  <AvatarImage src={initialData?.image as string} />
+                  <AvatarImage className='object-cover' src={initialData?.image as string} />
                   <AvatarFallback>
                     {initialData?.name?.charAt(0)}
                   </AvatarFallback>

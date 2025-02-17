@@ -12,6 +12,12 @@ const SellerProducts = async (props: {
 }) => {
   const params = await props.params;
 
+  const seller = await db.seller.findUnique({
+    where: {
+      id: params.sellerId,
+    },
+  });
+
   const data = await db.sellerProduct.findMany({
     where: {
       sellerId: params.sellerId,
@@ -50,7 +56,7 @@ const SellerProducts = async (props: {
       const priceWithVariants =
         lowestPrice !== Infinity
           ? `Starts at ₱${lowestPrice.toFixed(2)}`
-          : "Price unavailable";
+          : `₱${item.price?.toFixed(2) ?? "0.00"}`;
 
       return {
         id: item.id,
@@ -61,6 +67,7 @@ const SellerProducts = async (props: {
         availability: item.status,
         slug: item.slug,
         status: item.adminApprovalStatus,
+        isVariant: item.isVariant,
         href: `/seller/${params.sellerId}/manage-products/${item.id}`,
         tags: item.tags.join(", "),
         price: isThereAPrice
@@ -72,10 +79,10 @@ const SellerProducts = async (props: {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <p className="font-semibold text-2xl">Product Dashboard</p>
+        <p className="font-semibold text-2xl">{seller?.businessType === "Service" ? "Service" : "Product"} Dashboard</p>
         <Button>
           <Link href={`/seller/${params.sellerId}/manage-products/create`}>
-            + Add Product
+            + Add {seller?.businessType === "Service" ? "Service" : "Product"}
           </Link>
         </Button>
       </div>

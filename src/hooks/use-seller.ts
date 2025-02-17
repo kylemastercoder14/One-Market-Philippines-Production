@@ -38,3 +38,19 @@ export const useSeller = async () => {
     return { error: "Invalid or expired token" };
   }
 };
+
+export const updateBusinessType = async (
+  sellerId: string,
+  businessType: "NonFood" | "Food" | "Service"
+) => {
+  const updatedSeller = await db.seller.update({
+    where: {
+      id: sellerId,
+    },
+    data: {
+      businessType,
+    },
+  });
+
+  return updatedSeller;
+};

@@ -2,11 +2,10 @@ import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import db from "@/lib/db";
 
-interface RequestContext {
-  params: { categoryId: string };
-}
-
-export async function GET(req: NextRequest, { params }: RequestContext) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { categoryId: string } }
+) {
   try {
     const { categoryId } = params;
 
@@ -15,12 +14,8 @@ export async function GET(req: NextRequest, { params }: RequestContext) {
     }
 
     const subCategories = await db.subCategory.findMany({
-      orderBy: {
-        name: "asc",
-      },
-      where: {
-        categorySlug: categoryId,
-      },
+      orderBy: { name: "asc" },
+      where: { categorySlug: categoryId },
     });
 
     return NextResponse.json(subCategories);

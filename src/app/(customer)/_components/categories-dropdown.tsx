@@ -50,7 +50,7 @@ const CategoriesDropdown = () => {
     setSubLoading(true);
     try {
       const response = await axios.get(
-        `/api/categories/${categorySlug}/sub-categories`
+        `/api/categories/${categorySlug}`
       );
       setSubCategories(response.data);
     } catch (error) {

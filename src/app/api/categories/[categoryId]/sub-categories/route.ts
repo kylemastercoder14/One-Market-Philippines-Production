@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
-import { NextRequest } from "next/server";
 import db from "@/lib/db";
 
 export async function GET(
-  req: NextRequest,
+  req: Request,
   { params }: { params: { categoryId: string } }
 ) {
   try {

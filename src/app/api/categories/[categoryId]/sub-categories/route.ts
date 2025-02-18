@@ -1,11 +1,9 @@
 import { NextResponse } from "next/server";
 import db from "@/lib/db";
 
-export const dynamic = "force-static";
-
 export async function GET(
   req: Request,
-  { params }: { params: { categoryId: string } }
+  { params }: { params: { categoryId: string } } // Correctly access params
 ) {
   try {
     const { categoryId } = params;

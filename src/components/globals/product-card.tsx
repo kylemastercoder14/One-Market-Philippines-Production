@@ -7,6 +7,10 @@ import { StarIcon } from "@heroicons/react/24/solid";
 import { StarIcon as Star } from "@heroicons/react/24/outline";
 import { formatTime } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Seller } from "@prisma/client";
+import { ChevronRight } from 'lucide-react';
 
 const ProductCard = ({
   title,
@@ -16,11 +20,11 @@ const ProductCard = ({
   ratingCount,
   time,
   className,
-  href
+  href,
+  seller,
 }: {
   title: string;
   image: string;
-  slug: string;
   originalPrice: string;
   sold?: number;
   ratingCount?: number;
@@ -28,6 +32,7 @@ const ProductCard = ({
   initialCountdown?: number;
   className?: string;
   href: string;
+  seller: Seller | null;
 }) => {
   const router = useRouter();
   return (
@@ -45,8 +50,22 @@ const ProductCard = ({
             />
           </div>
           <div className="py-4">
-            <p className="line-clamp-2 text-sm mb-2">{title}</p>
-            <div className="flex items-center gap-2 text-sm">
+            <p className="line-clamp-1 text-sm mb-1">{title}</p>
+            <Link
+              className="flex text-sm items-center gap-1"
+              href={`/admin/sellers/${seller?.id}`}
+            >
+              Sold by:{" "}
+              <div className="text-red-800 flex items-center gap-2 hover:underline">
+                <Avatar className='w-5 h-5'>
+                  <AvatarImage src={seller?.image || ""} className='object-cover' />
+                  <AvatarFallback>{seller?.name?.charAt(0)}</AvatarFallback>
+                </Avatar>
+                {seller?.name}
+              </div>
+              <ChevronRight className="w-4 h-4" />
+            </Link>
+            <div className="flex items-center gap-2 mt-2 text-sm">
               <p className="text-red-700 font-semibold">{originalPrice}</p>
               {sold && <p>{sold}+ sold</p>}
             </div>

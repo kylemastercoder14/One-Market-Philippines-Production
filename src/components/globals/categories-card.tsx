@@ -15,7 +15,7 @@ const CategoriesCard = ({
     <CarouselItem className="pl-1 md:basis-1/2 lg:basis-1/4">
       <div className="p-1">
         <Card className="border-0 shadow-none">
-          <CardContent className="p-2 relative bg-gradient-to-b from-red-400 via-red-700 to-red-800 min-h-[120px] rounded-xl flex items-center justify-center">
+          <CardContent className="p-2 relative bg-gradient-to-b from-red-400 via-red-700 to-red-800 min-h-[160px] rounded-xl flex items-center justify-center">
             <div className="absolute bottom-0 right-0 bg-black/60 px-2 py-1 rounded-full text-white text-sm">
               {storeCount} stores
             </div>

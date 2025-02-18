@@ -3,7 +3,7 @@
 import React from "react";
 import { CarouselItem } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
-import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const StoreCard = ({
   storeName,
@@ -19,14 +19,10 @@ const StoreCard = ({
       <div className="p-1">
         <Card className="border-0 shadow-none">
           <CardContent className="p-0">
-            <div className="relative group overflow-hidden w-full h-[150px]">
-              <Image
-                className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
-                fill
-                src={image}
-                alt="Sample"
-              />
-            </div>
+            <Avatar className="w-40 h-40">
+              <AvatarImage src={image} className='object-cover' />
+              <AvatarFallback>{storeName.charAt(0)}</AvatarFallback>
+            </Avatar>
             <div className="py-4">
               <p className="line-clamp-2 text-sm">{storeName}</p>
               <p className="text-sm text-muted-foreground">{sold}+ sold</p>

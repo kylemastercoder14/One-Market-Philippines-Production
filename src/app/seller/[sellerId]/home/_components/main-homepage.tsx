@@ -191,37 +191,6 @@ const MainHomePage = ({
               </div>
             </div>
           )}
-
-          {product && paymentMethod && (
-            <div className="flex items-start gap-10">
-              <div className="relative w-[250px] h-[250px]">
-                <Image
-                  src="/images/manage-account.svg"
-                  fill
-                  className="w-full h-full"
-                  alt="Manage account"
-                />
-              </div>
-              <div className="mt-5">
-                <h1 className="font-semibold text-lg">
-                  Congratulations! You&apos;re all set. 🎉
-                </h1>
-                <p className="text-sm text-muted-foreground mt-3">
-                  You can start selling your products now and manage your
-                  account. If you need any help, please contact us. We are happy
-                  to help you. Thank you!
-                </p>
-                <Button
-                  className="mt-5"
-                  onClick={() =>
-                    router.push(`/seller/${params.sellerId}/my-account`)
-                  }
-                >
-                  Manage Account
-                </Button>
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>

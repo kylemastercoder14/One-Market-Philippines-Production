@@ -8,7 +8,6 @@ import HeaderDesign from "@/components/globals/header-design";
 import FeaturedStore from "./_components/featured-store";
 import CategoriesSection from "./_components/categories-section";
 import { Button } from "@/components/ui/button";
-import CategoryCarousel from "./_components/category-carousel";
 import ProductsGrid from "./_components/products-grid";
 
 const Homepage = () => {
@@ -75,12 +74,11 @@ const Homepage = () => {
         <section className="mt-10">
           <div className="flex justify-center items-center gap-4">
             <HeaderDesign />
-            <h3 className="text-orange-600 font-black text-2xl font-costaBold">
+            <h3 className="text-red-800 font-black text-2xl font-costaBold">
               EXPLORE YOUR INTERESTS
             </h3>
             <HeaderDesign />
           </div>
-          <CategoryCarousel />
           <ProductsGrid />
           <Button
             size="lg"

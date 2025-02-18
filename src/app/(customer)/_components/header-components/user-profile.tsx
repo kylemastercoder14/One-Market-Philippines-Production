@@ -122,7 +122,7 @@ const UserProfile = ({ auth }: { auth: any }) => {
   const handleSignout = async () => {
     await signOut();
     toast.success("Signed out successfully");
-    window.location.reload();
+    router.push("/");
   };
   return (
     <div

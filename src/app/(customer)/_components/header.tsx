@@ -13,8 +13,10 @@ import SupportDropdown from "./support-dropdown";
 import LanguageDropdown from "./language-dropdown";
 import CategoriesDropdown from "./categories-dropdown";
 import HeaderMobile from "./header-mobild";
+import useCart from '@/hooks/use-cart';
 
 const Header = ({ user }: { user: any }) => {
+  const { items } = useCart();
   const pathname = usePathname();
   const [isNavbarVisible, setIsNavbarVisible] = React.useState(true);
   const lastScrollTop = React.useRef(0);
@@ -124,7 +126,7 @@ const Header = ({ user }: { user: any }) => {
               className="px-4 flex items-center gap-2 py-2 rounded-2xl hover:bg-zinc-300/70 text-black text-sm transition-colors relative duration-300"
             >
               <span className="text-xs bg-zinc-600 w-4 h-4 flex items-center rounded-full justify-center absolute text-white top-0 right-0">
-                5
+                {items.length}
               </span>
               <ShoppingCart className="w-4 h-4" />
             </Link>

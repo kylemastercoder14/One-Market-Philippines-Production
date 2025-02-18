@@ -24,7 +24,7 @@ const FeaturedStore = async () => {
               <StoreCard
                 key={store.id}
                 storeName={store.name || "Store Name"}
-                image={store.bir || "/profile.jpg"}
+                image={store.image || ""}
                 sold={5}
               />
             ))}

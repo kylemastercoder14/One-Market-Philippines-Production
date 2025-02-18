@@ -149,7 +149,7 @@ const CategoriesDropdown = () => {
                             key={subCategory.id}
                             onClick={() =>
                               router.push(
-                                `/products/${subCategory.categorySlug}/sub-category/${subCategory.slug}`
+                                `/category/${subCategory.slug.replace(/-/g, " ").replace(/\b\w/g, (char) => char.toUpperCase())}`
                               )
                             }
                             className="p-2 flex text-white bg-gradient-to-b h-[120px] from-red-400 via-red-700 to-red-800 rounded-xl flex-col items-center justify-center cursor-pointer"

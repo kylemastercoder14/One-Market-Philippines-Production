@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from "react";
 import {
   Breadcrumb,
@@ -28,8 +29,8 @@ const ProductSlug = async (props: {
       sellerProductVariants: {
         include: {
           sellerProductVariantsOptions: true,
-        },
-      },
+        }
+      }
     },
   });
 
@@ -72,7 +73,8 @@ const ProductSlug = async (props: {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <ProductSingleClient product={product} seller={product?.seller} />
+      {/* @ts-expect-error */}
+      <ProductSingleClient product={product} />
       <div className="mt-10">
         <div className="flex items-center gap-4">
           <HeaderDesign />

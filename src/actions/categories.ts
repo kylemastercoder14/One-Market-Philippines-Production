@@ -1,6 +1,7 @@
 "use server";
 
 import db from "@/lib/db";
+import { Category, SubCategory } from "@prisma/client";
 
 export const createCategory = async (data: {
   name: string;
@@ -192,3 +193,32 @@ export const createSuggestedCategory = async (
     return { error: "Something went wrong. Please try again" };
   }
 };
+
+// Fetch all categories
+export async function fetchCategories(): Promise<Category[]> {
+  try {
+    const categories = await db.category.findMany({
+      orderBy: { name: "asc" },
+    });
+    return categories;
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    throw new Error("Failed to fetch categories");
+  }
+}
+
+// Fetch subcategories for a specific category
+export async function fetchSubCategories(
+  categorySlug: string
+): Promise<SubCategory[]> {
+  try {
+    const subCategories = await db.subCategory.findMany({
+      where: { categorySlug },
+      orderBy: { name: "asc" },
+    });
+    return subCategories;
+  } catch (error) {
+    console.error("Error fetching subcategories:", error);
+    throw new Error("Failed to fetch subcategories");
+  }
+}

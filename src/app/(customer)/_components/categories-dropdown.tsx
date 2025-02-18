@@ -3,10 +3,10 @@
 import { ChevronDown, ChevronRight } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Category, SubCategory } from "@prisma/client";
-import axios from "axios";
 import Image from "next/image";
 import { BeatLoader } from "react-spinners";
 import { useRouter } from "next/navigation";
+import { fetchCategories, fetchSubCategories } from "@/actions/categories";
 
 const CategoriesDropdown = () => {
   const router = useRouter();
@@ -20,41 +20,35 @@ const CategoriesDropdown = () => {
   const [subLoading, setSubLoading] = useState(false);
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const loadCategories = async () => {
       setLoading(true);
       try {
-        const response = await axios.get("/api/categories");
-        const fetchedCategories = response.data;
+        const fetchedCategories = await fetchCategories();
+        setCategories(fetchedCategories);
 
-        setTimeout(() => {
-          setCategories(fetchedCategories);
-          setLoading(false);
-
-          // Automatically select the first category and fetch its subcategories
-          if (fetchedCategories.length > 0) {
-            const firstCategorySlug = fetchedCategories[0].slug;
-            setSelectedCategorySlug(firstCategorySlug);
-            fetchSubCategories(firstCategorySlug);
-          }
-        }, 2000);
+        // Automatically select the first category and fetch its subcategories
+        if (fetchedCategories.length > 0) {
+          const firstCategorySlug = fetchedCategories[0].slug;
+          setSelectedCategorySlug(firstCategorySlug);
+          await loadSubCategories(firstCategorySlug);
+        }
       } catch (error) {
-        console.error("Error fetching categories:", error);
-        setLoading(false); // Ensure loading stops even on error
+        console.error("Error loading categories:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchCategories();
+    loadCategories();
   }, []);
 
-  const fetchSubCategories = async (categorySlug: string) => {
+  const loadSubCategories = async (categorySlug: string) => {
     setSubLoading(true);
     try {
-      const response = await axios.get(
-        `/api/categories/${categorySlug}`
-      );
-      setSubCategories(response.data);
+      const fetchedSubCategories = await fetchSubCategories(categorySlug);
+      setSubCategories(fetchedSubCategories);
     } catch (error) {
-      console.error("Error fetching subcategories:", error);
+      console.error("Error loading subcategories:", error);
     } finally {
       setSubLoading(false);
     }
@@ -62,8 +56,9 @@ const CategoriesDropdown = () => {
 
   const handleCategoryClick = (slug: string) => {
     setSelectedCategorySlug(slug);
-    fetchSubCategories(slug);
+    loadSubCategories(slug);
   };
+
   return (
     <>
       <div
@@ -125,7 +120,7 @@ const CategoriesDropdown = () => {
                     ))}
                   </div>
                   <div className="col-span-7 ml-3 p-2 overflow-y-auto no-scrollbar max-h-[70vh]">
-                    {/* show sub-categories here based on selected category */}
+                    {/* Show sub-categories here based on selected category */}
                     {subLoading ? (
                       <div className="flex flex-col h-full items-center justify-center">
                         <BeatLoader />
@@ -149,7 +144,11 @@ const CategoriesDropdown = () => {
                             key={subCategory.id}
                             onClick={() =>
                               router.push(
-                                `/category/${subCategory.slug.replace(/-/g, " ").replace(/\b\w/g, (char) => char.toUpperCase())}`
+                                `/category/${subCategory.slug
+                                  .replace(/-/g, " ")
+                                  .replace(/\b\w/g, (char) =>
+                                    char.toUpperCase()
+                                  )}`
                               )
                             }
                             className="p-2 flex text-white bg-gradient-to-b h-[120px] from-red-400 via-red-700 to-red-800 rounded-xl flex-col items-center justify-center cursor-pointer"

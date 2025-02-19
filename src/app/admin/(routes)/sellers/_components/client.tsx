@@ -494,7 +494,7 @@ const StoreClient = ({
                       ? `₱${product.price?.toFixed(2) ?? "0.00"}`
                       : priceWithVariants
                   }
-                  slug={product.slug}
+                  seller={seller}
                   sold={12}
                   ratingCount={180}
                 />

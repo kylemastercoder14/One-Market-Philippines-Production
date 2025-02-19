@@ -3,8 +3,12 @@ import { getVerificationTokenByToken } from "@/data/verification-token";
 import db from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
 
-export async function POST(req: NextRequest) {
-  const verificationToken = req.nextUrl.pathname.split("/").pop();
+export async function POST(
+  req: NextRequest,
+  { params }: { params: { verificationToken: string } }
+) {
+  const verificationToken = params.verificationToken;
+
   try {
     const checkVerificationToken = await getVerificationTokenByToken(
       verificationToken as string

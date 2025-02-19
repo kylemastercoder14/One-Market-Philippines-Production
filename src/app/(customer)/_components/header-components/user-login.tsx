@@ -8,7 +8,6 @@ import { Modal } from "@/components/ui/modal";
 import EncryptedBanner from "@/components/globals/encryted-banner";
 import UserForm from "@/components/forms/user-form";
 import { useRouter, useSearchParams } from "next/navigation";
-import axios from "axios";
 import { BeatLoader } from "react-spinners";
 import FormSuccess from "@/components/globals/form-success";
 import FormError from "@/components/globals/form-error";
@@ -16,6 +15,7 @@ import UserLoginFooter from "@/components/globals/user-login-footer";
 import { Button } from "@/components/ui/button";
 import ForgotPasswordForm from "@/components/forms/forgot-password-form";
 import ResetPasswordForm from "@/components/forms/reset-password-form";
+import { verifiedUser } from "@/actions/user";
 
 const UserLogin = () => {
   const router = useRouter();
@@ -36,9 +36,14 @@ const UserLogin = () => {
     setIsConfirming(true);
     setShowLogin(false);
     try {
-      const response = await axios.post(`/api/user/${token}/verified`);
-      setSuccess(response.data);
-      window.location.assign("/");
+      const response = await verifiedUser(token as string);
+      if (response.error) {
+        setError(response.error);
+        return;
+      } else {
+        setSuccess(response.success);
+        window.location.assign("/");
+      }
     } catch (error: any) {
       console.error("Error during email verification:", error);
       setError(

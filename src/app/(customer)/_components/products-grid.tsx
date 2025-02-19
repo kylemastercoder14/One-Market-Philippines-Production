@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from "react";
 import db from "@/lib/db";
-import ProductsGridClient from './products-grid-client';
+import ProductsGridClient from "./products-grid-client";
 
 const ProductsGrid = async () => {
   const categories = await db.subCategory.findMany({
@@ -24,7 +25,10 @@ const ProductsGrid = async () => {
   });
 
   return (
-    <ProductsGridClient categories={categories} products={products} />
+    <>
+      {/* @ts-expect-error */}
+      <ProductsGridClient categories={categories} products={products} />
+    </>
   );
 };
 

@@ -104,7 +104,7 @@ const Reviews = () => {
             </div>
             <div className="">
               <div className="flex items-center gap-2">
-                <p className="text-lg font-semibold">Kyle Andre Lim</p>
+                <p className="text-lg font-semibold">Juan Dela Cruz</p>
                 <EditIcon
                   onClick={() => router.push("/profile/update")}
                   className="w-4 cursor-pointer h-4 text-muted-foreground"

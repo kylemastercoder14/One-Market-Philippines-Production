@@ -63,7 +63,7 @@ export const OtpVerification = ({ otpCode }: OtpVerificationProps) => (
           2025. All rights reserved. 1 Market Philippines is a registered
           trademark of{" "}
           <Link
-            href="https://onemarketphilippines.com"
+            href="https://one-market-philippines-production.vercel.app"
             target="_blank"
             style={link}
           >
@@ -71,7 +71,7 @@ export const OtpVerification = ({ otpCode }: OtpVerificationProps) => (
           </Link>
           . View our{" "}
           <Link
-            href="https://onemarketphilippines.com/privacy-policy"
+            href="https://one-market-philippines-production.vercel.app/privacy-policy"
             target="_blank"
             style={link}
           >

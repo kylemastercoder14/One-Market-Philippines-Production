@@ -86,7 +86,7 @@ export const ProductStatus = ({
           2025. All rights reserved. 1 Market Philippines is a registered
           trademark of{" "}
           <Link
-            href="https://onemarketphilippines.com"
+            href="https://one-market-philippines-production.vercel.app"
             target="_blank"
             style={link}
           >
@@ -94,7 +94,7 @@ export const ProductStatus = ({
           </Link>
           . View our{" "}
           <Link
-            href="https://onemarketphilippines.com/privacy-policy"
+            href="https://one-market-philippines-production.vercel.app/privacy-policy"
             target="_blank"
             style={link}
           >
@@ -115,19 +115,6 @@ export const ProductStatusHTML = (props: ProductStatusProps) =>
 const main = {
   backgroundColor: "#fff",
   color: "#212121",
-};
-
-const button = {
-  backgroundColor: "#ea580c",
-  borderRadius: "5px",
-  color: "#fff",
-  fontSize: "16px",
-  fontWeight: "bold",
-  textDecoration: "none",
-  textAlign: "center" as const,
-  display: "block",
-  width: "100%",
-  padding: "10px",
 };
 
 const logo = {

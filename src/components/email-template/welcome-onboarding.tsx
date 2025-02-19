@@ -75,7 +75,7 @@ export const WelcomeOnboarding = ({
           </ul>
           <Section className="text-center">
             <Link
-              href={`http://localhost:3000/seller/${sellerId}/dashboard`}
+              href={`https://one-market-philippines-production.vercel.app/seller/${sellerId}/dashboard`}
               style={button}
             >
               Go to your dashboard
@@ -97,7 +97,7 @@ export const WelcomeOnboarding = ({
           2025. All rights reserved. 1 Market Philippines is a registered
           trademark of{" "}
           <Link
-            href="https://onemarketphilippines.com"
+            href="https://one-market-philippines-production.vercel.app"
             target="_blank"
             style={link}
           >
@@ -105,7 +105,7 @@ export const WelcomeOnboarding = ({
           </Link>
           . View our{" "}
           <Link
-            href="https://onemarketphilippines.com/privacy-policy"
+            href="https://one-market-philippines-production.vercel.app/privacy-policy"
             target="_blank"
             style={link}
           >

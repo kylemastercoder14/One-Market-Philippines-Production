@@ -40,8 +40,8 @@ const Checkout = () => {
       payer_email: "kylemastercoder14@gmail.com",
       description: `Payment for ${items.map((item) => item.name).join(", ")}`,
       currency: "PHP",
-      success_redirect_url: `http://localhost:3000/success?order=${orderNumber}`,
-      failure_redirect_url: "http://localhost:3000/failure",
+      success_redirect_url: `https://one-market-philippines-production.vercel.app/success?order=${orderNumber}`,
+      failure_redirect_url: "https://one-market-philippines-production.vercel.app/failure",
     };
 
     try {

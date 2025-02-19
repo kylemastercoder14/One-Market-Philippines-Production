@@ -36,7 +36,7 @@ export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
 };
 
 export const sendVerificationEmail = async (email: string, token: string) => {
-  const confirmLink = `http://localhost:3000?token=${token}`;
+  const confirmLink = `https://one-market-philippines-production.vercel.app?token=${token}`;
 
   const htmlContent = await VerificationEmailHTML({
     confirmLink,
@@ -73,7 +73,7 @@ export const sendPasswordResetTokenEmail = async (
   token: string,
   formattedDate: string
 ) => {
-  const confirmLink = `http://localhost:3000?passwordToken=${token}`;
+  const confirmLink = `https://one-market-philippines-production.vercel.app?passwordToken=${token}`;
 
   const htmlContent = await ResetPasswordEmailHTML({
     confirmLink,

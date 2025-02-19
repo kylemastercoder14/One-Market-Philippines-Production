@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "../ui/card";
 import Image from "next/image";
 import { StarIcon } from "@heroicons/react/24/solid";
@@ -22,6 +23,7 @@ const ProductCard = ({
   className,
   href,
   seller,
+  productLength,
 }: {
   title: string;
   image: string;
@@ -33,8 +35,22 @@ const ProductCard = ({
   className?: string;
   href: string;
   seller: Seller | null;
+  productLength?: number;
 }) => {
   const router = useRouter();
+  const initialCountdown = 7 * 3600 + 19 * 60 + 26;
+  const [timers, setTimers] = useState<number[]>(
+    Array.from({ length: productLength ?? 0 }, () => initialCountdown)
+  );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimers((prevTimers) =>
+        prevTimers.map((time) => (time > 0 ? time - 1 : 0))
+      );
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
   return (
     <div className="p-1 cursor-pointer" onClick={() => router.push(href)}>
       <Card className="border-0 shadow-none">

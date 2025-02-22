@@ -16,11 +16,15 @@ const OptionRadio = ({
   children,
   disabled,
   value,
+  className,
+  radioShow = true,
   ...props
 }: {
   children: React.ReactNode;
   value: string;
   disabled?: boolean;
+  className?: string;
+  radioShow?: boolean;
 }) => {
   const context = useContext(RadioContext);
 
@@ -32,8 +36,10 @@ const OptionRadio = ({
 
   return (
     <label
-      className={`px-6 py-4 flex items-start gap-3 shadow border rounded-lg cursor-pointer transition-all ${
-        selectedValue === value ? "border-[#8D021F] dark:border-[#fa5075]" : "border-gray-300"
+      className={`${className} flex items-start gap-3 shadow border rounded-lg cursor-pointer transition-all ${
+        selectedValue === value
+          ? "border-[#8D021F] dark:border-[#fa5075]"
+          : "border-gray-300"
       }`}
     >
       <input
@@ -45,15 +51,19 @@ const OptionRadio = ({
         checked={selectedValue === value}
         onChange={() => onChange(value)} // Trigger context's onChange
       />
-      <div
-        className={`w-3 h-3 mt-1 rounded-full border-2 flex items-center justify-center ${
-          selectedValue === value ? "border-[#8D021F] dark:border-[#fa5075]" : "border-gray-300"
-        }`}
-      >
-        {selectedValue === value && (
-          <div className="w-1 h-1 rounded-full dark:bg-[#fa5075] bg-[#8D021F]"></div>
-        )}
-      </div>
+      {radioShow && (
+        <div
+          className={`w-3 h-3 mt-1 rounded-full border-2 flex items-center justify-center ${
+            selectedValue === value
+              ? "border-[#8D021F] dark:border-[#fa5075]"
+              : "border-gray-300"
+          }`}
+        >
+          {selectedValue === value && (
+            <div className="w-1 h-1 rounded-full dark:bg-[#fa5075] bg-[#8D021F]"></div>
+          )}
+        </div>
+      )}
       {children}
     </label>
   );

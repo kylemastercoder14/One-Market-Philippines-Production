@@ -3,3 +3,4 @@ export * from "./admin";
 export * from "./product";
 export * from "./promotions";
 export * from "./payment";
+export * from "./feedback";

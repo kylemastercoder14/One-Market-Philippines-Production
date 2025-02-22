@@ -1,9 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const SupportDropdown = () => {
+  const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (
@@ -38,14 +40,18 @@ const SupportDropdown = () => {
                   "Purchase Protection",
                   "Privacy Policy",
                   "Terms of Use",
-                ].map((option, index) => (
-                  <li
-                    key={index}
-                    className="text-sm hover:bg-zinc-100 p-2 rounded-md cursor-pointer"
-                  >
-                    {option}
-                  </li>
-                ))}
+                ].map((option, index) => {
+                  const href = option.toLowerCase().replace(" ", "-");
+                  return (
+                    <li
+                      key={index}
+                      onClick={() => router.push(`/${href}`)}
+                      className="text-sm hover:bg-zinc-100 p-2 rounded-md cursor-pointer"
+                    >
+                      {option}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </div>

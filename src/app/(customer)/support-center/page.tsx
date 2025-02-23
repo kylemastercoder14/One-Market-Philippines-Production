@@ -11,7 +11,18 @@ import {
 } from "@/components/ui/breadcrumb";
 import HeaderDesign from "@/components/globals/header-design";
 import { ChevronRight } from "lucide-react";
-import { ACCOUNTHELP, MAINCONTENT, ORDERHELP, PRODUCTHELP, RETURNHELP, SHIPPINGHELP, TOPICS } from "@/data/support-center";
+import {
+  ACCOUNTHELP,
+  MAINCONTENT,
+  ORDERHELP,
+  PAYMENTHELP,
+  POLICIESHELP,
+  PRODUCTHELP,
+  RETURNHELP,
+  SECURITYHELP,
+  SHIPPINGHELP,
+  TOPICS,
+} from "@/data/support-center";
 import AccordionContent from "@/components/globals/accordion-content";
 
 const SupportCenter = () => {
@@ -112,7 +123,7 @@ const SupportCenter = () => {
                 })}
               </div>
             )}
-			{selectedTopic === "shipping" && (
+            {selectedTopic === "shipping" && (
               <div className="flex flex-col gap-4">
                 {SHIPPINGHELP.map((item, index) => {
                   const value = `shipping-${index}`;
@@ -127,7 +138,7 @@ const SupportCenter = () => {
                 })}
               </div>
             )}
-			{selectedTopic === "return" && (
+            {selectedTopic === "return" && (
               <div className="flex flex-col gap-4">
                 {RETURNHELP.map((item, index) => {
                   const value = `return-${index}`;
@@ -142,7 +153,7 @@ const SupportCenter = () => {
                 })}
               </div>
             )}
-			{selectedTopic === "product" && (
+            {selectedTopic === "product" && (
               <div className="flex flex-col gap-4">
                 {PRODUCTHELP.map((item, index) => {
                   const value = `product-${index}`;
@@ -157,10 +168,55 @@ const SupportCenter = () => {
                 })}
               </div>
             )}
-			{selectedTopic === "account" && (
+            {selectedTopic === "account" && (
               <div className="flex flex-col gap-4">
                 {ACCOUNTHELP.map((item, index) => {
                   const value = `account-${index}`;
+                  return (
+                    <AccordionContent
+                      key={index}
+                      title={item.title}
+                      value={value}
+                      description={item.description}
+                    />
+                  );
+                })}
+              </div>
+            )}
+            {selectedTopic === "payment" && (
+              <div className="flex flex-col gap-4">
+                {PAYMENTHELP.map((item, index) => {
+                  const value = `payment-${index}`;
+                  return (
+                    <AccordionContent
+                      key={index}
+                      title={item.title}
+                      value={value}
+                      description={item.description}
+                    />
+                  );
+                })}
+              </div>
+            )}
+            {selectedTopic === "security" && (
+              <div className="flex flex-col gap-4">
+                {SECURITYHELP.map((item, index) => {
+                  const value = `security-${index}`;
+                  return (
+                    <AccordionContent
+                      key={index}
+                      title={item.title}
+                      value={value}
+                      description={item.description}
+                    />
+                  );
+                })}
+              </div>
+            )}
+            {selectedTopic === "policies" && (
+              <div className="flex flex-col gap-4">
+                {POLICIESHELP.map((item, index) => {
+                  const value = `policies-${index}`;
                   return (
                     <AccordionContent
                       key={index}

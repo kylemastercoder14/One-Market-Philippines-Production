@@ -464,8 +464,8 @@ export const ACCOUNTHELP = [
         </ul>
         Your password should be at least 8 characters long and contain a mix of
         letters, numbers, and special characters for security. If you used your
-        Google or Facebook account details to log in to Temu, then you will need
-        to change your password details there.
+        Google or Facebook account details to log in to 1 Market Philippines,
+        then you will need to change your password details there.
       </p>
     ),
   },
@@ -593,12 +593,303 @@ export const ACCOUNTHELP = [
           </li>
         </ul>
       </p>
-    )
+    ),
   },
 ];
 
-export const PAYMENTHELP = [];
+export const PAYMENTHELP = [
+  {
+    title: "Unknown charges",
+    description: (
+      <p>
+        <b>The unknown charge is a bank authorization</b>
+        <br />
+        When you place an order, 1 Market Philippines contacts the issuing bank
+        to confirm the validity of the payment method. Your bank reserves the
+        funds until the transaction processes or the authorization expires. This
+        reservation appears immediately in your statement, but it isn't an
+        actual charge If you cancel your order, the authorization is removed
+        from your account according to the policies of your bank. Contact your
+        bank to clarify how long they hold authorizations for online orders.
+        <br /> <br />
+        <b>I see a charge on my credit card that I don't recognize</b>
+        <br />
+        If you see a purchase or credit card charge you don't recognize, check
+        with any family members, friends or coworkers who may have had access to
+        your device or permission to use your card. If you believe your 1 Market
+        Philippines account has been compromised, sign in to change your
+        password. From your Account security, Edit the Password and change your
+        1 Market Philippines password. If you still need help, you'll be asked
+        to provide as much information as possible to help us resolve your
+        issue. For your security, please don't include your full bank account
+        information.
+      </p>
+    ),
+  },
+  {
+    title: "What payment methods do you accept?",
+    description: (
+      <p>
+        We accept the following payment methods:
+        <ul className="list-disc pl-5">
+          <li>Credit and debit cards (Visa, MasterCard, American Express)</li>
+          <li>PayPal</li>
+          <li>GCash</li>
+          <li>Bank transfer</li>
+          <li>Over-the-counter payment (7-Eleven, M Lhuillier, etc.)</li>
+        </ul>
+      </p>
+    ),
+  },
+  {
+    title: "Why has my payment been declined?",
+    description: (
+      <p>
+        Your payment may have been declined due to various reasons. Please check
+        the following:
+        <ul className="list-disc pl-5">
+          <li>
+            Ensure your card is not expired and the card number, expiration
+            date, and CVV are correct.
+          </li>
+          <li>
+            Check if your card has sufficient funds to cover the purchase.
+          </li>
+          <li>
+            Contact your bank to check if the transaction was declined due to
+            security reasons.
+          </li>
+        </ul>
+      </p>
+    ),
+  },
+  {
+    title: "Avoiding payment scams",
+    description: (
+      <p>
+        To avoid payment scams, please follow these guidelines:
+        <ul className="list-disc pl-5">
+          <li>
+            Only make payments on the official 1 Market Philippines website or
+            app.
+          </li>
+          <li>
+            Be cautious of phishing emails that ask for your payment
+            information.
+          </li>
+          <li>
+            Don't share your payment information with anyone over the phone or
+            email.
+          </li>
+          <li>
+            Use secure payment methods like credit cards or PayPal for online
+            transactions.
+          </li>
+        </ul>
+      </p>
+    ),
+  },
+  {
+    title: "How to redeem a promo code",
+    description: (
+      <p>
+        To redeem a promo code, follow these steps:
+        <ul className="list-disc pl-5">
+          <li>
+            Go to your cart and click on the <b>"Checkout"</b> button.
+          </li>
+          <li>
+            Enter your promo code in the <b>"Promo Code"</b> field and click{" "}
+            <b>"Apply"</b>.
+          </li>
+          <li>Your promo code discount will be applied to your order total.</li>
+          <li>Complete your order by entering your payment information.</li>
+        </ul>
+      </p>
+    ),
+  },
+  {
+    title: "Where can I get the discount?",
+    description: (
+      <p>
+        We have many themed activities, promos, and sales that can be
+        automatically applied at checkout to help you maximize your savings.
+        Please stay tuned.
+      </p>
+    ),
+  },
+  {
+    title: "Why was my promo code not applied?",
+    description: (
+      <p>
+        If your promo code was not applied, please check the following:
+        <ul className="list-disc pl-5">
+          <li>Ensure the promo code is still valid and has not expired.</li>
+          <li>
+            Check if the promo code is applicable to the items in your cart.
+          </li>
+          <li>Confirm that you have entered the promo code correctly.</li>
+          <li>
+            Contact our customer service for assistance if you are still unable
+            to apply the promo code.
+          </li>
+        </ul>
+      </p>
+    ),
+  },
+  {
+    title: "My coupon code is expired. Can I request another one?",
+    description: (
+      <p>
+        We're sorry, but expired coupon codes cannot be reactivated or reissued.
+        Please keep an eye out for new promotions and discounts in the future.
+      </p>
+    ),
+  },
+];
 
-export const SECURITYHELP = [];
+export const SECURITYHELP = [
+  {
+    title: "Report something suspicious on 1 Market Philippines",
+    description: (
+      <p>
+        If you encounter something suspicious on 1 Market Philippines, please
+        report it to us immediately. You can report suspicious activity, such as
+        phishing emails, fake accounts, or fraudulent listings, by contacting
+        our customer service. We take the security of our platform seriously and
+        will investigate all reports to ensure the safety of our users.
+      </p>
+    ),
+  },
+  {
+    title: "How does 1 Market Philippines protect my information?",
+    description: (
+      <p>
+        1 Market Philippines takes the security and privacy of your information
+        seriously. We use industry-standard encryption to protect your personal
+        and payment information. We also have security measures in place to
+        prevent unauthorized access to your account. If you have any concerns
+        about the security of your information, please contact our customer
+        service for assistance.
+      </p>
+    ),
+  },
+  {
+    title:
+      "Is it safe to shop on 1 Market Philippines? How will my information be used?",
+    description: (
+      <p>
+        Shopping on 1 Market Philippines is safe and secure. We use
+        industry-standard encryption to protect your personal and payment
+        information. Your information will only be used to process your orders
+        and provide you with the best shopping experience. We do not share your
+        information with third parties without your consent. If you have any
+        concerns about the security of your information, please contact our
+        customer service for assistance.
+      </p>
+    ),
+  },
+  {
+    title: "How to recognize scams and phishing emails",
+    description: (
+      <p>
+        To recognize scams and phishing emails, please follow these guidelines:
+        <ul className="list-disc pl-5">
+          <li>
+            Be cautious of emails that ask for your personal or payment
+            information.
+          </li>
+          <li>
+            Check the sender's email address to ensure it is from a legitimate
+            source.
+          </li>
+          <li>
+            Avoid clicking on links or downloading attachments from suspicious
+            emails.
+          </li>
+          <li>
+            Report any suspicious emails to our customer service for
+            investigation.
+          </li>
+        </ul>
+      </p>
+    ),
+  },
+  {
+    title: "Guidelines for safe internet access",
+    description: (
+      <p>
+        To ensure safe internet access, please follow these guidelines:
+        <ul className="list-disc pl-5">
+          <li>Use strong and unique passwords for your accounts.</li>
+          <li>
+            Enable two-factor authentication to add an extra layer of security
+            to your accounts.
+          </li>
+          <li>
+            Avoid sharing personal or payment information on unsecured websites.
+          </li>
+          <li>
+            Be cautious of phishing emails and only log in to your accounts on
+            official websites.
+          </li>
+        </ul>
+      </p>
+    ),
+  },
+];
 
-export const POLICIESHELP = [];
+export const POLICIESHELP = [
+  {
+    title: "What is 1 Market Philippines's shipping policy?",
+    description: (
+      <p>
+        Please visit our <a href="/policies/shipping-info" className='underline text-red-800'>shipping info</a> page to view details about our shipping policy.
+      </p>
+    )
+  },
+  {
+    title: "What is 1 Market Philippines's return policy?",
+    description: (
+      <p>
+        Please visit our <a href="/policies/return-policy" className='underline text-red-800'>return & refund policy</a> page to view details about our return policy.
+      </p>
+    )
+  },
+  {
+    title: "What is 1 Market Philippines's privacy policy?",
+    description: (
+      <p>
+        Please visit our <a href="/policies/privacy-policy" className='underline text-red-800'>privacy policy</a> page to view details about our privacy policy.
+      </p>
+    )
+  },
+  {
+    title: "How should we leave comments on 1 Market Philippines?",
+    description: (
+      <p>
+        We welcome feedback and comments from our users. You can leave comments
+        on our products, sellers, and services by visiting the product page and
+        clicking the <b>'Leave a Review'</b> button. You can also contact our
+        customer service to share your feedback or report any issues you
+        encounter on the platform.
+      </p>
+    )
+  },
+  {
+    title: "What is 1 Market Philippines's community guidelines?",
+    description: (
+      <p>
+        Please visit our <a href="/policies/community-guidelines" className='underline text-red-800'>community guidelines</a> page to view details about our community guidelines.
+      </p>
+    )
+  },
+  {
+    title: "What is 1 Market Philippines's intellectual property policy?",
+    description: (
+      <p>
+        Please visit our <a href="/policies/intellectual-property" className='underline text-red-800'>intellectual property policy</a> page to view details about our intellectual property policy.
+      </p>
+    )
+  },
+];

@@ -42,8 +42,8 @@ const LoadingComponent = () => {
   }, []);
 
   return (
-    <div className="w-full h-full fixed inset-0 z-[99] flex items-center flex-col justify-center backdrop-blur bg-black bg-opacity-50">
-      <div className="bg-white w-32 h-32 gap-3 rounded-xl flex items-center flex-col justify-center">
+    <div className="w-full h-full fixed inset-0 z-[99] flex items-center flex-col justify-center bg-white">
+      <div className="bg-white shadow-lg w-32 h-32 gap-3 rounded-xl flex items-center flex-col justify-center">
         {currentIcon}
         <span className="text-base flex items-center gap-2 text-gray-600">
           Loading... <Loader2 className="w-4 h-4 animate-spin" />

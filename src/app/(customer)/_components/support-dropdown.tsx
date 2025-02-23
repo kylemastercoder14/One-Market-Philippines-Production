@@ -41,7 +41,7 @@ const SupportDropdown = () => {
                   "Privacy Policy",
                   "Terms of Use",
                 ].map((option, index) => {
-                  const href = option.toLowerCase().replace(" ", "-");
+                  const href = option.toLowerCase().replace(/ /g, "-");
                   return (
                     <li
                       key={index}

@@ -9,20 +9,20 @@ const Footer = () => {
         <div className="col-span-2">
           <p className="font-semibold">Company info</p>
           <div className="flex flex-col mt-3 text-sm space-y-2">
-            <Link href="#" className="text-zinc-400 hover:text-white">
+            <Link href="/about-us" className="text-zinc-400 hover:text-white">
               About 1 Market Philippines
             </Link>
-            <Link href="#" className="text-zinc-400 hover:text-white">
+            <Link href="/contact-us" className="text-zinc-400 hover:text-white">
               Contact Us
             </Link>
-            <Link href="#" className="text-zinc-400 hover:text-white">
+            <Link href="/press" className="text-zinc-400 hover:text-white">
               Press
             </Link>
-            <Link href="#" className="text-zinc-400 hover:text-white">
+            <Link
+              href="/seller/account/login"
+              className="text-zinc-400 hover:text-white"
+            >
               Seller Center
-            </Link>
-            <Link href="#" className="text-zinc-400 hover:text-white">
-              Terms & conditions
             </Link>
           </div>
           <p className="font-semibold md:mt-20 mt-5">We accept payments</p>
@@ -67,16 +67,28 @@ const Footer = () => {
         <div className="col-span-2">
           <p className="font-semibold">Customer service</p>
           <div className="flex flex-col mt-3 text-sm space-y-2">
-            <Link href="#" className="text-zinc-400 hover:text-white">
+            <Link
+              href="/return-and-refund"
+              className="text-zinc-400 hover:text-white"
+            >
               Return and refund policy
             </Link>
-            <Link href="#" className="text-zinc-400 hover:text-white">
+            <Link
+              href="/intellectual-property"
+              className="text-zinc-400 hover:text-white"
+            >
               Intellectual property policy
             </Link>
-            <Link href="#" className="text-zinc-400 hover:text-white">
+            <Link
+              href="/shipping-info"
+              className="text-zinc-400 hover:text-white"
+            >
               Shipping info
             </Link>
-            <Link href="#" className="text-zinc-400 hover:text-white">
+            <Link
+              href="/report-suspicious"
+              className="text-zinc-400 hover:text-white"
+            >
               Report suspicious activity
             </Link>
           </div>
@@ -84,16 +96,22 @@ const Footer = () => {
         <div className="col-span-2">
           <p className="font-semibold">Help</p>
           <div className="flex flex-col mt-3 text-sm space-y-2">
-            <Link href="#" className="text-zinc-400 hover:text-white">
+            <Link
+              href="/support-center"
+              className="text-zinc-400 hover:text-white"
+            >
               Support center & FAQ
             </Link>
-            <Link href="#" className="text-zinc-400 hover:text-white">
-              Safety center
+            <Link
+              href="/terms-of-use"
+              className="text-zinc-400 hover:text-white"
+            >
+              Terms & conditions
             </Link>
-            <Link href="#" className="text-zinc-400 hover:text-white">
+            <Link href="/purchase-protection" className="text-zinc-400 hover:text-white">
               Purchase protection
             </Link>
-            <Link href="#" className="text-zinc-400 hover:text-white">
+            <Link href="/site-map" className="text-zinc-400 hover:text-white">
               Sitemap
             </Link>
           </div>

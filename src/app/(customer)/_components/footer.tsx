@@ -15,9 +15,7 @@ const Footer = () => {
             <Link href="/contact-us" className="text-zinc-400 hover:text-white">
               Contact Us
             </Link>
-            <Link href="/press" className="text-zinc-400 hover:text-white">
-              Press
-            </Link>
+
             <Link
               href="/seller/account/login"
               className="text-zinc-400 hover:text-white"

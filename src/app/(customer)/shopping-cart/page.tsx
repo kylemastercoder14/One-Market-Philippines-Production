@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -10,7 +10,6 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import EncryptedBanner from "@/components/globals/encrypted-banner";
-import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { TriangleAlert } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
@@ -23,30 +22,7 @@ const ShoppingCart = () => {
   const { items, removeAll } = useCart();
   const router = useRouter();
 
-  // Track checked items
-  const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>(
-    items.reduce((acc, item) => ({ ...acc, [item.id]: false }), {})
-  );
-
-  // Toggle individual item selection
-  const toggleCheck = (id: string) => {
-    setCheckedItems((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
-
-  // Toggle select all
-  const toggleSelectAll = () => {
-    const allChecked = Object.values(checkedItems).every(Boolean);
-    const newCheckedState = items.reduce(
-      (acc, item) => ({ ...acc, [item.id]: !allChecked }),
-      {}
-    );
-    setCheckedItems(newCheckedState);
-  };
-
-  // Get selected items for checkout
-  const selectedItems = items.filter((item) => checkedItems[item.id]);
-
-  const totalPrice = selectedItems.reduce(
+  const totalPrice = items.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
@@ -64,25 +40,10 @@ const ShoppingCart = () => {
         </BreadcrumbList>
       </Breadcrumb>
       <div className="grid md:grid-cols-10 grid-cols-1 gap-10 mt-3">
-        <div className="col-span-7">
-          <EncryptedBanner />
-          <div className="flex items-center justify-between mt-4">
-            <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                onChange={toggleSelectAll}
-                checked={selectedItems.length === items.length}
-                className="w-5 h-5 cursor-pointer bg-red-800"
-              />
-              <Label
-                onClick={toggleSelectAll}
-                className="text-base"
-                htmlFor="option-one"
-              >
-                Select all ({items.length})
-              </Label>
-            </div>
-            <Button variant="ghost" onClick={removeAll} size="sm">
+        <div className="col-span-7 max-h-[50vh] no-scrollbar overflow-y-auto">
+          <div className="flex items-center justify-between">
+            <EncryptedBanner />
+            <Button variant="destructive" onClick={removeAll} size="sm">
               Remove All
             </Button>
           </div>
@@ -98,7 +59,6 @@ const ShoppingCart = () => {
                   image={product.image}
                   key={product.id}
                   quantity={product.quantity}
-                  onToggle={toggleCheck}
                 />
               ))
             ) : (
@@ -109,10 +69,14 @@ const ShoppingCart = () => {
                   width={200}
                   height={200}
                 />
-                <p className="font-semibold mb-2">
-                  Your cart is empty
-                </p>
-                <Button onClick={() => router.push("/")} variant="default" size="sm">Start shopping now!</Button>
+                <p className="font-semibold mb-2">Your cart is empty</p>
+                <Button
+                  onClick={() => router.push("/")}
+                  variant="default"
+                  size="sm"
+                >
+                  Start shopping now!
+                </Button>
               </div>
             )}
           </div>
@@ -123,17 +87,15 @@ const ShoppingCart = () => {
             <p>Item(s) Total:</p>
             <p className="text-muted-foreground line-through">₱{totalPrice}</p>
           </div>
-          <div className="flex items-center text-sm mt-2 justify-between">
-            <p>Item(s) Discount:</p>
-            <p className="text-orange-600">-₱150</p>
-          </div>
           <Separator className="my-4" />
           <div className="flex items-center mt-5 justify-between">
             <p className="font-semibold">Total:</p>
-            <p className="font-semibold">₱{totalPrice - 150}</p>
+            <p className="font-semibold">
+              {items.length === 0 ? "0" : `₱${totalPrice}`}
+            </p>
           </div>
           <Button
-            disabled={selectedItems.length === 0}
+            disabled={items.length === 0}
             onClick={() => router.push("/checkout")}
             className="rounded-full w-full mt-6 font-semibold"
             size="lg"

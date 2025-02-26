@@ -43,7 +43,7 @@ const ComboBox = ({
         <Button
           disabled={disabled}
           className={cn(
-            "w-full border border-gray-300 rounded-full px-3 py-2 flex items-center justify-between",
+            "w-full border border-gray-300 rounded-md px-3 py-2 flex items-center justify-between",
             !value && "text-gray-500"
           )}
           variant="ghost"

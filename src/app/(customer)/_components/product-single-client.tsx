@@ -17,8 +17,8 @@ import { StarIcon as Star } from "@heroicons/react/24/outline";
 import Preview from "@/components/globals/preview";
 import ReviewsBanner from "@/components/globals/reviews-banner";
 import ReviewCard from "@/components/globals/review-card";
-import useCart from "@/hooks/use-cart";
-import FullCalendarComponent from '@/components/globals/full-calendar-component';
+import FullCalendarComponent from "@/components/globals/full-calendar-component";
+import useCart from '@/hooks/use-cart';
 
 interface ProductsSingleClientPropsVariants extends ProductsSingleClientProps {
   sellerProductVariantsOptions: SellerProductVariantsOptions[];
@@ -30,6 +30,7 @@ interface ProductsSingleClientProps extends SellerProduct {
 }
 
 interface SimplifiedOption {
+  id: string;
   name: string;
   price?: number | null;
   image?: string | null;
@@ -88,6 +89,7 @@ const ProductSingleClient = ({
       variant: `${selectedColor?.name ?? ""} (${selectedSize?.name ?? ""})`,
     });
   };
+
   return (
     <>
       <div className="relative flex flex-col md:flex-row gap-16 mt-5">
@@ -282,7 +284,7 @@ const ProductSingleClient = ({
               <div className="mt-5">
                 <p className="text-[#0A8800] font-semibold">Shipping: TBA</p>
                 <p className="mt-3 text-sm">
-                  Delivery: 10-30 minuted depending on the location
+                  Delivery: 10-30 minutes depending on the location
                 </p>
                 <p className="mt-1 text-sm">
                   <strong>Courier</strong>: We aim to support tricycle drivers,
@@ -294,10 +296,7 @@ const ProductSingleClient = ({
             </>
           )}
           {product?.seller?.businessType === "Service" ? (
-            <Button
-              size="lg"
-              className="rounded-full h-12 mt-5"
-            >
+            <Button size="lg" className="rounded-full h-12 mt-5">
               Book appointment &rarr;
             </Button>
           ) : (

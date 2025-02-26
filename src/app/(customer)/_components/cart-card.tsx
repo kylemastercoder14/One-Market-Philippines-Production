@@ -6,33 +6,23 @@ import useCart from "@/hooks/use-cart";
 
 const CartCard = ({
   image,
-  checked,
   title,
   variant,
   price,
   id,
   quantity,
-  onToggle,
 }: {
   id: string;
   image: string;
-  checked?: boolean;
   title: string;
   variant: string;
   price: number;
   quantity: number;
-  onToggle: (id: string) => void;
 }) => {
   const { updateQuantity, removeItem } = useCart();
   return (
     <div className="flex justify-between">
       <div className="flex items-start gap-3">
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={() => onToggle(id)}
-          className="w-5 h-5 my-auto cursor-pointer"
-        />
         <div className="relative w-28 h-28">
           <Image
             src={image}

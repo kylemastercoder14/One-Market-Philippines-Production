@@ -2,11 +2,12 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { toast } from "sonner";
 
-interface CartItem {
+export interface CartItem {
   id: string;
   name: string;
   image: string;
   price: number;
+  sellerId?: string;
   variant: string;
   quantity: number;
 }

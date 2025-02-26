@@ -25,6 +25,33 @@ model User {
   account          Account[]
   feedback         Feedback[]
   reportSuspicious ReportSuspicious[]
+  reviews          Reviews[]
+  order            Order[]
+  address          Address[]
+}
+
+model Address {
+  id            String  @id @default(cuid())
+  firstName     String
+  lastName      String
+  contactNumber String
+  homeAddress   String
+  barangay      String
+  city          String
+  province      String
+  region        String
+  zipCode       String
+  isDefault     Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  order  Order[]
+
+  @@index([userId])
 }
 
 model Account {
@@ -128,6 +155,63 @@ model ReportSuspicious {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+}
+
+model Reviews {
+  id        String   @id @default(cuid())
+  rating    String
+  comment   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  productId String
+  product   SellerProduct @relation(fields: [productId], references: [slug], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([productId])
+}
+
+model Order {
+  id            String   @id @default(cuid())
+  orderNumber   String   @unique
+  status        String   @default("Pending")
+  paymentStatus String   @default("Pending")
+  paymentMethod String
+  type          String // (Delivery, Pickup)
+  totalAmount   Float
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  addressId String
+  address   Address @relation(fields: [addressId], references: [id], onDelete: Cascade)
+
+  orderItem OrderItem[]
+
+  @@index([userId])
+  @@index([addressId])
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  quantity  Int
+  price     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  productId String
+  product   SellerProduct @relation(fields: [productId], references: [slug], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([productId])
 }
 
 // SELLER SCHEMA
@@ -246,6 +330,8 @@ model SellerProduct {
 
   discountId String?
   discount   SellerDiscount? @relation(fields: [discountId], references: [id], onDelete: Cascade)
+  reviews    Reviews[]
+  orderItem  OrderItem[]
 
   @@index([sellerId])
   @@index([discountId])

@@ -50,17 +50,17 @@ const Notice = () => {
           <div className="flex items-center gap-4 text-white">
             <div className="flex items-center gap-2 text-sm text-white">
               <LockKeyhole className="w-4 h-4" />
-              <span>Security Privacy</span>
+              <span className='lg:block hidden'>Security Privacy</span>
             </div>
             <span>|</span>
             <div className="flex items-center gap-2 text-sm text-white">
               <Wallet2 className="w-4 h-4" />
-              <span>Safe Payments</span>
+              <span className='lg:block hidden'>Safe Payments</span>
             </div>
             <span>|</span>
             <div className="flex items-center gap-2 text-sm text-white">
               <Truck className="w-4 h-4" />
-              <span>Delivery Guarantee</span>
+              <span className='lg:block hidden'>Delivery Guarantee</span>
               <ChevronRight className="w-4 h-4" />
             </div>
           </div>
@@ -76,7 +76,7 @@ const Notice = () => {
               Market Philippines won&apos;t ask for extra free via SMS or email.
             </span>
           </div>
-          <div className="flex items-center gap-1 text-sm text-[#0A8800]">
+          <div className="lg:flex hidden items-center gap-1 text-sm text-[#0A8800]">
             <span>View</span>
             <ChevronRight className="w-4 h-4" />
           </div>

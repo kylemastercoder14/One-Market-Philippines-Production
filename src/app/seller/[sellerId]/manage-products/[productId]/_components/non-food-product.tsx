@@ -1,6 +1,6 @@
 "use client";
 
-import { SellerProduct, SubCategory } from "@prisma/client";
+import { SellerProduct, SubCategory, Seller } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -39,11 +39,11 @@ import SuggestCategoryForm from '@/components/forms/suggest-category-form';
 
 const NonFoodProductForm = ({
   subCategories,
-  sellerId,
+  seller,
   initialData,
 }: {
   subCategories: SubCategory[];
-  sellerId: string;
+  seller: Seller | null;
   initialData: SellerProduct | null;
 }) => {
   const [isAlertOpen, setIsAlertOpen] = React.useState(false);
@@ -63,7 +63,7 @@ const NonFoodProductForm = ({
       weight: initialData?.weight || 0,
       sku: initialData?.sku || "",
       isVariant: initialData?.isVariant || false,
-      category: initialData?.category || "",
+      subCategorySlug: initialData?.subCategoryId || "",
       tags: initialData?.tags || [],
       warrantyPeriod: initialData?.warrantyPeriod || "",
       warrantyPolicy: initialData?.warrantyPolicy || "",
@@ -98,28 +98,28 @@ const NonFoodProductForm = ({
         const res = await updateNonFoodProduct(
           values,
           initialData.id,
-          sellerId
+          seller?.id as string
         );
         if (res.success) {
           toast.success(res.success);
-          router.push(`/seller/${sellerId}/manage-products`);
+          router.push(`/seller/${seller?.id}/manage-products`);
         } else {
           toast.error(res.error);
         }
       } else {
         if (values.isVariant) {
-          const res = await createNonFoodProductWithoutPrice(values, sellerId);
+          const res = await createNonFoodProductWithoutPrice(values, seller?.id as string, seller?.categorySlug as string);
           if (res.success) {
             toast.success(res.success);
-            router.push(`/seller/${sellerId}/manage-products`);
+            router.push(`/seller/${seller?.id}/manage-products`);
           } else {
             toast.error(res.error);
           }
         } else {
-          const res = await createNonFoodProductWithPrice(values, sellerId);
+          const res = await createNonFoodProductWithPrice(values, seller?.id as string, seller?.categorySlug as string);
           if (res.success) {
             toast.success(res.success);
-            router.push(`/seller/${sellerId}/manage-products/create/${values.slug}`);
+            router.push(`/seller/${seller?.id}/manage-products/create/${values.slug}`);
           } else {
             toast.error(res.error);
           }
@@ -142,7 +142,6 @@ const NonFoodProductForm = ({
         title="Are you sure you want to save it without adding any variants?"
         description="You have not added any variants for this product. If you save it now, you will not be able to add variants later."
       />
-
       <Form {...form}>
         <form>
           <div className="mt-5 grid md:grid-cols-10 grid-cols-1 gap-5">
@@ -323,7 +322,7 @@ const NonFoodProductForm = ({
                 <div className="grid md:grid-cols-2 grid:cols-1 gap-3">
                   <FormField
                     control={form.control}
-                    name="category"
+                    name="subCategorySlug"
                     render={({ field }) => (
                       <FormItem className="relative">
                         <FormLabel>
@@ -350,7 +349,7 @@ const NonFoodProductForm = ({
                             placeholder="Select the product category"
                             data={subCategories.map((subCategory) => ({
                               label: subCategory.name,
-                              value: subCategory.name,
+                              value: subCategory.slug,
                             }))}
                           />
                         </FormControl>
@@ -581,7 +580,7 @@ const NonFoodProductForm = ({
                     onClick={() => {
                       if (form.watch("isVariant")) {
                         router.push(
-                          `/seller/${sellerId}/manage-products/create/${form.watch("slug")}`
+                          `/seller/${seller?.id}/manage-products/create/${form.watch("slug")}`
                         );
                         form.handleSubmit(onSubmit)();
                         toast.success("Product saved successfully");

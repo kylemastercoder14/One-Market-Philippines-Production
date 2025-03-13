@@ -222,30 +222,30 @@ export const finishingSellerData = async (
     });
 
     switch (data.category) {
-      case "fashion-&-apparel":
+      case "fashion-apparel":
       case "home-supplies":
-      case "arts,-crafts-&-sewing":
+      case "arts-crafts-sewing":
       case "automotive":
-      case "beauty-&-health":
-      case "jewelry-&-accessories":
+      case "beauty-health":
+      case "jewelry-accessories":
       case "pet-supplies":
-      case "sports-&-outdoor":
-      case "tools-&-hardwares":
-      case "toys-&-games":
+      case "sports-outdoor":
+      case "tools-hardwares":
+      case "toys-games":
         await updateBusinessType(existingSeller.id, "NonFood");
         break;
-      case "food-&-beverages":
+      case "food-beverages":
         await updateBusinessType(existingSeller.id, "Food");
         break;
-      case "beauty-&-personal-care-services":
+      case "beauty-personal-care-services":
       case "creative-services":
-      case "education-&-training-services":
+      case "education-training-services":
       case "event-services":
-      case "health-&-wellness-services":
+      case "health-wellness-services":
       case "home-services":
       case "professional-services":
       case "real-estate-services":
-      case "transportation-&-logistic-services":
+      case "transportation-logistic-services":
         await updateBusinessType(existingSeller.id, "Service");
         break;
     }

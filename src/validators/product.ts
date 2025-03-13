@@ -13,7 +13,7 @@ export const NonFoodProductValidators = z.object({
     message: "Status is required",
   }),
   tags: z.array(z.string()).nonempty("Please at least one tag"),
-  category: z.string().min(1, { message: "Category is required" }),
+  subCategorySlug: z.string().min(1, { message: "Category is required" }),
   warrantyPeriod: z.string().optional(),
   warrantyPolicy: z.string().optional(),
   media: z

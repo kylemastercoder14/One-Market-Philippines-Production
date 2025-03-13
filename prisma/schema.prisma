@@ -47,9 +47,9 @@ model Address {
   updatedAt DateTime @updatedAt
 
   userId String
-  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  order  Order[]
+  order Order[]
 
   @@index([userId])
 }
@@ -180,7 +180,6 @@ model Order {
   status        String   @default("Pending")
   paymentStatus String   @default("Pending")
   paymentMethod String
-  type          String // (Delivery, Pickup)
   totalAmount   Float
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -279,11 +278,13 @@ model Category {
   id        String   @id @default(cuid())
   name      String
   slug      String   @unique
+  image     String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   seller            Seller[]
   sellerSubCategory SubCategory[]
+  sellerProduct     SellerProduct[]
 }
 
 model SubCategory {
@@ -294,8 +295,10 @@ model SubCategory {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  categorySlug String
-  category     Category @relation(fields: [categorySlug], references: [slug], onDelete: Cascade)
+  categorySlug  String
+  category      Category        @relation(fields: [categorySlug], references: [slug], onDelete: Cascade)
+
+  sellerProduct SellerProduct[]
 
   @@index([categorySlug])
 }
@@ -305,7 +308,6 @@ model SellerProduct {
   slug                String   @unique
   name                String
   description         String
-  category            String
   images              String[]
   video               String?
   brand               String?
@@ -326,6 +328,12 @@ model SellerProduct {
   sellerId String
   seller   Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)
 
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [slug], onDelete: Cascade)
+
+  subCategoryId String
+  subCategory   SubCategory @relation(fields: [subCategoryId], references: [slug], onDelete: Cascade)
+
   sellerProductVariants SellerProductVariants[]
 
   discountId String?
@@ -335,6 +343,8 @@ model SellerProduct {
 
   @@index([sellerId])
   @@index([discountId])
+  @@index([subCategoryId])
+  @@index([categoryId])
 }
 
 model SellerProductVariants {

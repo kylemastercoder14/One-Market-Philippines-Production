@@ -50,7 +50,7 @@ const Checkout = () => {
   const [loading, setLoading] = React.useState(false);
   const [addressModal, setAddressModal] = React.useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] =
-    React.useState("gcash");
+    React.useState("Online payment");
   const totalPrice = items.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
@@ -88,7 +88,8 @@ const Checkout = () => {
     fetchAllAddress();
   }, []);
 
-  const handlePayment = async () => {
+  const handlePayment = async (event: React.FormEvent) => {
+    event.preventDefault();
     const paymentData = {
       external_id: `1 Market Philippines-${Date.now()}`,
       amount: grandTotal,
@@ -101,8 +102,32 @@ const Checkout = () => {
     };
 
     try {
+      const data = {
+        grandTotal,
+        orderNumber,
+        items,
+        selectedAddress,
+        selectedPaymentMethod,
+      };
       const payment = await createPayment(paymentData);
-      setInvoiceUrl(payment.invoice_url);
+      if (payment) {
+        setInvoiceUrl(payment.invoice_url);
+        const res = await fetch("/api/orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (res.ok) {
+          toast.success("Order created successfully");
+        } else {
+          toast.error("Failed to create order");
+        }
+      } else {
+        toast.error("Payment failed. Please try again.");
+      }
     } catch (error) {
       console.error("Payment failed:", error);
     }
@@ -322,9 +347,13 @@ const Checkout = () => {
               ))}
             </div>
             <p className="mt-3 font-semibold mb-3">Payment methods</p>
-            <RadioGroup defaultValue="option-one" className="space-y-4">
+            <RadioGroup
+              defaultValue={selectedPaymentMethod}
+              onValueChange={(value) => setSelectedPaymentMethod(value)}
+              className="space-y-4"
+            >
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="Online payment" checked={selectedPaymentMethod === "Online payment"} id="Online payment" />
+                <RadioGroupItem value="Online payment" id="Online payment" />
                 <div className="flex items-center gap-2">
                   <Image
                     title="GCash"
@@ -355,7 +384,6 @@ const Checkout = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem
-                checked={selectedPaymentMethod === "Cash on delivery"}
                   value="Cash on delivery"
                   id="Cash on delivery"
                 />
@@ -367,9 +395,7 @@ const Checkout = () => {
                     width={50}
                     height={50}
                   />
-                  <p>
-                    Cash on Delivery{" "}
-                  </p>
+                  <p>Cash on Delivery </p>
                 </div>
               </div>
             </RadioGroup>

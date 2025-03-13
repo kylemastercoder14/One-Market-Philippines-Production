@@ -10,8 +10,9 @@ import { Button } from "@/components/ui/button";
 import { List, ShoppingCart } from "lucide-react";
 import { Category } from "@prisma/client";
 import axios from "axios";
-import UserDropdown from './header-components/user-dropdown';
-import { BeatLoader } from 'react-spinners';
+import UserDropdown from "./header-components/user-dropdown";
+import { BeatLoader } from "react-spinners";
+import { fetchCategories } from "@/actions/categories";
 
 const HeaderMobile = ({ user }: { user: any }) => {
   const [isNavbarVisible, setIsNavbarVisible] = React.useState(true);
@@ -21,23 +22,19 @@ const HeaderMobile = ({ user }: { user: any }) => {
   const sliderRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    const fetchCategories = async () => {
+    const loadCategories = async () => {
       setLoading(true);
       try {
-        const response = await axios.get("/api/categories");
-        const fetchedCategories = response.data;
-
-        setTimeout(() => {
-          setCategories(fetchedCategories);
-          setLoading(false);
-        }, 2000);
+        const fetchedCategories = await fetchCategories();
+        setCategories(fetchedCategories);
       } catch (error) {
-        console.error("Error fetching categories:", error);
-        setLoading(false); // Ensure loading stops even on error
+        console.error("Error loading categories:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchCategories();
+    loadCategories();
   }, []);
 
   React.useEffect(() => {
@@ -122,9 +119,6 @@ const HeaderMobile = ({ user }: { user: any }) => {
             <MobileSearch />
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon">
-              <List className="w-5 h-5" />
-            </Button>
             <UserDropdown auth={user} />
             <Button variant="ghost" size="icon">
               <ShoppingCart className="w-5 h-5" />
@@ -132,7 +126,12 @@ const HeaderMobile = ({ user }: { user: any }) => {
           </div>
         </div>
         {/* categories bar */}
-        <div ref={sliderRef} onMouseDown={handleDragScroll} className="flex mt-3 overflow-x-auto space-x-3 no-scrollbar cursor-grab">
+        <div
+          ref={sliderRef}
+          onMouseDown={handleDragScroll}
+          className="flex mt-3 overflow-x-auto space-x-3 no-scrollbar cursor-grab"
+          style={{userSelect: "none"}}
+        >
           {loading ? (
             <BeatLoader />
           ) : (

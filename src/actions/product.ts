@@ -5,7 +5,6 @@
 import { ProductStatusHTML } from "@/components/email-template/product-status-email";
 import db from "@/lib/db";
 import nodemailer from "nodemailer";
-import { auth } from "@/lib/auth";
 
 export const createNonFoodProductWithVariants = async (values: any) => {
   try {
@@ -15,7 +14,8 @@ export const createNonFoodProductWithVariants = async (values: any) => {
       slug,
       description,
       tags,
-      category,
+      categorySlug,
+      subCategorySlug,
       images,
       brand,
       materials,
@@ -44,7 +44,8 @@ export const createNonFoodProductWithVariants = async (values: any) => {
         slug,
         description,
         tags,
-        category,
+        categoryId: categorySlug,
+        subCategoryId: subCategorySlug,
         images,
         brand,
         materials,
@@ -164,7 +165,8 @@ export const updateNonFoodProductWithVariants = async (
 
 export const createNonFoodProductWithPrice = async (
   values: any,
-  sellerId: string
+  sellerId: string,
+  categorySlug: string
 ) => {
   try {
     // Destructure product data
@@ -173,7 +175,7 @@ export const createNonFoodProductWithPrice = async (
       slug,
       description,
       tags,
-      category,
+      subCategorySlug,
       media,
       price,
       brand,
@@ -201,7 +203,8 @@ export const createNonFoodProductWithPrice = async (
         slug,
         description,
         tags,
-        category,
+        categoryId: categorySlug,
+        subCategoryId: subCategorySlug,
         images: media,
         price,
         brand,
@@ -229,7 +232,8 @@ export const createNonFoodProductWithPrice = async (
 
 export const createNonFoodProductWithoutPrice = async (
   values: any,
-  sellerId: string
+  sellerId: string,
+  categorySlug: string
 ) => {
   try {
     // Destructure product data
@@ -238,7 +242,7 @@ export const createNonFoodProductWithoutPrice = async (
       slug,
       description,
       tags,
-      category,
+      subCategorySlug,
       media,
       brand,
       materials,
@@ -266,7 +270,8 @@ export const createNonFoodProductWithoutPrice = async (
         slug,
         description,
         tags,
-        category,
+        categoryId: categorySlug,
+        subCategoryId: subCategorySlug,
         images: media,
         price: 0,
         brand,
@@ -302,7 +307,8 @@ export const createService = async (values: any, sellerId: string) => {
       description,
       price,
       tags,
-      category,
+      categorySlug,
+      subCategorySlug,
       media,
       sku,
       isVariant,
@@ -324,7 +330,8 @@ export const createService = async (values: any, sellerId: string) => {
         slug,
         description,
         tags,
-        category,
+        categoryId: categorySlug,
+        subCategoryId: subCategorySlug,
         images: media,
         price,
         sku,
@@ -371,7 +378,7 @@ export const updateService = async (
         slug,
         description,
         tags,
-        category,
+        categoryId: category,
         images: media,
         price,
         sku,
@@ -609,7 +616,7 @@ export const searchProducts = async (query: string) => {
         OR: [
           { name: { contains: query, mode: "insensitive" } },
           { description: { contains: query, mode: "insensitive" } },
-          { category: { contains: query, mode: "insensitive" } },
+          { categoryId: { contains: query, mode: "insensitive" } },
           { tags: { has: query } },
         ],
       },
@@ -620,74 +627,5 @@ export const searchProducts = async (query: string) => {
   } catch (error) {
     console.error(error);
     return { error: "An error occurred. Please try again." };
-  }
-};
-
-export const addToCart = async (
-  productId: string,
-  quantity: number,
-  variantIds: string[]
-) => {
-  const session = await auth();
-  const data = session?.user;
-
-  if (!data) {
-    return { error: "User not found" };
-  }
-
-  try {
-    // Check if the product already exists in the cart
-    const isCartExisting = await db.cart.findFirst({
-      where: {
-        userId: data.id,
-        productId: productId,
-      },
-      include: {
-        cartVariants: true,
-      },
-    });
-
-    if (isCartExisting) {
-      // ✅ Check if the same variants already exist
-      const existingVariantIds = isCartExisting.cartVariants.map(
-        (v) => v.variantId
-      );
-      const isSameVariants = variantIds.every((id) =>
-        existingVariantIds.includes(id)
-      );
-
-      if (isSameVariants) {
-        await db.cart.update({
-          where: { id: isCartExisting.id },
-          data: { quantity: isCartExisting.quantity + quantity },
-        });
-
-        return { success: "Product quantity updated in cart" };
-      }
-    }
-
-    // ✅ Create a new cart item
-    const newCart = await db.cart.create({
-      data: {
-        userId: data.id as string,
-        productId: productId,
-        quantity: quantity,
-      },
-    });
-
-    // ✅ Store selected variants in CartVariant table
-    await db.cartVariant.createMany({
-      data: variantIds.map((variantId) => ({
-        cartId: newCart.id,
-        variantId: variantId,
-      })),
-    });
-
-    return { success: "Product added to cart" };
-  } catch (error) {
-    console.error("Error adding to cart:", error);
-    return {
-      error: error instanceof Error ? error.message : "Unknown error occurred",
-    };
   }
 };

@@ -14,7 +14,7 @@ const Homepage = () => {
   return (
     <>
       <Banner />
-      <main className="md:px-[200px] px-10 pb-20 pt-10">
+      <main className="lg:px-[200px] px-10 pb-20 pt-10">
         <Notice />
         <section className="mt-10">
           <div className="flex items-center justify-between">

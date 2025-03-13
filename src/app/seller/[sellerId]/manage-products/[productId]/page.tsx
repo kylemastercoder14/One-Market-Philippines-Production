@@ -52,7 +52,7 @@ const ProductId = async (props: {
       {businessType === "NonFood" && (
         <NonFoodProductForm
           subCategories={seller?.category?.sellerSubCategory || []}
-          sellerId={params.sellerId}
+          seller={seller}
           initialData={products}
         />
       )}

@@ -31,6 +31,7 @@ const SellerProducts = async (props: {
           sellerProductVariantsOptions: true,
         },
       },
+      subCategory: true,
     },
   });
 
@@ -62,7 +63,7 @@ const SellerProducts = async (props: {
         id: item.id,
         name: item.name,
         image: item.images[0],
-        category: item.category,
+        category: item.subCategory?.name,
         sku: item.sku,
         availability: item.status,
         slug: item.slug,

@@ -56,14 +56,14 @@ const ProductSlug = async (props: {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink href={`/type/${product?.seller?.categorySlug}`} className="capitalize">
-              {product?.seller?.categorySlug?.replace(/-/g, " ") ||
+            <BreadcrumbLink href={`/type/${product?.categoryId}`} className="capitalize">
+              {product?.categoryId?.replace(/-/g, " ") ||
                 "Unknown Category"}
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink href={`/category/${product?.category}`}>{product?.category}</BreadcrumbLink>
+            <BreadcrumbLink className='capitalize' href={`/category/${product?.subCategoryId}`}>{product?.subCategoryId.replace(/-/g, " ")}</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>

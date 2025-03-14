@@ -35,7 +35,7 @@ const ProductsGridClient = ({
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const filteredProducts = selectedCategory
-    ? products.filter((product) => product.category === selectedCategory)
+    ? products.filter((product) => product.subCategoryId === selectedCategory)
     : products;
   return (
     <>

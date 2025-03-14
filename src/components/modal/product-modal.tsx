@@ -88,7 +88,7 @@ const ProductModal = ({
       .filter((product) =>
         selectedCategory === "all" || selectedCategory === ""
           ? true
-          : product.category === selectedCategory
+          : product.subCategoryId === selectedCategory
       )
       .filter((product) =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase())

@@ -1,6 +1,6 @@
 "use client";
 
-import { SellerProduct, SubCategory } from "@prisma/client";
+import { Seller, SellerProduct, SubCategory } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -37,11 +37,11 @@ import SuggestCategoryForm from "@/components/forms/suggest-category-form";
 
 const ServiceProductForm = ({
   subCategories,
-  sellerId,
+  seller,
   initialData,
 }: {
   subCategories: SubCategory[];
-  sellerId: string;
+  seller: Seller | null;
   initialData: SellerProduct | null;
 }) => {
   const router = useRouter();
@@ -56,7 +56,7 @@ const ServiceProductForm = ({
       price: initialData?.price || 0,
       sku: initialData?.sku || "",
       isVariant: initialData?.isVariant || false,
-      category: initialData?.category || "",
+      subCategorySlug: initialData?.subCategoryId || "",
       tags: initialData?.tags || [],
       slug: initialData?.slug || "",
     },
@@ -85,18 +85,26 @@ const ServiceProductForm = ({
   async function onSubmit(values: z.infer<typeof ServiceValidators>) {
     try {
       if (initialData) {
-        const res = await updateService(values, initialData.id, sellerId);
+        const res = await updateService(
+          values,
+          initialData.id,
+          seller?.id as string
+        );
         if (res.success) {
           toast.success(res.success);
-          router.push(`/seller/${sellerId}/manage-products`);
+          router.push(`/seller/${seller?.id}/manage-products`);
         } else {
           toast.error(res.error);
         }
       } else {
-        const res = await createService(values, sellerId);
+        const res = await createService(
+          values,
+          seller?.id as string,
+          seller?.categorySlug as string
+        );
         if (res.success) {
           toast.success(res.success);
-          router.push(`/seller/${sellerId}/manage-products`);
+          router.push(`/seller/${seller?.id}/manage-products`);
         } else {
           toast.error(res.error);
         }
@@ -182,7 +190,7 @@ const ServiceProductForm = ({
                 <div className="grid md:grid-cols-2 grid:cols-1 gap-3">
                   <FormField
                     control={form.control}
-                    name="category"
+                    name="subCategorySlug"
                     render={({ field }) => (
                       <FormItem className="relative">
                         <FormLabel>
@@ -209,7 +217,7 @@ const ServiceProductForm = ({
                             placeholder="Select the service category"
                             data={subCategories.map((subCategory) => ({
                               label: subCategory.name,
-                              value: subCategory.name,
+                              value: subCategory.slug,
                             }))}
                           />
                         </FormControl>

@@ -59,14 +59,14 @@ const ProductId = async (props: {
       {businessType === "Food" && (
         <FoodProductForm
           subCategories={seller?.category?.sellerSubCategory || []}
-          sellerId={params.sellerId}
+          seller={seller}
           initialData={products}
         />
       )}
       {businessType === "Service" && (
         <ServiceProductForm
           subCategories={seller?.category?.sellerSubCategory || []}
-          sellerId={params.sellerId}
+          seller={params.sellerId}
           initialData={products}
         />
       )}

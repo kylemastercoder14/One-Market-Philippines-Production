@@ -55,7 +55,7 @@ export const ServiceValidators = z.object({
     message: "Status is required",
   }),
   tags: z.array(z.string()).nonempty("Please at least one tag"),
-  category: z.string().min(1, { message: "Category is required" }),
+  subCategorySlug: z.string().min(1, { message: "Category is required" }),
   media: z
     .array(
       z.union([z.string().url(), z.instanceof(File)]).refine(

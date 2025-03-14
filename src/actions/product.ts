@@ -298,7 +298,11 @@ export const createNonFoodProductWithoutPrice = async (
   }
 };
 
-export const createService = async (values: any, sellerId: string) => {
+export const createService = async (
+  values: any,
+  sellerId: string,
+  categorySlug: string
+) => {
   try {
     // Destructure product data
     const {
@@ -307,7 +311,6 @@ export const createService = async (values: any, sellerId: string) => {
       description,
       price,
       tags,
-      categorySlug,
       subCategorySlug,
       media,
       sku,
@@ -359,8 +362,16 @@ export const updateService = async (
 ) => {
   try {
     // Destructure product data
-    const { title, slug, description, tags, category, media, price, sku } =
-      values;
+    const {
+      title,
+      slug,
+      description,
+      tags,
+      subCategorySlug,
+      media,
+      price,
+      sku,
+    } = values;
 
     // Check for an existing product with the same name and sellerId
     const existingProduct = await db.sellerProduct.findUnique({
@@ -378,7 +389,7 @@ export const updateService = async (
         slug,
         description,
         tags,
-        categoryId: category,
+        subCategoryId: subCategorySlug,
         images: media,
         price,
         sku,

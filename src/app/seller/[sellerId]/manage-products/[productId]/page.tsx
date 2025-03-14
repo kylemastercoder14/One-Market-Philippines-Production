@@ -66,7 +66,7 @@ const ProductId = async (props: {
       {businessType === "Service" && (
         <ServiceProductForm
           subCategories={seller?.category?.sellerSubCategory || []}
-          seller={params.sellerId}
+          seller={seller}
           initialData={products}
         />
       )}

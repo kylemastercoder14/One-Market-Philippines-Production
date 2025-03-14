@@ -20,7 +20,7 @@ const CategorySlug = async (props: {
   const decodedSlug = decodeURIComponent(params.categorySlug);
   const products = await db.sellerProduct.findMany({
     where: {
-      category: decodedSlug,
+      subCategoryId: decodedSlug,
     },
     include: {
       seller: true,

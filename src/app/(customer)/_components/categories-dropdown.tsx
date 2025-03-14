@@ -151,8 +151,14 @@ const CategoriesDropdown = () => {
                                   )}`
                               )
                             }
-                            className="p-2 flex text-white bg-gradient-to-b h-[120px] from-red-400 via-red-700 to-red-800 rounded-xl flex-col items-center justify-center cursor-pointer"
                           >
+                            <Image
+                              src={subCategory.image as string}
+                              className="rounded-full"
+                              alt={subCategory.name}
+                              width={80}
+                              height={80}
+                            />
                             <span className="text-sm text-center mt-2">
                               {subCategory.name}
                             </span>

@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
       "upload.wikimedia.org",
       "static.wikia.nocookie.net",
       "logodix.com",
+      "ph.phonebooky.com",
     ],
   },
   eslint: {

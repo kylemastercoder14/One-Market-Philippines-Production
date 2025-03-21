@@ -142,6 +142,7 @@ const CategoriesDropdown = () => {
                         {subCategories.map((subCategory) => (
                           <li
                             key={subCategory.id}
+                            className="flex flex-col items-center justify-center"
                             onClick={() =>
                               router.push(
                                 `/category/${subCategory.slug
@@ -152,14 +153,15 @@ const CategoriesDropdown = () => {
                               )
                             }
                           >
-                            <Image
-                              src={subCategory.image as string}
-                              className="rounded-full"
-                              alt={subCategory.name}
-                              width={80}
-                              height={80}
-                            />
-                            <span className="text-sm text-center mt-2">
+                            <div className="relative size-20">
+                              <Image
+                                src={subCategory.image as string}
+                                className="rounded-full w-full h-full object-cover"
+                                alt={subCategory.name}
+                                fill
+                              />
+                            </div>
+                            <span className="text-xs text-center mt-2">
                               {subCategory.name}
                             </span>
                           </li>

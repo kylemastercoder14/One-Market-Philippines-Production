@@ -28,6 +28,7 @@ const CategoriesSection = async () => {
                 key={category.id}
                 title={category.name}
                 storeCount={category.seller.length}
+                image={category.image as string}
               />
             ))}
           </CarouselContent>
